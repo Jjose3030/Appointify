@@ -217,7 +217,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
         minPrice: 10.00,
         maxPrice: 60.00,
         rating: 4.5,
-        shopImage: 'images/img11.jpg',
+        shopImage: 'Images/img11.jpg',
         bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
         description:  `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
         direction:  `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
