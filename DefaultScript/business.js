@@ -173,15 +173,12 @@ function showBooking(){
 })
 
     const bookIt = document.querySelectorAll('.book-item');
-    console.log(bookIt);
     const spins = document.querySelectorAll('.spin');
   
  bookIt.forEach(book => {
   book.addEventListener('click', (e) => {
     if (e.target.closest('.spin')) return; 
     book.classList.add('active');
-    console.log(e.target);
-    
   });
   
 });
@@ -192,9 +189,36 @@ spins.forEach(spin => {
     book.classList.remove('active');
   });
 });
+
+//displays message page when the bussiness owner clicks on message customer button
+const messageCust = document.querySelectorAll('.message-cust');
+messageCust.forEach(message=>{
+    message.addEventListener('click', ()=>{
+        const pages = document.querySelectorAll('.page');
+        const navLink = document.querySelectorAll('.nav-menu')
+        navLink.forEach(nav=>{nav.classList.remove('active')
+        if(nav.dataset.page === 'message') {
+            nav.classList.add('active')
+            
+        }
+    })
+        pages.forEach(p=>{
+            p.classList.remove('active');
+            if(p.classList.contains('message')) {
+                 p.classList.add('active');
+            }
+        })
+        
+        
+    })
+})  
+
 }
 
 document.addEventListener('DOMContentLoaded', showBooking)
+
+
+
 
 
 
