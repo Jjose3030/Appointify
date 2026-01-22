@@ -218,7 +218,335 @@ messageCust.forEach(message=>{
 document.addEventListener('DOMContentLoaded', showBooking)
 
 
+//company form 
+
+const companyForm = document.getElementById('company-form');
+companyForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    clearError();
+    validateInputs();
+})
+
+//display uploaded image for the company
+const revImg = document.getElementById('rev-img');
+const imgText = document.querySelector('.prof-img-text');
+const showImg = document.querySelector('.show-comp-img')
+const compImg = document.getElementById('comp-img');
+ compImg.addEventListener('input', ()=>{
+        clearError();
+        getImage(compImg, showImg, imgText)
+    })
+
+//controls the display of uploaded image
+function getImage(input, image, text) {
+        const getImg = URL.createObjectURL(input.files[0]);
+        image.style.display = 'flex';
+        image.src = getImg;
+        text.style.display = 'none';
+    }
+   
+//display uploaded images for the gallery
+const galleryUpload = document.getElementById('work-img-up');
+const galleryCont = document.querySelector('.up-img-cont');
+galleryUpload.addEventListener('input', ()=>{
+    const gallStock = galleryUpload.files;
+    galleryCont.innerHTML = '';
+
+    for(let i = 0; i < gallStock.length; i++) {
+        const galleryImage = document.createElement('div');
+        galleryImage.classList.add('up-img');
+        const  disImg = document.createElement('img');
+        let url = URL.createObjectURL(gallStock[i]);
+        disImg.src = url;
+        galleryImage.appendChild(disImg);
+        galleryCont.appendChild(galleryImage);
+    } 
+})
+
+  
+//function controlling the  companys form info validation and also sending it to an end point
+function validateInputs(){
+    const cName = document.getElementById('comp-name');
+    const cEmail = document.getElementById('comp-email');
+    const cPhone = document.getElementById('comp-phone');
+    const cJob = document.getElementById('comp-job');
+    const cWorkDay = document.getElementById('comp-work-day');
+    const cAddy = document.getElementById('comp-address');
+    const cMinPrice = document.getElementById('comp-min-price');
+    const cMaxPrice = document.getElementById('comp-max-price');
+    const cDesc = document.getElementById('comp-description');
+    const cDir = document.getElementById('comp-direction');
+
+    const compImg = document.getElementById('comp-img');
+    if(compImg.files[0] === undefined || compImg.files[0] === null) {
+       showError(compImg, 'Upload an image for your company profile') 
+    }
+   
+  
+
+    if(cName.value === '') {
+        showError(cName, 'Field can not be left empty');
+        return;
+    } else if(cName.value.trim().length < 5 || !isNaN(cName.value)) {
+        showError(cName, `Kindly input your company's full name`);
+        return;
+    }
+
+    if(cEmail.value === '') {
+        showError(cEmail, 'Field can not be left empty');
+        return;
+    } else if(!cEmail.value.includes('@') || !cEmail.value.includes('.com')) {
+        showError(cEmail, `Input your company's email address`);
+        return;
+    }
+
+    if(cPhone.value === '') {
+        showError(cPhone, 'Field can not be left empty');
+        return;
+    } else if(cPhone.value.trim().length < 11 || cPhone.value.trim().length > 14 || isNaN(cPhone.value)) {
+        showError(cPhone, 'Enter a valid phone number for your company');
+        return;
+    }
+
+
+    if(cJob.value === ''){
+        showError(cJob, 'Field can not be left empty');
+        return;
+    } else if(cJob.value.trim().length < 3 || !isNaN(cJob.value)) {
+        showError(cJob, 'Input the job title your company offers');
+        return;
+    }
+
+
+    if(cWorkDay.value === "") {
+        showError(cWorkDay, 'Field can not be left empty');
+        return;
+        }  else if(cWorkDay.value.trim().length < 5 || !isNaN(cWorkDay.value)) {
+        showError(cWorkDay, 'Input the work days your company operates on');
+        return;
+    }
 
 
 
 
+    if(cAddy.value === "") {
+        showError(cAddy, 'Field can not be left empty');
+        return;
+        }  else if(cAddy.value.trim().length < 30 || !isNaN(cAddy.value)) {
+        showError(cAddy, 'Fill in a well detailed location about where your company is located');
+        return;
+    }
+
+
+    if(cMinPrice.value === "") {
+        showError(cMinPrice, 'Field can not be left empty');
+        return;
+        }  else if(cMinPrice.value.trim().length < 1 || isNaN(cMinPrice.value)) {
+        showError(cMinPrice, 'Enter the minimum amount your company charges for a service session');
+        return;
+    }
+
+    if(cMaxPrice.value === "") {
+        showError(cMaxPrice, 'Field can not be left empty');
+        return;
+        }  else if(cMaxPrice.value.trim().length < 1 || isNaN(cMaxPrice.value)) {
+        showError(cMaxPrice, 'Enter the maximum amount your company charges for a service session');
+        return;
+    }
+
+
+    if(cDesc.value === "") {
+        showError(cDesc, 'Field can not be left empty');
+        return;
+        }  else if(cDesc.value.trim().length < 200 || !isNaN(cDesc.value)) {
+        showError(cDesc, 'Input a well detailed information about your company so it gives customers a sense of trust. At least 200 characters');
+        return;
+    }
+
+
+
+    if(cDir.value === "") {
+        showError(cDir, 'Field can not be left empty');
+        return;
+        }  else if(cDir.value.trim().length < 80 || !isNaN(cDir.value)) {
+        showError(cDir, 'Input a well detailed information about where your company is located, so as to help customer in locating your company physically. At least 80 characters');
+        return;
+    }
+
+
+    const companyProfile = {
+        companyImage : compImg.files[0],
+        companyName : cName.value,
+        companyEmail : cEmail.value,
+        companyPhone : cPhone.value,
+        companyJob : cJob.value,
+        companyWorkDay : cWorkDay.value,
+        companyAddress : cAddy.value,
+        companyMinPrice : cMinPrice.value,
+        companyMaxPrice : cMaxPrice.value,
+        companyDescription : cDesc.value,
+        companyDirection : cDir.value,
+    }
+
+ 
+
+  async function sendData(){
+     try {
+        const res = await fetch('url in here',{
+            method : 'PATCH',
+            headers : {
+               "Content-type" : 'application/json',
+               "Accept" : 'application/json'
+            },
+            body : JSON.stringify(companyProfile)
+        });        
+        console.log('data sent');     
+  } catch (error) {
+        alert(`Failed to upload your company's profile, try again later`)
+  }
+  }
+  sendData()
+}
+
+
+//Bussiness Profile page form validation
+
+//displaying business owner selected image
+const busImg = document.getElementById('bus-form-img');
+const revBusImg = document.querySelector('.rev-form-img');
+const busImgText = document.querySelector('.bus-span-text');
+const showBusImg = document.querySelector('.buss-img')
+
+busImg.addEventListener('input', ()=>{
+    getImage(busImg, showBusImg, busImgText)
+})
+
+
+const bussForm = document.getElementById('bus-prof-form');
+bussForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+
+    clearError();
+    validateBuss()
+
+})
+
+//controls the validation of the bussiness owner profile form
+function validateBuss(){
+    const bName = document.getElementById('bus-name');
+    const bEmail = document.getElementById('bus-email');
+    const bPhone = document.getElementById('bus-phone');
+    const bAddy = document.getElementById('bus-addy');
+    const bBio = document.getElementById('bus-bio');
+
+
+
+
+
+     const busImg = document.getElementById('bus-form-img');
+    if(busImg.files[0] === undefined || busImg.files[0] === null) {
+       showError(busImg, 'Upload an image for your profile picture') 
+    }
+   
+  
+
+    if(bName.value === '') {
+        showError(bName, 'Field can not be left empty');
+        return;
+    } else if(bName.value.trim().length < 5 || !isNaN(bName.value)) {
+        showError(bName, `Kindly input your full name`);
+        return;
+    }
+
+    if(bEmail.value === '') {
+        showError(bEmail, 'Field can not be left empty');
+        return;
+    } else if(!bEmail.value.includes('@') || !bEmail.value.includes('.com')) {
+        showError(bEmail, `Input a valid email address`);
+        return;
+    }
+
+    if(bPhone.value === '') {
+        showError(bPhone, 'Field can not be left empty');
+        return;
+    } else if(bPhone.value.trim().length < 11 || bPhone.value.trim().length > 14 || isNaN(bPhone.value)) {
+        showError(bPhone, 'Enter a valid phone number');
+        return;
+    }
+
+    if(bAddy.value === "") {
+        showError(bAddy, 'Field can not be left empty');
+        return;
+        }  else if(bAddy.value.trim().length < 30 || !isNaN(bAddy.value)) {
+        showError(bAddy, 'Input your residential  address');
+        return;
+    }
+
+
+    if(bBio.value === "") {
+        showError(bBio, 'Field can not be left empty');
+        return;
+        }  else if(bBio.value.trim().length < 80 || !isNaN(bBio.value)) {
+        showError(bBio, 'Tell us more about yourself, it would help customers understand you better. At least 80 characters');
+        return;
+    }
+
+
+
+    const busProfile = {
+        ownerImage : busImg.files[0],
+        ownerName : bName.value,
+        ownerEmail : bEmail.value,
+        ownerPhone : bPhone.value,
+        ownerAddress : bAddy.value,
+        ownerBio : bBio.value
+    }
+
+async function sendData(){
+     try {
+        const res = await fetch('url in here',{
+            method : 'PATCH',
+            headers : {
+               "Content-type" : 'application/json',
+               "Accept" : 'application/json'
+            },
+            body : JSON.stringify(busProfile)
+        });        
+        console.log('profile data sent');     
+  } catch (error) {
+        alert(`Failed to upload your profile, try again later`)
+  }
+  }
+  sendData()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//function showing input errors
+function showError(input, message){
+    const errorDiv = document.getElementById(input.id + '-error');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    input.classList.add('input-error');
+    return;
+}
+//function removing input errors
+function clearError(){
+    const error = document.querySelectorAll('.error');
+    error.forEach(err=>{
+        err.style.display = 'none';
+    })
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(inp=>{
+        inp.classList.remove('input-error')
+    })
+}

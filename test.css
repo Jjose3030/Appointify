@@ -52,7 +52,7 @@
 body {
     background-color: var(--white-var);
     color: var(--pri-color);
-    font-family: "Inter", sans-serif;;
+    font-family: "Inter", sans-serif;
 }
 .modal {
     width: 100%;
@@ -284,7 +284,7 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin-top: 3rem;
+    margin-top: 3rem;    
 }
 .footer-cont, .foot-low-cont {
     display: grid;
