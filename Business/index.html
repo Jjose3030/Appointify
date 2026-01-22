@@ -177,10 +177,322 @@
             </div>
         </nav>
         <div class="display-page">
-            <div class="page active" id="dashboard"><h2>This is the dashboard page</h2></div>
-            <div class="page" id="booking"><h2>This is the booking page</h2></div>
-            <div class="page" id="company"><h2>This is the company page</h2></div>
+            <!-- this is the dashboard page -->
+            <div class="page active dashboard" id="dashboard">
+                <div class="dash-stat-cont">
+                    <div class="stat-item stat-item1">
+                        <div class="stat-item-header">
+                            <p class="stat-title">Total Booking</p>
+                            <div class="trend-cont">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.83315 6.07467L8.16649 8.408L11.4956 5.07892L12.8332 6.4165V2.9165H9.33315L10.6707 4.25409L8.16649 6.75834L5.83315 4.425L1.3374 8.92075L2.16224 9.74559L5.83315 6.07467Z" fill="#0B8A00"/>
+                            </svg>
+                            <span class="per">10.0%</span>
+                            </div>
+                        </div>
+                        <h2>856</h2>
+                        <p>This month</p>
+                    </div>
+                    <div class="stat-item stat-item2">
+                        <div class="stat-item-header">
+                            <p class="stat-title">Completed</p>
+                            <div class="trend-cont">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.83315 6.07467L8.16649 8.408L11.4956 5.07892L12.8332 6.4165V2.9165H9.33315L10.6707 4.25409L8.16649 6.75834L5.83315 4.425L1.3374 8.92075L2.16224 9.74559L5.83315 6.07467Z" fill="#0B8A00"/>
+                            </svg>
+                            <span class="per">22.0%</span>
+                            </div>
+                        </div>
+                        <h2>3,342</h2>
+                        <p>Services</p>
+                    </div>
+                    <div class="stat-item stat-item3">
+                        <div class="stat-item-header">
+                            <p class="stat-title">Booking Pending</p>
+                            <div class="trend-cont">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.83315 6.07467L8.16649 8.408L11.4956 5.07892L12.8332 6.4165V2.9165H9.33315L10.6707 4.25409L8.16649 6.75834L5.83315 4.425L1.3374 8.92075L2.16224 9.74559L5.83315 6.07467Z" fill="#0B8A00"/>
+                            </svg>
+                            <span class="per">12.0%</span>
+                            </div>
+                        </div>
+                        <h2>77</h2>
+                        <p>Customer</p>
+                    </div>
+                    <div class="stat-item stat-item4">
+                        <div class="stat-item-header">
+                            <h2>Statistics</h2>
+                            <div class="cha-stat">
+                                <div class="cha-stat-item cha-stat-item1">
+                                    <p class="pend"><span class="pen-col"></span>Pending</p>
+                                    <p class="comp"><span class="comp-col"></span>Completed</p>
+                                </div>
+                                <select name="" id="" class="stat-month">
+                                    <option value="month">This Month</option>
+                                    <option value="month">Last Month</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="stat-chart-cont">
+                            <p>chart would be displayed here</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cust-stat-cont">
+                    <div class="cust-stat-header">
+                        <h2>Customer Status</h2>
+                        <div class="filt-cont">
+                            <p>Filter & Sort  
+                                <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15.8335 2.5H13.3335" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 0.833496V4.16683" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10.0002 2.5H0.833496" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M4.16683 8.3335H0.833496" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7.5 6.66699V10.0003" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16.6667 8.3335H7.5" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M15.8335 14.167H13.3335" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 12.5V15.8333" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10.0002 14.167H0.833496" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg></p>
+                                <div class="filt-drop">
+                                    <div class="drop-option">Approved</div>
+                                    <div class="drop-option">Pending</div>
+                                    <div class="drop-option">Cancel</div>
+                                </div>
+                        </div>
+                        <!-- <select name="" id="" class="cust-fil">
+                            <option value="all">Filter & Sort  
+                                <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15.8335 2.5H13.3335" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 0.833496V4.16683" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10.0002 2.5H0.833496" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M4.16683 8.3335H0.833496" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7.5 6.66699V10.0003" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16.6667 8.3335H7.5" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M15.8335 14.167H13.3335" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 12.5V15.8333" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10.0002 14.167H0.833496" stroke="#1A2B88" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </option>
+                            <option value="approve">Approved</option>
+                            <option value="pending">Pending</option>
+                            <option value="cancel">Cancel</option>
+                        </select> -->
+                    </div>
+                    <div class="cust-body">
+                        <div class="cust-body-header">
+                            <div class="cust-item">Customer Name</div>
+                            <div class="cust-item">Location</div>
+                            <div class="cust-item">Budget</div>
+                            <div class="cust-item">Date</div>
+                            <div class="cust-item">Status</div>
+                        </div>
+                        <div class="cust-cont">
+                            <div class="cust-cont-item">
+                                <div class="prof-block">
+                                    <div class="img"></div>
+                                    <h3>Justin Lipshutz</h3>
+                                </div>
+                                <p>Lagos</p>
+                                <p>20-45</p>
+                                <p class="cust-date">Jan 26</p>
+                                <div class="appr">Approved</div>
+                            </div>
+                            <div class="cust-cont-item">
+                                <div class="prof-block">
+                                    <div class="img img2"></div>
+                                    <h3>Marcus Culhane</h3>
+                                </div>
+                                <p>Ogun</p>
+                                <p>10-25</p>
+                                <p class="cust-date">Jan 25</p>
+                                <div class="pen">Pending</div>
+                            </div>
+                            <div class="cust-cont-item">
+                                <div class="prof-block">
+                                    <div class="img img3"></div>
+                                    <h3>Leo Stanton</h3>
+                                </div>
+                                <p>Imo</p>
+                                <p>20-60</p>
+                                <p class="cust-date">Jan 24</p>
+                                <div class="can">Cancel</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- this is the booking page -->
+            <div class="page booking" id="booking">
+                <div class="book-parent">
+                    <div class="book-cont"></div>
+                </div>
+            </div>
+
+            <!-- this is the company page -->
+            <div class="page" id="company">
+                <div class="company-cont">
+                    <form action="" id="company-form" class="company-form">
+                        <h2>Company Profile</h2>
+
+                        <div class="comp-form-header">
+                            <input type="file" class="comp-img" accept="image/*"  id="comp-img">
+                            <label for="comp-img" id="rev-img">
+                                <span class="prof-img-text">
+                                    Click to add <br>profile image
+                                </span>
+                            </label>
+                            <span class="error" id="rev-img-error">kkk</span>
+                        </div>
+
+                        <div class="comp-form-body">
+                            <div class="comp-group">
+                                <div class="comp-layer">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="#666666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M20.5901 22C20.5901 18.13 16.7402 15 12.0002 15C7.26015 15 3.41016 18.13 3.41016 22" stroke="#666666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <input type="text" placeholder="Company name" id="comp-name">
+                                </div>
+                                <div class="error" id="comp-name-error">wd</div>
+                            </div>
+                            <div class="comp-group">
+                                <div class="comp-layer">
+                                    <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 0.5H19C19.2762 0.5 19.5 0.723856 19.5 1V17C19.5 17.2762 19.2762 17.5 19 17.5H1C0.723856 17.5 0.5 17.2762 0.5 17V1C0.5 0.723862 0.723862 0.5 1 0.5ZM1.5 16.5H18.5V3.11914L17.666 3.86523L10.0693 10.6689L2.33105 3.84082L1.5 3.1084V16.5ZM2.18066 2.375L9.73145 9.03711L10.0645 9.33105L10.3955 9.03418L17.835 2.37207L18.8086 1.5H1.18945L2.18066 2.375Z" fill="black" stroke="#666666"/>
+                                    </svg>
+                                    <input type="text" placeholder="Company email" id="comp-email">
+                                </div>
+                                <div class="error" id="comp-email-error"></div>
+                            </div>
+                            <div class="comp-group">
+                                <div class="comp-layer">
+                                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_1_8022)">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H24V24H0V0Z" fill="white"/>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.9984 0H24V24H15.9984V0ZM0 0H8.00156V24H0V0Z" fill="#617FE4"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_1_8022">
+                                        <rect width="24" height="24" rx="12" fill="white"/>
+                                        </clipPath>
+                                        </defs>
+                                </svg>
+                                    <input type="text" placeholder="+234 123 456 7890" id="comp-phone">
+                                </div>
+                                <div class="error" id="comp-phone-error"></div>
+                            </div>
+                            <div class="comp-group">
+                                <div class="comp-layer">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 8.25V18C20 21 18.21 22 16 22H8C5.79 22 4 21 4 18V8.25C4 5 5.79 4.25 8 4.25C8 4.87 8.24997 5.43 8.65997 5.84C9.06997 6.25 9.63 6.5 10.25 6.5H13.75C14.99 6.5 16 5.49 16 4.25C18.21 4.25 20 5 20 8.25Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 4.25C16 5.49 14.99 6.5 13.75 6.5H10.25C9.63 6.5 9.06997 6.25 8.65997 5.84C8.24997 5.43 8 4.87 8 4.25C8 3.01 9.01 2 10.25 2H13.75C14.37 2 14.93 2.25 15.34 2.66C15.75 3.07 16 3.63 16 4.25Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8 13H12" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8 17H16" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <input type="text" placeholder="Job type e.g Barbing" id="comp-job">
+                                </div>
+                                <div class="error" id="comp-job-error"></div>
+                            </div>
+                            <div class="comp-group">
+                                <div class="comp-layer">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M20.75 17.6001H3.25" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 8.25C10.77 8.25 9.73 8.92 9.73 10.22C9.73 10.84 10.02 11.31 10.46 11.61C9.85 11.97 9.5 12.55 9.5 13.23C9.5 14.47 10.45 15.24 12 15.24C13.54 15.24 14.5 14.47 14.5 13.23C14.5 12.55 14.15 11.96 13.53 11.61C13.98 11.3 14.26 10.84 14.26 10.22C14.26 8.92 13.23 8.25 12 8.25ZM12 11.09C11.48 11.09 11.1 10.78 11.1 10.29C11.1 9.79 11.48 9.5 12 9.5C12.52 9.5 12.9 9.79 12.9 10.29C12.9 10.78 12.52 11.09 12 11.09ZM12 14C11.34 14 10.86 13.67 10.86 13.07C10.86 12.47 11.34 12.15 12 12.15C12.66 12.15 13.14 12.48 13.14 13.07C13.14 13.67 12.66 14 12 14Z" fill="#292D32"/>
+                                    </svg>
+                                    <input type="text" placeholder="Working days e.g Moday - Friday" id="comp-work-day">
+                                </div>
+                                <div class="error" id="comp-work-day-error"></div>
+                            </div>
+                            <div class="comp-group">
+                                <div class="comp-layer">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3.61971 8.49C5.58971 -0.169998 18.4197 -0.159997 20.3797 8.5C21.5297 13.58 18.3697 17.88 15.5997 20.54C13.5897 22.48 10.4097 22.48 8.38971 20.54C5.62971 17.88 2.46971 13.57 3.61971 8.49Z" stroke="#292D32" stroke-width="1.5"/>
+                                        <path d="M9.25 11.5L10.75 13L14.75 9" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <input type="text" placeholder="Company address" id="comp-address">
+                                </div>
+                                <div class="error" id="comp-address-error"></div>
+                            </div>
+                            <div class="comp-group">
+                                <div class="comp-layer">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8.67188 14.3298C8.67188 15.6198 9.66188 16.6598 10.8919 16.6598H13.4019C14.4719 16.6598 15.3419 15.7498 15.3419 14.6298C15.3419 13.4098 14.8119 12.9798 14.0219 12.6998L9.99187 11.2998C9.20187 11.0198 8.67188 10.5898 8.67188 9.36984C8.67188 8.24984 9.54187 7.33984 10.6119 7.33984H13.1219C14.3519 7.33984 15.3419 8.37984 15.3419 9.66984" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 6V18" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M15 22H9C4 22 2 20 2 15V9C2 4 4 2 9 2H15C20 2 22 4 22 9V15C22 20 20 22 15 22Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg> 
+                                    <input type="text" placeholder="Minimal price e.g 20" id="comp-min-price">
+                                </div>
+                                <div class="error" id="comp-min-price-error"></div>
+                            </div>
+                            <div class="comp-group">
+                                <div class="comp-layer">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8.67188 14.3298C8.67188 15.6198 9.66188 16.6598 10.8919 16.6598H13.4019C14.4719 16.6598 15.3419 15.7498 15.3419 14.6298C15.3419 13.4098 14.8119 12.9798 14.0219 12.6998L9.99187 11.2998C9.20187 11.0198 8.67188 10.5898 8.67188 9.36984C8.67188 8.24984 9.54187 7.33984 10.6119 7.33984H13.1219C14.3519 7.33984 15.3419 8.37984 15.3419 9.66984" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 6V18" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M15 22H9C4 22 2 20 2 15V9C2 4 4 2 9 2H15C20 2 22 4 22 9V15C22 20 20 22 15 22Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg> 
+                                    <input type="text" placeholder="Maximal price e.g 90" id="comp-name">
+                                </div>
+                                <div class="error" id="comp-name-error"></div>
+                            </div>
+                            <div class="comp-group comp-group9">
+                                <div class="comp-layer">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M7 13H15" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M7 17H12" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <textarea  id="comp-description" placeholder=" Company Description"></textarea>
+                                </div>
+                                <div class="error" id="comp-description-error"></div>
+                            </div>
+                            <div class="comp-group comp-group10">
+                                <div class="comp-layer">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M7 13H15" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M7 17H12" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <textarea  id="comp-direction" placeholder="Company Direction"></textarea>
+                                </div>
+                                <div class="error" id="comp-direction-error"></div>
+                            </div>
+                        </div>
+
+                        <div class="comp-form-footer">
+                            <h2>Photo Gallery</h2>
+                            <p>Add some of your work done for better experience</p>
+                            <div class="comp-work-img-cont">
+                                <input type="file" id="work-img-up" accept="image/*" multiple>
+                                <label for="work-img-up" class="work-img-up">Click to upload images</label>
+                                <div class="up-img-cont">
+                                    <div class="up-img"></div>
+                                    <div class="up-img"></div>
+                                    <div class="up-img"></div>
+                                    <div class="up-img"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="save-comp-btn">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- this is the message page -->
             <div class="page" id="message">This is the message page</div>
+
+            <!-- this is the profile page -->
             <div class="page" id="profile"><h2>This is the profile page</h2></div>
         </div>
     </main>
