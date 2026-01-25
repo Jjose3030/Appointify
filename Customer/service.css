@@ -382,7 +382,7 @@ nav ul li a:hover {
     font-weight: 600;
     font-size: 1.1rem;
 }
-.log-rev {
+.explore-btn {
     width: 100%;
     display: block;
     text-align: center;
@@ -393,11 +393,14 @@ nav ul li a:hover {
     border-radius: 10px;
     transition: var(--trans2);
     text-decoration: none;
+    cursor: pointer;
+    border: none;
+    outline: none;
 }
-.log-rev:visited {
-    color: var(--pri-color3);
+.explore-btn:active {
+    scale: 0.85;
 }
-.log-rev:hover {
+.explore-btn:hover {
     background-color: var(--btn-col-hov);
 }
 

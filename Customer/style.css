@@ -314,7 +314,7 @@ nav ul li a:hover {
 .yoga-cont p {
     font-size: 1.5rem;
 }
-.book-1, .book2, .book3, .log-rev {
+.book-1, .book2, .book3 {
     background-color: var(--btn-col);
     color: var(--pri-color3);
     padding: 10px;
@@ -326,10 +326,31 @@ nav ul li a:hover {
     transition: var(--trans2);
     text-decoration: none;
 }
-a.book-1:visited, .book2:visited, .book3:visited, .log-rev:visited {
+a.book-1:visited, .book2:visited, .book3:visited {
     color: var(--pri-color3);
 }
-.book-1:hover, .book2:hover, .book3:hover, .log-rev:hover {
+.book-1:hover, .book2:hover, .book3:hover {
+    background-color: var(--btn-col-hov);
+}
+.explore-btn {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-top: 0;
+    background-color: var(--btn-col);
+    color: var(--pri-color3);
+    padding: 10px;
+    border-radius: 10px;
+    transition: var(--trans2);
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+.explore-btn:active {
+    scale: 0.85;
+}
+.explore-btn:hover {
     background-color: var(--btn-col-hov);
 }
 .slide-item2 {
@@ -1155,6 +1176,7 @@ a.nav-link:not(.nav-link6, .nav-link7){
 }
 .slide-item2 h2 { 
     width: 100%;
+    font-size: 2.2rem; 
 }
     .top-rate-cont, .recommend-cont, .recent-cont {
     grid-template-columns: repeat(2, 1fr);
@@ -1233,7 +1255,7 @@ footer {
     font-size: 1.8rem;
 }
 
-    .main-text h2 {
+    .main-text h2, .slide-item2 h2 {
     font-size: 1.8rem;
 }
         .top-rate-cont, .recommend-cont, .recent-cont {
@@ -1293,9 +1315,16 @@ section.contact {
     margin-top: 30px;
     width: 100%;
 }
+        .main-text h2, .slide-item2 h2,  .yoga-cont h2  {
+    font-size: 1.55rem;
+}
+
   }
 
   @media(max-width: 325px){
+        .main-text h2, .slide-item2 h2,  .yoga-cont h2  {
+    font-size: 1.25rem;
+}
     summary {
         font-size: 12px;
     }

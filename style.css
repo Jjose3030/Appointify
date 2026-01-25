@@ -1015,6 +1015,14 @@ hr.rule {
     font-size: 2.5rem;   
     width: 150px;
 }
+.slide-item2 {
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+}
+.slide-item2 h2 { 
+    width: 100%;
+}
 .slide-text-cont {
     width: max-content;
 
@@ -1101,11 +1109,12 @@ footer {
 }
 }
  @media(max-width: 570px) {
+
      .slide-text-cont {
     width: 90%;
     text-align: center;
 }
-    .main-text h2 {
+    .main-text h2, .slide-item2 h2,  .yoga-cont h2  {
     font-size: 1.8rem;
 }
         .top-rate-cont, .recommend-cont, .recent-cont {
@@ -1139,6 +1148,9 @@ footer {
 }
  }
   @media(max-width: 380px) {
+            .main-text h2, .slide-item2 h2,  .yoga-cont h2  {
+    font-size: 1.5rem;
+}
      .question > p {
     width: 100%;
  }
@@ -1163,6 +1175,9 @@ section.contact {
   }
 
   @media(max-width: 325px){
+            .main-text h2, .slide-item2 h2,  .yoga-cont h2  {
+    font-size: 1.2rem;
+}
     summary {
         font-size: 12px;
     }

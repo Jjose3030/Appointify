@@ -340,7 +340,7 @@ img {
     aspect-ratio: 1;
     object-fit: cover;
     border-radius: 20px;
-    max-height: 317px;
+    max-height: 320px;
     flex-shrink: 0;
 }
 .heart {
@@ -1107,7 +1107,7 @@ a.nav-link:not(.nav-link6, .nav-link7){
 @media(max-width: 930px) {
 
 .form-book-header {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr ;
 
 }
 .form-time-cont {
@@ -1159,6 +1159,12 @@ a.nav-link:not(.nav-link6, .nav-link7){
 @media(max-width: 840px) {
     .form-book-body {
     grid-template-columns: repeat(2, 1fr);
+}
+.top-footer {
+    flex-direction: column;
+}
+.price-range {
+    font-size: 1.1rem;
 }
 }
 

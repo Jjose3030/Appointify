@@ -90,7 +90,7 @@ if(userLogForm) {
         setTimeout(() => {
             clearTimeout(show);
             userLogForm.reset();
-            window.location.assign('../index.html');
+            window.location.assign('../Customer/index.html');
         }, 4000);
     }
     
@@ -159,7 +159,6 @@ function clearError(){
 
 //bussiness owner login form validation
 const bussLogForm = document.getElementById('buss-sign-in');
-
 if(bussLogForm) {  
     const bussLogEmail = document.getElementById('buss-email');
     const bussLogPassword = document.getElementById('buss-password');
@@ -238,8 +237,7 @@ forgotBtn.addEventListener('click', ()=>{
 
 //user signup form validation
 const userSignForm = document.getElementById('user-sign-up');
-
-    if(userSignForm) {
+if(userSignForm) {
 
         const userSignName = document.getElementById('user-name'); 
         const userSignEmail = document.getElementById('create-user-email');
@@ -346,7 +344,7 @@ async  function postNewUser(){
                         //display the user interface after account has been created successfully
                         const VerCompBtn = document.querySelector('.ver-done-btn');
                         VerCompBtn.addEventListener('click', ()=>{
-                            window.location.assign('../index.html')
+                           window.location.assign('../Customer/index.html');
                         })
                     }, 4000);
                 
