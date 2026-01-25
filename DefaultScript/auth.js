@@ -16,8 +16,16 @@ const users = [
         password : 'james123'
     }
 ]
+// const userRes = fetch('end point for users or customers');
+// const users = userRes.json();
 
-//business Owners sample data for testing login & sign up (replacement also needed when api is available);
+
+
+
+//business Owners sample data for testing login & sign up (replacement also needed when api is available)
+// const res = fetch('business owner end point');
+// const businessUsers = res.json();
+
 const businessUsers = [
     {
         id : 1,
@@ -290,43 +298,64 @@ const userSignForm = document.getElementById('user-sign-up');
                 return
             } 
 
+ //send new users data to an end point
+async  function postNewUser(){
+                 if(!findUser) {
+                    const newUser = {
+                        id : Date.now(),
+                        name : username,
+                        email : userEmail,
+                        password : userPassword,
+                        role : 'customer'
+                    };
 
-    if(!findUser) {
-        const newUser = {
-            id : Date.now(),
-            name : username,
-            email : userEmail,
-            password : userPassword
-        };
-        users.push(newUser);
-        const loader = document.querySelector('.loader')
-        loader.style.display = 'flex';
+                    // try {
+                    //     const res = await fetch('url', {
+                    //         method : 'POST',
+                    //         headers : {
+                    //             "Content-type" : "application/json",
+                    //             "Accept" : "application/json"
+                    //         },
+                    //         body : JSON.stringify(newUser),  
+                    //     })
+                    //     console.log(newUser);
+                        
+                    //      console.log('data submitted');
+                    // } catch (error) {
+                    //     alert('An error occured while creating your account')
+                    // }
+                    users.push(newUser);
+                    const loader = document.querySelector('.loader')
+                    loader.style.display = 'flex';
 
-        setTimeout(() => {
-            userSignForm.reset();
-            loader.style.display = 'none';
+                    setTimeout(() => {
+                        userSignForm.reset();
+                        loader.style.display = 'none';
 
-            const modal = document.querySelector('.modal');
-            const UserVerifyCont = document.querySelector('.verify-cont');
+                        const modal = document.querySelector('.modal');
+                        const UserVerifyCont = document.querySelector('.verify-cont');
 
-            modal.classList.add('active')            
-            UserVerifyCont.classList.add('active');
+                        modal.classList.add('active')            
+                        UserVerifyCont.classList.add('active');
 
-            modal.addEventListener('click', ()=>{
-                modal.classList.remove('active');
-                UserVerifyCont.classList.remove('active');
-            });
+                        modal.addEventListener('click', ()=>{
+                            modal.classList.remove('active');
+                            UserVerifyCont.classList.remove('active');
+                        });
 
-            //display the user interface after account has been created successfully
-            const VerCompBtn = document.querySelector('.ver-done-btn');
-            VerCompBtn.addEventListener('click', ()=>{
-                window.location.assign('../index.html')
-            })
-        }, 4000);
-     
-    }
-   
+                        //display the user interface after account has been created successfully
+                        const VerCompBtn = document.querySelector('.ver-done-btn');
+                        VerCompBtn.addEventListener('click', ()=>{
+                            window.location.assign('../index.html')
+                        })
+                    }, 4000);
+                
+                }
+            }
+
+   postNewUser()
 })
+
 
     // show passwords
         const showPass = userSignForm.querySelector('.show-pass');
@@ -417,43 +446,63 @@ if(bussSignForm) {
                 return
             } 
 
+async function sendBuss(){
             if(!findUser) {
                 const newBussOwner = {
-                    id : Date.now(),
-                    name : bussname,
-                    email : bussEmail,
-                    password : bussPassword,
-                    companyName : bussCompany,
+                            id : Date.now(),
+                            name : bussname,
+                            email : bussEmail,
+                            password : bussPassword,
+                            companyName : bussCompany,
+                            role : 'business'
                 };
 
-                businessUsers.push(newBussOwner);
+            try {
+                const res = await fetch('url', {
+                    method : 'POST',
+                    headers : {
+                        "Content-type" : "application/json",
+                        "Accept" : "application/json"
+                    },
+                    body : JSON.stringify(newBussOwner)
+                })
+                console.log(newBussOwner);
+                console.log('data submitted');
                 
+                
+            } catch (error) {
+                alert('Can not create your account at the moment')
+            }    
+
+
+                businessUsers.push(newBussOwner);                        
                 const loader = document.querySelector('.loader')
                 loader.style.display = 'flex';
                 setTimeout(() => {
-                    bussSignForm.reset();
-                    loader.style.display = 'none';
+                            bussSignForm.reset();
+                            loader.style.display = 'none';
 
-            const modal = document.querySelector('.modal');
-            const UserVerifyCont = document.querySelector('.verify-cont');
+                    const modal = document.querySelector('.modal');
+                    const UserVerifyCont = document.querySelector('.verify-cont');
 
-            modal.classList.add('active')            
-            UserVerifyCont.classList.add('active');
+                    modal.classList.add('active')            
+                    UserVerifyCont.classList.add('active');
 
-            modal.addEventListener('click', ()=>{
-                modal.classList.remove('active');
-                UserVerifyCont.classList.remove('active');
-            });
+                    modal.addEventListener('click', ()=>{
+                        modal.classList.remove('active');
+                        UserVerifyCont.classList.remove('active');
+                    });
 
-            //display the business dashboard interface after account has been created successfully
-            const VerCompBtn = document.querySelector('.ver-done-btn');
-            VerCompBtn.addEventListener('click', ()=>{
-                window.location.assign('../Business/index.html')
-            })
+                    //display the business dashboard interface after account has been created successfully
+                    const VerCompBtn = document.querySelector('.ver-done-btn');
+                    VerCompBtn.addEventListener('click', ()=>{
+                        window.location.assign('../Business/index.html')
+                    })
                 }, 4000);
-                    }
+            }
+}
 
-       
+     sendBuss()  
     })
 
      const showPass = bussSignForm.querySelector('.show-pass');

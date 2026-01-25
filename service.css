@@ -308,7 +308,6 @@ nav ul li a:hover {
     color: var(--pri-color3);
     padding: 10px;
     border-radius: 10px;
-    display: block;
     transition: var(--trans2);
     text-decoration: none;
 }

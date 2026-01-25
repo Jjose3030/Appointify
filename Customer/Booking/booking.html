@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment</title>
+    <link rel="stylesheet" href="/Customer/Booking/booking.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="shortcut icon" href="/Images/logo-col.png" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="logo">
+           <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28.6613 4.20108e-05C24.8672 0.000302291 21.2286 1.49464 18.5458 4.15438C15.863 6.81412 14.3557 10.4214 14.3554 14.1829V14.5166H0V43H29.1068V28.3559C32.8663 28.2488 36.432 26.6781 39.032 23.9837C41.6319 21.2894 43.0568 17.6883 42.9983 13.96C42.9397 10.2317 41.4023 6.67635 38.719 4.0636C36.0357 1.45085 32.4224 -0.00902793 28.6613 4.20108e-05ZM4.95014 38.0924V19.4241H14.3554V28.3657H24.1567V38.0924H4.95014ZM29.1068 23.4483C28.9583 23.4581 28.8098 23.4581 28.6613 23.4581H19.3055V14.1829C19.3057 12.3672 19.8433 10.5916 20.8518 9.076C21.8603 7.56045 23.2952 6.37165 24.9788 5.65701C26.6624 4.94236 28.5205 4.7333 30.3227 5.05573C32.125 5.37816 33.7922 6.21791 35.1176 7.47087C36.443 8.72382 37.3684 10.3349 37.7789 12.1043C38.1895 13.8737 38.0672 15.7237 37.4272 17.4249C36.7872 19.126 35.6577 20.6036 34.1786 21.6743C32.6996 22.745 30.9361 23.3619 29.1068 23.4483Z" fill="#345ADC"/>
+         </svg>
+           <h2>Appointify</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/Customer/index.html" class="nav-link ">Home</a></li>
+                <li><a href="/Customer/service.html" class="nav-link ">Services</a></li>
+                <li><a href="/Customer/about.html" class="nav-link">About Us</a></li>
+                <li><a href="/Customer/contact.html" class="nav-link">Contact Us</a></li>
+                <li><a href="/Customer/contact.html" class="nav-link">Testimonies</a></li>
+            </ul>
+            <div class="prof-summary prof-summary2">
+                <div class="cust-img"></div>
+                <div class="cust-name-summary">Hi, Abiodun</div>
+                <i class="fa-solid fa-chevron-down spin"></i>
+                <div class="user-drop-down user-drop-down2">
+                    <div class="drop-cont">
+                        <p><a href="#" class="drop-link">Profile</a></p>
+                        <p><a href="#" class="drop-link">Booking</a></p>
+                        <p><a href="#" class="drop-link">Messages</a></p>
+                        <p><button class="user-log-out-btn">Log Out</button></p>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="profile-block">
+            <div class="noti-block-cont">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.0196 2.91016C8.7096 2.91016 6.0196 5.60016 6.0196 8.91016V11.8002C6.0196 12.4102 5.7596 13.3402 5.4496 13.8602L4.2996 15.7702C3.5896 16.9502 4.0796 18.2602 5.3796 18.7002C9.6896 20.1402 14.3396 20.1402 18.6496 18.7002C19.8596 18.3002 20.3896 16.8702 19.7296 15.7702L18.5796 13.8602C18.2796 13.3402 18.0196 12.4102 18.0196 11.8002V8.91016C18.0196 5.61016 15.3196 2.91016 12.0196 2.91016Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
+                    <path d="M13.8699 3.19994C13.5599 3.10994 13.2399 3.03994 12.9099 2.99994C11.9499 2.87994 11.0299 2.94994 10.1699 3.19994C10.4599 2.45994 11.1799 1.93994 12.0199 1.93994C12.8599 1.93994 13.5799 2.45994 13.8699 3.19994Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M15.0195 19.0601C15.0195 20.7101 13.6695 22.0601 12.0195 22.0601C11.1995 22.0601 10.4395 21.7201 9.89953 21.1801C9.35953 20.6401 9.01953 19.8801 9.01953 19.0601" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"/>
+                </svg>
+                <div class="noti-dot"></div>
+            </div>
+            <div class="prof-summary">
+                <div class="cust-img"></div>
+                <div class="cust-name-summary">Hi, Abiodun</div>
+                <i class="fa-solid fa-chevron-down spin"></i>
+                <div class="user-drop-down">
+                    <div class="drop-cont">
+                        <p><a href="#" class="drop-link">Profile</a></p>
+                        <p><a href="#" class="drop-link">Booking</a></p>
+                        <p><a href="#" class="drop-link">Messages</a></p>
+                        <p><button class="user-log-out-btn">Log Out</button></p>
+                    </div>
+                </div>
+            </div>
+            <div class="bar"><i class="fa-solid fa-bars bar-tog" ></i></div>
+        </div>    
+    </header>
+
+    <div class="modal"></div>
+
+    <div class="search-area">
+        <input type="search" placeholder="Search for services / Business name">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.666 4.1665H16.666" stroke="#B3B3B3" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M11.666 6.6665H14.166" stroke="#B3B3B3" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17.4993 9.58317C17.4993 13.9582 13.9577 17.4998 9.58268 17.4998C5.20768 17.4998 1.66602 13.9582 1.66602 9.58317C1.66602 5.20817 5.20768 1.6665 9.58268 1.6665" stroke="#B3B3B3" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18.3327 18.3332L16.666 16.6665" stroke="#B3B3B3" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+
+    <div class="book-cont">
+        <div class="ret-btn-cont"><button class="ret-btn"> <i class="fa-solid fa-arrow-left"></i></button></div>
+        <div class="book-bussiness-cont">
+            <div class="buss-sum-view">
+                <div class="buss-book-header">
+                <div class="book-head-item">
+                    <img src="/Images/img1.jpg" alt="business image">
+                    <div class="heart">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.0004 17.1999C22.0004 18.0999 21.7504 18.9499 21.3004 19.6699C20.4704 21.0599 18.9504 21.9999 17.2004 21.9999C15.4504 21.9999 13.9204 21.0599 13.1004 19.6699C12.6604 18.9499 12.4004 18.0999 12.4004 17.1999C12.4004 14.5499 14.5504 12.3999 17.2004 12.3999C19.8504 12.3999 22.0004 14.5499 22.0004 17.1999Z" stroke="" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15.3301 17.2L16.5101 18.38L19.0701 16.02" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 8.69012C22 10.6601 21.49 12.4001 20.69 13.9101C19.81 12.9801 18.57 12.4001 17.2 12.4001C14.55 12.4001 12.4 14.5501 12.4 17.2001C12.4 18.4301 12.87 19.5501 13.63 20.4001C13.26 20.5701 12.92 20.7101 12.62 20.8101C12.28 20.9301 11.72 20.9301 11.38 20.8101C8.48 19.8201 2 15.6901 2 8.69012C2 5.60012 4.49 3.1001 7.56 3.1001C9.37 3.1001 10.99 3.98014 12 5.33014C13.01 3.98014 14.63 3.1001 16.44 3.1001C19.51 3.1001 22 5.60012 22 8.69012Z" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                    </div>
+                </div>
+                <div class="book-head-item buss-book-sum">
+                    <div class="top-body">
+                        <h2 class="bus-name">Adex barbing</h2>
+                        <div class="location">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3.61971 8.49C5.58971 -0.169998 18.4197 -0.159997 20.3797 8.5C21.5297 13.58 18.3697 17.88 15.5997 20.54C13.5897 22.48 10.4097 22.48 8.38971 20.54C5.62971 17.88 2.46971 13.57 3.61971 8.49Z" stroke="#292D32" stroke-width="1.5"/>
+                                <path d="M9.25 11.5L10.75 13L14.75 9" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p class="top-rev-text">kajola oda road</p>
+                        </div>
+                        <div class="work-note">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 8.25V18C20 21 18.21 22 16 22H8C5.79 22 4 21 4 18V8.25C4 5 5.79 4.25 8 4.25C8 4.87 8.24997 5.43 8.65997 5.84C9.06997 6.25 9.63 6.5 10.25 6.5H13.75C14.99 6.5 16 5.49 16 4.25C18.21 4.25 20 5 20 8.25Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 4.25C16 5.49 14.99 6.5 13.75 6.5H10.25C9.63 6.5 9.06997 6.25 8.65997 5.84C8.24997 5.43 8 4.87 8 4.25C8 3.01 9.01 2 10.25 2H13.75C14.37 2 14.93 2.25 15.34 2.66C15.75 3.07 16 3.63 16 4.25Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8 13H12" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8 17H16" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p class="top-rev-text">barbing salon </p>
+                        </div>
+                        <div class="day-cal">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M20.75 17.6001H3.25" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 8.25C10.77 8.25 9.73 8.92 9.73 10.22C9.73 10.84 10.02 11.31 10.46 11.61C9.85 11.97 9.5 12.55 9.5 13.23C9.5 14.47 10.45 15.24 12 15.24C13.54 15.24 14.5 14.47 14.5 13.23C14.5 12.55 14.15 11.96 13.53 11.61C13.98 11.3 14.26 10.84 14.26 10.22C14.26 8.92 13.23 8.25 12 8.25ZM12 11.09C11.48 11.09 11.1 10.78 11.1 10.29C11.1 9.79 11.48 9.5 12 9.5C12.52 9.5 12.9 9.79 12.9 10.29C12.9 10.78 12.52 11.09 12 11.09ZM12 14C11.34 14 10.86 13.67 10.86 13.07C10.86 12.47 11.34 12.15 12 12.15C12.66 12.15 13.14 12.48 13.14 13.07C13.14 13.67 12.66 14 12 14Z" fill="#292D32"/>
+                            </svg>
+                            <p class="top-rev-text">monday - thrsday</p>
+                        </div>
+                        <div class="phone-cal">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21.97 18.33C21.97 18.69 21.89 19.06 21.72 19.42C21.55 19.78 21.33 20.12 21.04 20.44C20.55 20.98 20.01 21.37 19.4 21.62C18.8 21.87 18.15 22 17.45 22C16.43 22 15.34 21.76 14.19 21.27C13.04 20.78 11.89 20.12 10.75 19.29C9.6 18.45 8.51 17.52 7.47 16.49C6.44 15.45 5.51 14.36 4.68 13.22C3.86 12.08 3.2 10.94 2.72 9.81C2.24 8.67 2 7.58 2 6.54C2 5.86 2.12 5.21 2.36 4.61C2.6 4 2.98 3.44 3.51 2.94C4.15 2.31 4.85 2 5.59 2C5.87 2 6.15 2.06 6.4 2.18C6.66 2.3 6.89 2.48 7.07 2.74L9.39 6.01C9.57 6.26 9.7 6.49 9.79 6.71C9.88 6.92 9.93 7.13 9.93 7.32C9.93 7.56 9.86 7.8 9.72 8.03C9.59 8.26 9.4 8.5 9.16 8.74L8.4 9.53C8.29 9.64 8.24 9.77 8.24 9.93C8.24 10.01 8.25 10.08 8.27 10.16C8.3 10.24 8.33 10.3 8.35 10.36C8.53 10.69 8.84 11.12 9.28 11.64C9.73 12.16 10.21 12.69 10.73 13.22C11.27 13.75 11.79 14.24 12.32 14.69C12.84 15.13 13.27 15.43 13.61 15.61C13.66 15.63 13.72 15.66 13.79 15.69C13.87 15.72 13.95 15.73 14.04 15.73C14.21 15.73 14.34 15.67 14.45 15.56L15.21 14.81C15.46 14.56 15.7 14.37 15.93 14.25C16.16 14.11 16.39 14.04 16.64 14.04C16.83 14.04 17.03 14.08 17.25 14.17C17.47 14.26 17.7 14.39 17.95 14.56L21.26 16.91C21.52 17.09 21.7 17.3 21.81 17.55C21.91 17.8 21.97 18.05 21.97 18.33Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"/>
+                            </svg>
+                            <p class="top-rev-text">+234948748572</p>
+                        </div>
+                        <div class="email-cal">
+                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 8.5C2 5 4 3.5 7 3.5H17C20 3.5 22 5 22 8.5V15.5C22 19 20 20.5 17 20.5H7" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17 9L13.87 11.5C12.84 12.32 11.15 12.32 10.12 11.5L7 9" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 16.5H8" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12.5H5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p class="top-rev-text">Adexsaloon@gmail.com</p>
+                        </div>
+                        <div class="book-time-cont">
+                            <div class="book-time">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M15.7099 15.1798L12.6099 13.3298C12.0699 13.0098 11.6299 12.2398 11.6299 11.6098V7.50977" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <p class="top-rev-text">available</p>
+                            </div>
+                            <div class="rate-cont">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10.2977 2.63248L11.6177 5.27248C11.7977 5.63998 12.2777 5.99248 12.6827 6.05998L15.0752 6.45748C16.6052 6.71248 16.9652 7.82248 15.8627 8.91748L14.0027 10.7775C13.6877 11.0925 13.5152 11.7 13.6127 12.135L14.1452 14.4375C14.5652 16.26 13.5977 16.965 11.9852 16.0125L9.74268 14.685C9.33768 14.445 8.67018 14.445 8.25768 14.685L6.01518 16.0125C4.41018 16.965 3.43518 16.2525 3.85518 14.4375L4.38768 12.135C4.48518 11.7 4.31268 11.0925 3.99768 10.7775L2.13768 8.91748C1.04268 7.82248 1.39518 6.71248 2.92518 6.45748L5.31768 6.05998C5.71518 5.99248 6.19518 5.63998 6.37518 5.27248L7.69518 2.63248C8.41518 1.19998 9.58518 1.19998 10.2977 2.63248Z" fill="#FBC02D"/>
+                                </svg>
+                                <p class="top-rev-text">4.5</p>
+                            </div>
+                        </div>
+                        <div class="top-footer">
+                            <p class="rev-range">From</p>
+                            <div class="price-range">$10.32 - $20.43</div>
+                            <p class="rev-range">Per Person</p>
+                         </div>
+                    </div>
+                </div>
+                <div class="book-head-item buss-ceo-sum">
+                    <div class="ceo-header">
+                        <div class="ceo-img"><img src="/Images/img32.png" alt="ceo image"></div>
+                        <div class="ceo-det">
+                            <h2>Abiodun Olamilekan</h2>
+                            <p>C.E.O</p>
+                        </div>
+                    </div>
+                    <div class="ceo-bio">
+                        <h2>Bio</h2>
+                        <p>Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles, and classic cuts. He is known for his attention to detail, punctuality, and excellent customer service.</p>
+                    </div>
+                </div>
+                </div>
+                <div class="buss-book-body">
+                <div class="book-desc-item">
+                    <h2>Descriptions</h2>
+                    <p>Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish, and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming, and custom styles tailored to each client's preference. <br> Hygiene, comfort, and customer satisfaction are at the core of everything we do. Our tools are properly sterilized after every use, and we maintain a calm, friendly environment where clients can relax while getting quality service. Every haircut is done with attention to detail, ensuring sharp finishing and long-lasting style.</p>
+                </div>
+                <div class="book-desc-item">
+                    <h2>Shop Direction</h2>
+                    <p>Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish, and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming, and custom styles tailored to each client's preference.</p>
+                </div>
+                </div>
+            </div>
+            <div class="book-form-cont">
+                <h2>Book Us Now</h2>
+                <form action="" class="book-form" id="book-form">
+                    <input type="hidden" name="" id="date-value">
+                    <input type="hidden" name="" id="time-value">
+                    <div class="form-book-header">
+                        <div class="form-book-item f-book1">
+                            <div class="form-calendar-cont">
+                                <div class="cal-cont">
+                                    <div class="cal-cont-header">
+                                        <button class="prev-month" id="prev-month" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+                                        <div class="month-year">jan 2025</div>
+                                        <button class="next-month" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                                    </div>
+                                    <div class="cal-cont-body">
+                                        <div class="week-day-cont">
+                                            <div class="week-day">SUN</div>
+                                            <div class="week-day">MON</div>
+                                            <div class="week-day">TUE</div>
+                                            <div class="week-day">WED</div>
+                                            <div class="week-day">THUR</div>
+                                            <div class="week-day">FRI</div>
+                                            <div class="week-day">SAT</div>
+                                        </div>
+                                        <div class="week-date-cont"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-time-cont">
+                               <div class="time-section">
+                                <p>Select time:</p>
+                                <div class="time-display-cont">
+                                    <p>Time</p>
+                                    <div class="time-group">
+                                        <input type="text" id="hour" required placeholder="04" maxlength="2" max="2"><span class="coll">:</span>
+                                        <input type="text" id="minute" required placeholder="04" maxlength="2" max="2">
+                                        <div class="time-ampm-cont">
+                                            <input type="radio" name="ampm" id="am" value="AM" checked >
+                                            <label for="am">AM</label>
+                                            <input type="radio" name="ampm" id="pm" value="PM">
+                                            <label for="pm">PM</label>
+                                        </div>
+                                    </div>
+                                </div>
+                               </div>
+                               <div class="upload-section">
+                                    <p>Upload a sample (Optional)</p>
+                                    <div class="sample-display-cont">
+                                        <input type="file" id="sample-upload" name="sample" accept="image/*">
+                                        <label for="sample-upload"  class="sample-upload">
+                                             <p class="sample-up-text">
+                                            Upload a sample <br>
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9 17V11L7 13" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9 11L11 13" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M22 10V15C22 20 20 22 15 22H9C4 22 2 20 2 15V9C2 4 4 2 9 2H14" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M22 10H18C15 10 14 9 14 6V2L22 10Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg> 
+                                        </p>
+                                        </label>
+                                    </div>
+                               </div>
+                            </div>
+                        </div>
+                        <div class="form-book-item budgg">
+                            <div class="note-cont">
+                                <p>Write short note</p>
+                                <textarea name="note" required id="short-note" placeholder="write a short note aout the service need"></textarea>
+                            </div>
+                            <div class="budget-cont">
+                                <p>Budget</p>
+                                <input type="text" required placeholder="write your price budget e.g 20,30" id="budget-price">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-book-body">
+                        <div class="ser-type">
+                            <h2>Service type:</h2>
+                            <select name="service-type" id="service-type">
+                                <option value="select" selected disabled>Select</option>
+                                <option value="home">Home</option>
+                                <option value="shop">Shop</option>
+                            </select>
+                        </div>
+                        <div class="phone-cont">
+                            <h2>Phone</h2>
+                            <input type="text" required placeholder="+234 123 456 7890" id="phone">
+                        </div>
+                        <div class="location">
+                            <h2>Location</h2>
+                            <input type="text" required id="location" placeholder="Ogun State, Nigeria">
+                        </div>
+                    </div>
+                    <div class="form-book-foot">
+                        <h2>Address Direction (only if you select home service)</h2>
+                        <textarea name="house-loaction" id="house-loacation" placeholder="Write direction"></textarea>
+                    </div>
+                    <button class="book-form-btn">Submit</button>
+                </form>
+            </div>
+            <div class="book-gal-cont">
+                <h2>Photo Gallery</h2>
+                <div class="gal-cont">
+                    <div class="gal-cont-item"><img src="/Images/img33.jpg" alt=""></div>
+                    <div class="gal-cont-item"><img src="/Images/img34.jpg" alt=""></div>
+                    <div class="gal-cont-item"><img src="/Images/img35.jpg" alt=""></div>
+                    <div class="gal-cont-item"><img src="/Images/img36.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="review-cont">
+                <h2>Review and Ratings</h2>
+                <div class="revv">
+                    <div class="rev-item">
+                    <div class="rev-header">
+                        <div class="rev-sum">
+                            <div class="rev-image"><img src="/Images/img27.png" alt=""></div>
+                            <div class="rev-name">Dessy Adams</div>
+                            <div class="rev-date">22 Jan 2026</div>
+                        </div>
+                        <div class="rev-rating">&star;&star;&star;&star;&star;</div>
+                    </div>
+                    <div class="rev-text">
+                        <p>KaiB was amazing with our cats!! 🌟🌟🌟 This was our first time using a pet-sitting service, so we were naturally quite anxious. We took a chance on Kai and completely lucked out! We booked Kai to come twice a day for three days. Kai spent a considerable amount of time playing and engaging with our cats. </p>
+                    </div>
+                </div>
+                <div class="rev-item">
+                    <div class="rev-header">
+                        <div class="rev-sum">
+                            <div class="rev-image"><img src="/Images/img29.png" alt=""></div>
+                            <div class="rev-name">Mobayo Smith</div>
+                            <div class="rev-date">21 Jan 2026</div>
+                        </div>
+                        <div class="rev-rating">&star;&star;&star;&star;&star;</div>
+                    </div>
+                    <div class="rev-text">
+                        <p>Lina was amazing with our cats!! 🌟🌟🌟 This was our first time using a pet-sitting service, so we were naturally quite anxious. We took a chance on Kai and completely lucked out! We booked Kai to come twice a day for three days. Kai spent a considerable amount of time playing and engaging with our cats.</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-cont">
+            <div class="foot-logo">
+                <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M28.6613 4.20108e-05C24.8672 0.000302291 21.2286 1.49464 18.5458 4.15438C15.863 6.81412 14.3557 10.4214 14.3554 14.1829V14.5166H0V43H29.1068V28.3559C32.8663 28.2488 36.432 26.6781 39.032 23.9837C41.6319 21.2894 43.0568 17.6883 42.9983 13.96C42.9397 10.2317 41.4023 6.67635 38.719 4.0636C36.0357 1.45085 32.4224 -0.00902793 28.6613 4.20108e-05ZM4.95014 38.0924V19.4241H14.3554V28.3657H24.1567V38.0924H4.95014ZM29.1068 23.4483C28.9583 23.4581 28.8098 23.4581 28.6613 23.4581H19.3055V14.1829C19.3057 12.3672 19.8433 10.5916 20.8518 9.076C21.8603 7.56045 23.2952 6.37165 24.9788 5.65701C26.6624 4.94236 28.5205 4.7333 30.3227 5.05573C32.125 5.37816 33.7922 6.21791 35.1176 7.47087C36.443 8.72382 37.3684 10.3349 37.7789 12.1043C38.1895 13.8737 38.0672 15.7237 37.4272 17.4249C36.7872 19.126 35.6577 20.6036 34.1786 21.6743C32.6996 22.745 30.9361 23.3619 29.1068 23.4483Z" fill="white"/>
+                </svg>
+                <h2>Appointify</h2>
+            </div>
+            <div class="foot-item">
+                <h2>Quick Links</h2>
+                <div class="foot-nav">
+                    <a href="../Customer/index.html" class="foot">Home</a>
+                    <a href="#" class="foot">Service</a>
+                    <a href="../Customer//about.html" class="foot">About Us</a>
+                    <a href="../Customer/contact.html" class="foot">Contact Us</a>
+                    <a href="../Customer/test.html" class="foot">Testimonials</a>
+                </div>
+            </div>
+            <div class="foot-item">
+                <h2>Download App</h2>
+                <div class="foot-nav">
+                    <p class="app-foot">
+                        <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.7916 6.96187L9.90685 10.0005L12.792 13.0381L16.3347 10.9189C16.818 10.6293 17 10.2861 17 9.99976C17 9.71348 16.8181 9.37049 16.3349 9.08135L12.7916 6.96187Z" fill="#8EA3EB"/>
+                            <path d="M9.18256 9.99976L0.130387 0.469323C0.050182 0.646069 0 0.878344 0 1.17015V18.8298C0 19.1222 0.050186 19.3543 0.130417 19.5309L9.18256 9.99976Z" fill="#8EA3EB"/>
+                            <path d="M1.54233 0.233388L12.2606 6.64507L9.54714 9.50188L0.563356 0.042673C0.808497 -0.0437826 1.13919 -0.00780021 1.54233 0.233388Z" fill="#8EA3EB"/>
+                            <path d="M0.562695 19.9572C0.807823 20.0438 1.1387 20.0079 1.54231 19.7669L12.2603 13.3546L9.54779 10.4974L8.5459 11.5523L0.562695 19.9572Z" fill="#8EA3EB"/>
+                        </svg>
+                        <a href="#" class="foot">Google Play</a>
+                    </p>
+                    <p class="app-foot">
+                        <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.1988 10.6359C14.2196 9.09202 15.0859 7.63115 16.4601 6.82249C15.5931 5.6374 14.1411 4.88602 12.6303 4.84078C11.019 4.67889 9.45691 5.76366 8.63581 5.76366C7.79882 5.76366 6.53461 4.85685 5.17326 4.88366C3.3988 4.93853 1.74456 5.90417 0.881248 7.38906C-0.974531 10.4644 0.409713 14.9841 2.18739 17.47C3.0768 18.6873 4.11627 20.047 5.47639 19.9988C6.80735 19.9459 7.30444 19.1864 8.91102 19.1864C10.5027 19.1864 10.9691 19.9988 12.3568 19.9681C13.785 19.9459 14.6848 18.7454 15.543 17.5166C16.182 16.6493 16.6738 15.6907 17 14.6763C15.3216 13.9969 14.2008 12.3802 14.1988 10.6359Z" fill="#8EA3EB"/>
+                            <path d="M11.5776 3.20595C12.3564 2.31119 12.74 1.16113 12.6471 0C11.4574 0.1196 10.3585 0.663834 9.56924 1.52426C8.79749 2.36494 8.39586 3.49477 8.47179 4.61152C9.66191 4.62325 10.8319 4.09376 11.5776 3.20595Z" fill="#8EA3EB"/>
+                        </svg>
+                        <a href="#" class="foot">Apple Store</a>
+                    </p>
+                    <p class="app-foot">
+                        <svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.90909 0C0.854729 0 0 0.826551 0 1.84615V12.9231C0 13.9427 0.854729 14.7692 1.90909 14.7692H19.0909C20.1453 14.7692 21 13.9427 21 12.9231V1.84615C21 0.826551 20.1453 0 19.0909 0H1.90909Z" fill="#8EA3EB"/>
+                            <path d="M5.72727 17.3077C5.72727 16.9253 6.05602 16.6154 6.46154 16.6154H14.5385C14.944 16.6154 15.2727 16.9253 15.2727 17.3077C15.2727 17.69 14.944 18 14.5385 18H6.46154C6.05601 18 5.72727 17.69 5.72727 17.3077Z" fill="#8EA3EB"/>
+                        </svg>
+                        <a href="#" class="foot">Desktop</a>
+                    </p>
+                </div>
+            </div>
+            <div class="foot-item">
+                <h3>Join a Newsletter</h3>
+
+                <div class="inp-new">
+                    <label for="email">Your Email</label>
+                    <div class="news-group">
+                        <input type="email" name="" id="" placeholder="Enter Your Email" required>
+                        <button class="news-btn">Subscribe</button>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+        <hr class="rule">
+        <div class="foot-low-cont">
+            <div class="foot-low-item">
+                <p>Copyright &copy; Appointify</p>
+            </div>
+            <div class="foot-low-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C15.87 2 19 5.13 19 9C19 14.25 12 22 12 22C12 22 5 14.25 5 9C5 5.13 8.13 2 12 2ZM7 9C7 11.85 9.92 16.21 12 18.88C14.12 16.19 17 11.88 17 9C17 6.24 14.76 4 12 4C9.24 4 7 6.24 7 9ZM12 11.5C10.6193 11.5 9.5 10.3807 9.5 9C9.5 7.61929 10.6193 6.5 12 6.5C13.3807 6.5 14.5 7.61929 14.5 9C14.5 10.3807 13.3807 11.5 12 11.5Z" fill="#3A86FF"/>
+                </svg>
+                <p>8819 Ohio St. South Gate, CA 90280</p>
+            </div>
+            <div class="foot-low-item">
+                <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M20 2C20 0.9 19.1 0 18 0H2C0.9 0 0 0.9 0 2V14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2ZM18 2L10 7L2 2H18ZM18 14H2V4L10 9L18 4V14Z" fill="#3A86FF"/>
+                </svg>
+                <a href="mailto:Support@appointify.com" class="mail">Support@appointify.com</a>
+            </div>
+            <div class="foot-low-item">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.54 2C3.6 2.89 3.75 3.76 3.99 4.59L2.79 5.79C2.38 4.59 2.12 3.32 2.03 2H3.54ZM13.4 14.02C14.25 14.26 15.12 14.41 16 14.47V15.96C14.68 15.87 13.41 15.61 12.2 15.21L13.4 14.02ZM4.5 0H1C0.45 0 0 0.45 0 1C0 10.39 7.61 18 17 18C17.55 18 18 17.55 18 17V13.51C18 12.96 17.55 12.51 17 12.51C15.76 12.51 14.55 12.31 13.43 11.94C13.33 11.9 13.22 11.89 13.12 11.89C12.86 11.89 12.61 11.99 12.41 12.18L10.21 14.38C7.38 12.93 5.06 10.62 3.62 7.79L5.82 5.59C6.1 5.31 6.18 4.92 6.07 4.57C5.7 3.45 5.5 2.25 5.5 1C5.5 0.45 5.05 0 4.5 0Z" fill="#3A86FF"/>
+                </svg>
+                <a href="tel:+234 123 456 7890" class="mail">+234 123 456 7890</a>
+            </div>
+        </div>
+    </footer>
+    <script src="/DefaultScript/customer.js"></script>
+</body>
+</html>

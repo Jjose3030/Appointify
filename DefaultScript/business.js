@@ -1,4 +1,13 @@
 
+const notiBell = document.querySelector('.noti-bell');
+const notiCont = document.querySelector('.noti-cont');
+
+notiBell.addEventListener('click', ()=>{
+    notiCont.classList.toggle('active', !notiCont.classList.contains('active'))
+})
+
+
+
 
 //logout operation
 const ownerSum = document.querySelectorAll('.owner-summary');
@@ -522,15 +531,6 @@ async function sendData(){
 
 
 
-
-
-
-
-
-
-
-
-
 //function showing input errors
 function showError(input, message){
     const errorDiv = document.getElementById(input.id + '-error');
@@ -550,3 +550,68 @@ function clearError(){
         inp.classList.remove('input-error')
     })
 }
+
+
+const setup = [
+    {
+        id : 1,
+        role : 'business',
+        name : 'santi jose',
+        ownerData : {
+            email : 'santi@gmail.com',
+            phone : '0303539839302',
+            bio : 'just a cool and chill guy thats all',
+            address : 'Ologo one touch street',
+            image : '../Image/img23.png'
+        },
+        companyInfo : {
+            name : 'runira ltd',
+            email : 'efejion@gmail.com',
+            phone : '030349038545',
+            job : 'welder',
+            work : 'Friday - saturday',
+            address : 'kwdnk wepfuhef n we;fiwu wefn;we f;',
+            minPrice : 20,
+            maxPrice : 40,
+            descriptiption : "ekefk efnkwnfknewkfnienwf ekwfl wef lwenf",
+            direction : 'ksf ekfke inwifn weinfinn enf knwfonwe',
+            image : '../Image/img12.png'
+        }
+    },
+    {
+        id : 2,
+        role : 'business',
+        name : 'rose mary',
+        ownerData : {
+            email : 'rose@gmail.com',
+            phone : '0303591042002',
+            bio : 'just a cool and chill girl thats all',
+            address : 'Ologo three touch street',
+            image : '../Image/img18.png'
+        },
+        companyInfo : {
+            name : 'nail, tech ltd',
+            email : 'lerg;on@gmail.com',
+            phone : '03034130435',
+            job : 'nail',
+            work : 'monday - saturday',
+            address : 'kwdnk kejfkjqk;fe foiwefo mweffiwu wefn;we f;',
+            minPrice : 15,
+            maxPrice : 100,
+            descriptiption : "ekefk efnkwn;ls' ewf wef  efhbhbslcacx wfl wef lwenf",
+            direction : 'ksf oqficd we f;wefh  frjewf enrjf ;ew fnwfonwe',
+            image : '../Image/img15.png'
+        }
+    },
+]
+
+
+
+
+console.log(setup);
+
+
+setup.forEach(set=>{
+    console.log(set.companyInfo.minPrice);
+    
+})

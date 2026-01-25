@@ -1,10 +1,14 @@
-
+const custDrop = document.querySelectorAll('.prof-summary');
+custDrop.forEach(drop=>{
+    drop.addEventListener('click', ()=>{
+    drop.classList.toggle('active', !drop.classList.contains('active'))
+})
+})
 
 //For the hero page slider
-const slideCont = document.querySelector('.slide-cont')
+    const slideCont = document.querySelector('.slide-cont')
     const slides = document.querySelectorAll('.slide-item');
     let currentSlide = 0;
-
     function moveSlide(index){
         slides.forEach(slide =>{
             slide.classList.remove('active');
@@ -12,19 +16,17 @@ const slideCont = document.querySelector('.slide-cont')
             
         })
     }
-
     function startmove(){
         setInterval(() => {
             currentSlide = (currentSlide + 1) % slides.length;
             moveSlide(currentSlide)
-        }, 10000);
+        }, 3000);
     }
-
     moveSlide(currentSlide);
     startmove();
 
-//this json data would then be replaced with an end point that contains the complete profile of a business owner and his/her registered company which would be aid in navigating to the booking interface of the selected business
 
+//this would be replaced with and end point that contains all available bussinesses 
 const businesses = [
     {
         id : 1,
@@ -35,7 +37,7 @@ const businesses = [
             phone : '0303591042002',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
             address : 'Ologo three touch street',
-            image : 'Images/img32.png'
+            image : '../Images/img32.png'
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -51,7 +53,7 @@ const businesses = [
         
 Hygiene, comfort and customer satisfaction are at the core of everything we do. Our tools are properly sterilized after use and we maintain a calm, friendly enviroment where clients can relax while getting quality service. Every haircut is done with attention to detail, ensuring sharp finishing and long-lasting style`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
-            image : 'Images/img1.jpg',
+            image : '../Images/img1.jpg',
             rating : 4.5
         }
     },
@@ -64,7 +66,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             phone : '0301042002',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
             address : 'escobar avenue',
-            image : 'Images/img32.png'
+            image : '../Images/img32.png'
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -78,7 +80,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 40,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : 'Images/img2.jpg',
+            image : '../Images/img2.jpg',
             rating : 4.5
         }
     },
@@ -91,7 +93,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             phone : '01010429802',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
             address : 'dragola street',
-            image : 'Images/img32.png',
+            image : '../Images/img32.png',
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -105,7 +107,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 80,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : 'Images/img3.jpg',
+            image : '../Images/img3.jpg',
             rating : 4.5
         }
     },
@@ -118,7 +120,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             phone : '0310104292',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
             address : 'heritage avenue',
-            image : 'Images/img32.png',
+            image : '../Images/img32.png',
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -132,7 +134,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 60,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : 'Images/img4.jpg',
+            image : '../Images/img4.jpg',
             rating : 4.5
         }
     },
@@ -145,7 +147,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             phone : '0910106292',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
             address : 'ikeja lagos',
-            image : 'Images/img32.png',
+            image : '../Images/img32.png',
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -159,7 +161,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 600,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : 'Images/img5.jpg',
+            image : '../Images/img5.jpg',
             rating : 4.5
         }
     },
@@ -172,7 +174,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             phone : '0210106262',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
             address : 'ikeja lagos',
-            image : 'Images/img32.png',
+            image : '../Images/img32.png',
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -186,7 +188,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 500,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : 'Images/img6.jpg',
+            image : '../Images/img6.jpg',
             rating : 4.5
         }
     },
@@ -199,7 +201,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             phone : '0710106262',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
             address : 'aston avenue Ibadan',
-            image : 'Images/img32.png',
+            image : '../Images/img32.png',
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -213,7 +215,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 80,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : 'Images/img7.jpg',
+            image : '../Images/img7.jpg',
             rating : 4.5
         }
     },
@@ -226,7 +228,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             phone : '0910106262',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
             address : 'signature avenue Ibadan',
-            image : 'Images/img32.png',
+            image : '../Images/img32.png',
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -240,7 +242,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 500,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : 'Images/img8.jpg',
+            image : '../Images/img8.jpg',
             rating : 4.5
         }
     },
@@ -253,7 +255,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             phone : '0541010262',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail`,
             address : 'ijomu junction',
-            image : 'Images/img32.png',
+            image : '../Images/img32.png',
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -267,7 +269,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 50,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : 'Images/img9.jpg',
+            image : '../Images/img9.jpg',
             rating : 4.5
         }
     },
@@ -280,7 +282,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             phone : '0301042002',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
             address : 'escobar avenue',
-            image : 'Images/img32.png'
+            image : '../Images/img32.png'
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -294,7 +296,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 40,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : 'Images/img2.jpg',
+            image : '../Images/img2.jpg',
             rating : 4.5
         }
     },
@@ -307,7 +309,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             phone : '0801042002',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
             address : 'escobar avenue',
-            image : 'Images/img32.png'
+            image : '../Images/img32.png'
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -321,7 +323,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 80,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : 'Images/img10.jpg',
+            image : '../Images/img10.jpg',
             rating : 4.5
         }
     },
@@ -334,7 +336,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             phone : '09010823002',
             bio : `Abiodun is a skilled barber with over 6 years of experience, specializing in clean fades, modern styles and classic cuts. He is known for his attention to detail, puntuality and excellent customer service`,
             address : 'palace street avenue',
-            image : 'Images/img32.png'
+            image : '../Images/img32.png'
         }, 
         companyData : {
             availability: 'Booking Available',
@@ -348,16 +350,12 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 60,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : 'Images/img11.jpg',
+            image : '../Images/img11.jpg',
             rating : 4.5
         }
     },
 
 ]
-
-console.log(businesses[0]);
-
-
 
 const rateCont = document.querySelector('.top-rate-cont');
 const recommendCont = document.querySelector('.recommend-cont');
@@ -368,10 +366,10 @@ if(rateCont || recentCont|| recommendCont) {
     const recentAdd = businesses.slice(4, 8);
     const recommended = businesses.slice(8, 12);
 
-    //Generating each section dynamically(rated recommended, trending and also the service page)
+//Generating each section dynamically(rated recommended, trending and also the service page)
 
 function createCard(){
-
+//99% identical with that of the landing page before login but this time the anchor tag is replaced with a button that when it gets clicked it leads to the booking page interface displaying the clicked business card
     topRated.forEach(card=>{
         const revCard = document.createElement('div');
         revCard.className = 'top-rev-item';
@@ -435,7 +433,7 @@ function createCard(){
                         <p class="rev-range">From</p>
                         <div class="price-range">$${card.companyData.minPrice} - $${card.companyData.maxPrice}</div>
                         <p class="rev-range">Per Person</p>
-                        <a href="./Auth/user-sign-in.html" class="log-rev">Explore / Book</a>
+                        <button class="show-book-btn" onclick="showBook()">Explore / Book</button>
                     </div>
  `
        rateCont.appendChild(revCard);    
@@ -504,7 +502,7 @@ function createCard(){
                         <p class="rev-range">From</p>
                         <div class="price-range">$${card.companyData.minPrice} - $${card.companyData.maxPrice}</div>
                         <p class="rev-range">Per Person</p>
-                        <a href="./Auth/user-sign-in.html" class="log-rev">Explore / Book</a>
+                        <button class="show-book-btn" onclick="showBook()">Explore / Book</button>
                     </div>
  `
        recommendCont.appendChild(revCard);    
@@ -573,7 +571,7 @@ function createCard(){
                         <p class="rev-range">From</p>
                         <div class="price-range">$${card.companyData.minPrice} - $${card.companyData.maxPrice}</div>
                         <p class="rev-range">Per Person</p>
-                        <a href="./Auth/user-sign-in.html" class="log-rev">Explore / Book</a>
+                        <button class="show-book-btn" onclick="showBook()">Explore / Book</button>
                     </div>
  `
        recentCont.appendChild(revCard);    
@@ -582,10 +580,37 @@ function createCard(){
 }
 
 createCard();
-
-
 }
 
+
+
+
+//nav toggle
+const bar = document.querySelector('.bar-tog');
+const nav = document.querySelector('nav');
+const modal = document.querySelector('.modal')
+function navToggle(){
+    if(nav.classList.contains('active')){
+        bar.classList.remove("fa-bars");
+        bar.classList.add('fa-xmark');
+        modal.classList.add('active')
+    } else {
+        bar.classList.add("fa-bars");
+        bar.classList.remove('fa-xmark');
+        modal.classList.remove('active')
+    }
+}
+bar.addEventListener('click', ()=>{
+    nav.classList.toggle('active', !nav.classList.contains('active'));
+    navToggle()
+    
+    modal.addEventListener('click', ()=>{
+        nav.classList.remove('active')
+        bar.classList.add("fa-bars");
+        bar.classList.remove('fa-xmark');
+        modal.classList.remove('active')
+    })
+})
 
 
 
@@ -593,7 +618,6 @@ createCard();
 //service landing page display cards
 
 const serviceCont = document.querySelector('.service-cont');
-
 if(serviceCont){
     const allService = document.querySelector('.service-cont')
     function serviceCard(){
@@ -601,7 +625,7 @@ if(serviceCont){
         const revCard = document.createElement('div');
         revCard.className = 'top-rev-item';
         revCard.innerHTML = `
-                    <div class="top-header">
+            <div class="top-header">
                         <img src="${card.companyData.image}" alt="business image">
                         <div class="heart">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -677,32 +701,171 @@ heart.forEach(h=>{
     })
 })
 
-//nav toggle
-const bar = document.querySelector('.bar-tog');
-const nav = document.querySelector('nav');
-const modal = document.querySelector('.modal')
-function navToggle(){
-    if(nav.classList.contains('active')){
-        bar.classList.remove("fa-bars");
-        bar.classList.add('fa-xmark');
-        modal.classList.add('active')
-    } else {
-        bar.classList.add("fa-bars");
-        bar.classList.remove('fa-xmark');
-        modal.classList.remove('active')
+
+
+
+//booking form 
+const dateValue = document.getElementById('date-value')
+const timeValue = document.getElementById('time-value');
+const weekDateCont = document.querySelector('.week-date-cont');
+const prevMonthBtn = document.querySelector('.prev-month');
+const nextMonthBtn = document.querySelector('.next-month');
+const monthYear = document.querySelector('.month-year')
+let currentDate = new Date();
+
+let month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'JUL', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+function showDates(){
+    weekDateCont.innerHTML ='';
+    let monthIndex = currentDate.getMonth();
+    let year = currentDate.getFullYear();
+    monthYear.textContent = `${month[monthIndex]} ${year}`;
+
+    let dayInMonth = new Date(year, monthIndex + 1, 0).getDate();
+    //get the first day in the month, would help allign the dates to it's respective days
+    let firstDay = new Date(year, monthIndex, 1).getDay();
+    for(let day = 0; day < firstDay; day++){
+        const empty = document.createElement('div');
+        weekDateCont.appendChild(empty)
+    }
+    
+
+
+
+    //generate the dates in the month and display it inform of an input so that a day can get selected by using a label assigned to an input.
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    for(let day = 1; day <= dayInMonth; day++){
+        const input = document.createElement('input');
+        const label = document.createElement('label');
+        const id = `${day}-${monthIndex}-${year}`;
+        input.type = 'radio';
+        input.id = id;
+        input.value =  `${day}-${month[monthIndex]}-${year}`;
+        input.name = 'day'        
+        label.htmlFor = id;
+        label.textContent = day;
+
+    //disable past dates  
+    const dateToCheck = new Date(year, monthIndex, day);
+    dateToCheck.setHours(0,0,0,0);
+    if (dateToCheck < today) {
+        input.disabled = true;
+     }
+
+    //using the inputs with the type of hidden, setting it's value to be the value of the input gotten when a date gets checked and that can then be used
+    input.addEventListener('click', ()=>{
+        dateValue.value = input.value;
+         updateSummary()
+    });
+
+        weekDateCont.appendChild(input);
+        weekDateCont.appendChild(label);
+         
     }
 }
-bar.addEventListener('click', ()=>{
-    nav.classList.toggle('active', !nav.classList.contains('active'));
-    navToggle()
+
+
+
+    //moving to the next and previous months
+  prevMonthBtn.onclick = () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    showDates()
+  };
+  nextMonthBtn.onclick = () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    showDates()
+  };
+
+
+function updateSummary(){
+    const hour = document.getElementById('hour').value;
+    const minute = document.getElementById('minute').value;
+    const period = document.querySelector("input[name='ampm']:checked")?.value;
     
-    modal.addEventListener('click', ()=>{
-        nav.classList.remove('active')
-        bar.classList.add("fa-bars");
-        bar.classList.remove('fa-xmark');
-        modal.classList.remove('active')
+
+    if(dateValue.value && hour && minute && period) {
+        timeValue.value = `${hour}:${minute} ${period}`;
+
+        const bookDate = `Your booking date is scheduled for ${dateValue.value} at ${timeValue.value}. Do make sure to contact who you booked an appointment with`;
+        console.log(bookDate);
+        
+        
+    }
+    
+  }
+
+    document.getElementById("hour").addEventListener("input", updateSummary);
+    document.getElementById("minute").addEventListener("input", updateSummary);
+    document.querySelectorAll('input[name=ampm]').forEach(per=>{per.addEventListener('change', updateSummary)})
+
+
+
+
+const bookForm = document.getElementById('book-form');
+    bookForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const shortNote = document.getElementById('short-note').value;
+        const budget = document.getElementById('budget-price').value;
+        const serviceType = document.getElementById('service-type').value;
+        const phone = document.getElementById('phone').value;
+        const location = document.getElementById('location').value;
+        const houseAddress = document.getElementById('house-loacation').value
+        
+        // this would be the information displayed on the booking page in the business owner interface. simulated that using the bookingInfo[{},{}]
+        const bookingData = {
+            name : `username`,
+            phone : phone,
+            location : location,
+            budget : 25,
+            time : timeValue.value,
+            day : dateValue.value,
+            userImg : '../Images/img29.png',
+            sampleImg : '../Images/img34.jpg' ?? null, //haven't worked this out here on the booking page
+            shortNote : shortNote,
+            address : houseAddress,
+            type : serviceType
+        }
+
+
+        try {
+            const res = await fetch('url', {
+                method : 'POST',
+                header : {
+                    'Content-type' : 'application/json',
+                    'Accept' : 'application/json'
+                },
+                body : JSON.stringify(bookingData)
+            });
+            const data = await res.json();
+            alert('booking successful')
+        } catch (error) {
+            alert('booking failed');
+            console.log(error);   
+        } 
     })
-})
+
+showDates()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

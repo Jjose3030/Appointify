@@ -216,22 +216,25 @@ p.trust {
     display: flex;
     overflow: auto;
     gap: 30px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 3px var(--dark),
+    0 0 3px var(--like-col);
+    align-items: center;
+    align-self: center;
 }
 .test-slide-cont::-webkit-scrollbar {
     display: none;
 }
 .test-slide {
     width: 100%;
-    margin-top: 10px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     gap: 30px;
     flex-shrink: 0;
-    flex: 0 0 100%;
+    flex-grow: 1;
 }
 .test-item {
-
     background-color: var(--pri-color3);
     display: flex;
     flex-direction: column;
@@ -258,6 +261,7 @@ p.trust {
 }
 .test-message p {
     text-align: center;
+    flex: 1;
 }
 .test-rate i {
     color: var(--nav-color-hov);
