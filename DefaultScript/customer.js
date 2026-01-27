@@ -26,7 +26,7 @@ custDrop.forEach(drop=>{
     startmove();
 
 
-//this would be replaced with and end point that contains all available bussinesses 
+//this would be replaced with an end point that contains all available bussinesses 
 const businesses = [
     {
         id : 1,
@@ -614,9 +614,14 @@ bar.addEventListener('click', ()=>{
 //service landing page display cards
 const serviceCont = document.querySelector('.service-cont');
 if(serviceCont){
-    const allService = document.querySelector('.service-cont')
-    function serviceCard(){
-     businesses.forEach(card=>{
+    const allService = document.querySelector('.service-cont');
+
+
+async function serviceCard(){
+//gets all the availble business cards that already exist when a business owner creates an account but would leave it like this so that cards can be displayed on the landing pages and when there's enough businessses it can then be changed
+        // const res = await fetch('');
+        // const businesses = await res.JSON();
+        businesses.forEach(card=>{
         const revCard = document.createElement('div');
         revCard.className = 'top-rev-item';
         revCard.innerHTML = `
@@ -705,7 +710,6 @@ if(bookForm) {
 
     //displaying the information of the bussiness card that got clicked from either the service page or from the home page by getting the stored item it the local storage and displaying it dynamically
     const selectedBussiness = JSON.parse(localStorage.getItem('bookBuss'));
-    console.log(selectedBussiness);
     
     //display in book area for showing the bussiness details or summary
     const BussShowCont = document.querySelector('.buss-sum-view');
@@ -854,7 +858,7 @@ function showDates(){
         const id = `${day}-${monthIndex}-${year}`;
         input.type = 'radio';
         input.id = id;
-        input.value =  `${day}-${month[monthIndex]}-${year}`;
+        input.value =  `${day} - ${month[monthIndex]} - ${year}`;
         input.name = 'day'        
         label.htmlFor = id;
         label.textContent = day;
@@ -878,8 +882,6 @@ function showDates(){
     }
 }
 
-
-
 //moving to the next and previous months
   prevMonthBtn.onclick = () => {
     currentDate.setMonth(currentDate.getMonth() - 1);
@@ -901,36 +903,31 @@ function updateSummary(){
         timeValue.value = `${hour}:${minute} ${period}`;
 
         const bookDate = `Your booking date is scheduled for ${dateValue.value} at ${timeValue.value}. Do make sure to contact who you booked an appointment with`;
-        console.log(bookDate);
-        
-        
+        console.log(bookDate);  
     }
     
   }
 
-    document.getElementById("hour").addEventListener("input", updateSummary);
-    document.getElementById("minute").addEventListener("input", updateSummary);
-    document.querySelectorAll('input[name=ampm]').forEach(per=>{per.addEventListener('change', updateSummary)})
-
-
-
+document.getElementById("hour").addEventListener("input", updateSummary);
+document.getElementById("minute").addEventListener("input", updateSummary);
+document.querySelectorAll('input[name=ampm]').forEach(per=>{per.addEventListener('change', updateSummary)})
 
 const bookForm = document.getElementById('book-form');
-    bookForm.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        const shortNote = document.getElementById('short-note').value;
-        const budget = document.getElementById('budget-price').value;
-        const serviceType = document.getElementById('service-type').value;
-        const phone = document.getElementById('phone').value;
-        const location = document.getElementById('location').value;
-        const houseAddress = document.getElementById('house-loacation').value
+bookForm.addEventListener('submit', async (e)=> {
+    e.preventDefault();
+    const shortNote = document.getElementById('short-note').value;
+    const budget = Number(document.getElementById('budget-price').value);
+    const serviceType = document.getElementById('service-type').value;
+    const phone = document.getElementById('phone').value;
+    const location = document.getElementById('location').value;
+    const houseAddress = document.getElementById('house-loacation').value
         
-        // this would be the information displayed on the booking page in the business owner interface. simulated that using the bookingInfo[{},{}]
-        const bookingData = {
+// this would be the information displayed on the booking page in the business owner interface. swould be sent to an end point also so it gets fetched from there and displayed on the business page
+const bookingData = {
             name : `username`,
             phone : phone,
             location : location,
-            budget : 25,
+            budget : budget,
             time : timeValue.value,
             day : dateValue.value,
             userImg : '../Images/img29.png',
@@ -938,31 +935,84 @@ const bookForm = document.getElementById('book-form');
             shortNote : shortNote,
             address : houseAddress,
             type : serviceType
-        }
+    }
+
+//this would be used to dislay the booking or order history on the customer side, by merging the the details from the selected bussiness and from the booking form
+const bookingHistory = {
+            bussName : selectedBussiness.companyData.name,
+            bussImg : selectedBussiness.companyData.image,
+            type : serviceType,
+            note : shortNote,
+            budget : budget,
+            date : dateValue.value
+    }
 
 
-        // try {
-        //     const res = await fetch('url', {
-        //         method : 'POST',
-        //         header : {
-        //             'Content-type' : 'application/json',
-        //             'Accept' : 'application/json'
-        //         },
-        //         body : JSON.stringify(bookingData)
-        //     });
-        //     const data = await res.json();
-        //     alert('booking successful')
-        // } catch (error) {
-        //     alert('booking failed');
-        //     console.log(error);   
-        // } 
+//push any booking that was made in here and then save it to the local storage then on the order history page it would be gotten from the local storage and displayed there
+let bookingCart = JSON.parse(localStorage.getItem('history')) || [];  
+bookingCart.push(bookingHistory);
+localStorage.setItem('history', JSON.stringify(bookingCart));
 
-        console.log(bookingData);
+
+
+//this would then be displayed in the booking page on the business owner interface when he/she refreshes the page would then be replaced with an end point that controls it
+let localBook = JSON.parse(localStorage.getItem('bookData')) || [];
+localBook.push(bookingData);
+localStorage.setItem('bookData', JSON.stringify(localBook));
+         
+         
+    // try {
+    //     const res = await fetch('', {
+    //         method : '',
+    //         header : {
+    //             'Content-type' : 'application/json',
+    //             'Accept' : 'application/json'
+    //             },
+    //             body : JSON.stringify(bookingData)
+    //         });
+    //         const data = await res.json();
+    //         alert('booking successful')
+    //     } catch (error) {
+    //         alert('booking failed');
+    //         console.log(error);   
+    //     }   
+
+
+//for displaing the success message that an appointment has been booked
+ const bookSuccess = document.querySelector('.book-suc-cont');
+        const sucDone = document.querySelector('.suc-done');
+        modal.classList.add('active');
+        bookSuccess.classList.add('active');
+
+
+        sucDone.addEventListener('click', ()=>{
+            modal.classList.remove('active');
+            bookSuccess.classList.remove('active')
+        })
+        modal.addEventListener('click', ()=>{
+            modal.classList.remove('active');
+            bookSuccess.classList.remove('active')
+        });
         
+       setTimeout(() => {
+         bookForm.reset()
+       }, 1500);
+
+
+
+
+
+
+
+
+
+
+
+
+
     })
 
-showDates()
-
+showDates();
 }
 
 

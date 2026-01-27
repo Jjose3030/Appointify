@@ -23,7 +23,7 @@ const slideCont = document.querySelector('.slide-cont')
     moveSlide(currentSlide);
     startmove();
 
-//this json data would then be replaced with an end point that contains the complete profile of a business owner and his/her registered company which would be aid in navigating to the booking interface of the selected business
+//this json data would then be replaced with an end point that contains the complete profile of a business owner and his/her registered company which would be aid in navigating to the booking interface of the selected business also leaving it like that since that's the main design would just work around it
 
 const businesses = [
     {
@@ -355,9 +355,6 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
 
 ]
 
-console.log(businesses[0]);
-
-
 
 const rateCont = document.querySelector('.top-rate-cont');
 const recommendCont = document.querySelector('.recommend-cont');
@@ -587,15 +584,13 @@ createCard();
 }
 
 
-
-
-
 //service landing page display cards
 
 const serviceCont = document.querySelector('.service-cont');
 
 if(serviceCont){
-    const allService = document.querySelector('.service-cont')
+    const allService = document.querySelector('.service-cont');
+    //if theres enough bussiness already would use the end point to fetch and then display them here but for it's like this since this is the main landing page
     function serviceCard(){
      businesses.forEach(card=>{
         const revCard = document.createElement('div');

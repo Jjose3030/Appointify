@@ -1,7 +1,7 @@
 'use strict';
 
 
-//user sample data for testing user login & sign up (would be replaced when there's an api)
+//user sample data for testing user login & sign up (would be replaced when there's an end point)
 const users = [
     {
         id : 1,
@@ -16,16 +16,7 @@ const users = [
         password : 'james123'
     }
 ]
-// const userRes = fetch('end point for users or customers');
-// const users = userRes.json();
-
-
-
-
-//business Owners sample data for testing login & sign up (replacement also needed when api is available)
-// const res = fetch('business owner end point');
-// const businessUsers = res.json();
-
+//business Owners sample data for testing login & sign up (replacement also needed when an end point is available)
 const businessUsers = [
     {
         id : 1,
@@ -46,17 +37,22 @@ const businessUsers = [
 
 //userlogin form validation
 const userLogForm = document.getElementById('user-sign-in');
-
 if(userLogForm) {
-    const userLogEmail = document.getElementById('user-email');
-    const userLogPassword = document.getElementById('user-password');
+const userLogEmail = document.getElementById('user-email');
+const userLogPassword = document.getElementById('user-password');
 
-    userLogForm.addEventListener('submit', (e)=>{
+userLogForm.addEventListener('submit',  async (e)=>{
     e.preventDefault();
-
     clearError();
-    const emailValue = userLogEmail.value;
-    const passValue = userLogPassword.value;
+
+    try {
+        const emailValue = userLogEmail.value;
+        const passValue = userLogPassword.value;
+
+        //end point that has the users data
+        // const res = await fetch('');
+        // const users = await res.JSON();
+
     const findUser = users.find(user => user.email === emailValue);
 
     if(emailValue === ''){
@@ -94,7 +90,10 @@ if(userLogForm) {
         }, 4000);
     }
     
-    
+
+    } catch (error) {
+        console.log('error occured');
+    }  
 })  
 
 //reveal and hide password
@@ -134,42 +133,24 @@ forgotBtn.addEventListener('click', ()=>{
 }
 
 
-
-//function showing input errors
-function showError(input, message){
-    const errorDiv = document.getElementById(input.id + '-error');
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
-    input.classList.add('input-error');
-    return;
-}
-//function removing input errors
-function clearError(){
-    const error = document.querySelectorAll('.error');
-    error.forEach(err=>{
-        err.style.display = 'none';
-    })
-    const inputs = document.querySelectorAll('input');
-    inputs.forEach(inp=>{
-        inp.classList.remove('input-error')
-    })
-}
-
-
-
 //bussiness owner login form validation
 const bussLogForm = document.getElementById('buss-sign-in');
 if(bussLogForm) {  
     const bussLogEmail = document.getElementById('buss-email');
     const bussLogPassword = document.getElementById('buss-password');
 
-    bussLogForm.addEventListener('submit', (e)=>{
+    bussLogForm.addEventListener('submit', async (e)=>{
     e.preventDefault();
-
     clearError();
-    const emailValue = bussLogEmail.value;
-    const passValue = bussLogPassword.value;
-    const findUser = businessUsers.find(user => user.email === emailValue);
+
+try {
+//end point for business owners profile
+// const res = await fetch('');
+// const businessUsers = await res.JSON();
+
+const emailValue = bussLogEmail.value;
+const passValue = bussLogPassword.value;
+const findUser = businessUsers.find(user => user.email === emailValue);
 
     //email validation
     if(emailValue === ''){
@@ -206,21 +187,23 @@ if(bussLogForm) {
              window.location.assign('../Business/index.html')
         }, 4000);
     }
+    } catch (error) {
+        console.log('an error occured');
+        
+    }
+
     
 })
+
 
 const showPass = bussLogForm.querySelector('.show-pass');
 showPass.addEventListener('click', ()=>{
     revPass(bussLogPassword, showPass)
 })
 
-
-
 //reset password for business login page
-
 const resetCont = document.querySelector('.reset-cont');
 const forgotBtn = document.querySelector('.forgot');
-
 forgotBtn.addEventListener('click', ()=>{
     const modal = document.querySelector('.modal');
     modal.classList.add('active')
@@ -231,102 +214,105 @@ forgotBtn.addEventListener('click', ()=>{
     })
 })
 
-
 }
+
 
 
 //user signup form validation
 const userSignForm = document.getElementById('user-sign-up');
 if(userSignForm) {
 
-        const userSignName = document.getElementById('user-name'); 
-        const userSignEmail = document.getElementById('create-user-email');
-        const userSignPassword = document.getElementById('create-user-password');
-        const  userConfirmPassword = document.getElementById('confirm-user-password');
+const userSignName = document.getElementById('user-name'); 
+const userSignEmail = document.getElementById('create-user-email');
+const userSignPassword = document.getElementById('create-user-password');
+const  userConfirmPassword = document.getElementById('confirm-user-password');
 
 
-        userSignForm.addEventListener('submit', (e)=>{
-            e.preventDefault();
-            clearError();
+userSignForm.addEventListener('submit', async (e)=>{
+ e.preventDefault();
+clearError();
+try {
 
-            const username = userSignName.value;
-            const userEmail = userSignEmail.value;
-            const userPassword = userSignPassword.value;
-            const userConPassword = userConfirmPassword.value;
+    // const res = await fetch('');
+    // const users = await res.JSON();
 
-            //check if there is a user with existing profile
-           const findUser = users.find(user => user.email === userEmail);
+    const username = userSignName.value;
+    const userEmail = userSignEmail.value;
+    const userPassword = userSignPassword.value;
+    const userConPassword = userConfirmPassword.value;
 
-            //user name validation
-            if(username === '') {
+    //check if there is a user with existing profile
+    const findUser = users.find(user => user.email === userEmail);
+
+     //user name validation
+    if(username === '') {
                 showError(userSignName, 'Field can not be left empty');
                 return;
-            } else if(username.trim().length < 2 || !isNaN(username)) {
-                showError(userSignName, 'Enter Your full name');
-                return;
-            }
+        } else if(username.trim().length < 2 || !isNaN(username)) {
+            showError(userSignName, 'Enter Your full name');
+            return;
+    }
 
-            //user email validation
-            if(userEmail === ''){
-            showError(userSignEmail, 'Field can not be left empty');
-            return;
-        } else if(!userEmail.includes('@') || !userEmail.includes('.com')){
-            showError(userSignEmail, 'Invalid Email Address, missing @ /.com');
-            return;
-        } else if(findUser) {
-            showError(userSignEmail, 'A user already exist with this email, choose another');
-            return;
-        }
+    //user email validation
+    if(userEmail === ''){
+        showError(userSignEmail, 'Field can not be left empty');
+        return;
+    } else if(!userEmail.includes('@') || !userEmail.includes('.com')){
+        showError(userSignEmail, 'Invalid Email Address, missing @ /.com');
+        return;
+    } else if(findUser) {
+        showError(userSignEmail, 'A user already exist with this email, choose another');
+        return;
+    }
 
-            //password validation
-            if(userPassword === ''){
-            showError(userSignPassword, 'Field can not be left empty');
-            return;
-            } else if(userPassword.trim().length < 7) {
-                showError(userSignPassword, 'Password must be at least 7 characters');
-                return
-            } 
+    //password validation
+    if(userPassword === ''){
+        showError(userSignPassword, 'Field can not be left empty');
+        return;
+    } else if(userPassword.trim().length < 7) {
+        showError(userSignPassword, 'Password must be at least 7 characters');
+        return
+    } 
 
-            //confirm password validation
-            if(userConPassword === ''){
-                showError(userConfirmPassword, 'Field can not be left empty');
-                return;
-            } else if(userPassword !== userConPassword ) {
+    //confirm password validation
+    if(userConPassword === ''){
+        showError(userConfirmPassword, 'Field can not be left empty');
+        return;
+    } else if(userPassword !== userConPassword ) {
                 showError(userConfirmPassword, 'Password does not match');
                 return
-            } 
+    } 
 
  //send new users data to an end point
-async  function postNewUser(){
-                 if(!findUser) {
-                    const newUser = {
+
+if(!findUser) {
+    const newUser = {
                         id : Date.now(),
                         name : username,
                         email : userEmail,
                         password : userPassword,
                         role : 'customer'
-                    };
+    };
 
-                    // try {
-                    //     const res = await fetch('url', {
-                    //         method : 'POST',
-                    //         headers : {
-                    //             "Content-type" : "application/json",
-                    //             "Accept" : "application/json"
-                    //         },
-                    //         body : JSON.stringify(newUser),  
-                    //     })
-                    //     console.log(newUser);
+    // try {
+    //     const res = await fetch('url', {
+    //         method : 'POST',
+    //         headers : {
+    //             "Content-type" : "application/json",
+    //             "Accept" : "application/json"
+    //         },
+    //         body : JSON.stringify(newUser),  
+    //     })
+    //     console.log(newUser);
                         
-                    //      console.log('data submitted');
-                    // } catch (error) {
-                    //     alert('An error occured while creating your account')
-                    // }
-                    users.push(newUser);
-                    const loader = document.querySelector('.loader')
-                    loader.style.display = 'flex';
-
-                    setTimeout(() => {
+    //      console.log('data submitted');
+    // } catch (error) {
+    //     alert('An error occured while creating your profile')
+    // }
+        users.push(newUser); // delete once there's an end point
+        const loader = document.querySelector('.loader')
+        loader.style.display = 'flex';
+        setTimeout(() => {
                         userSignForm.reset();
                         loader.style.display = 'none';
 
@@ -346,25 +332,24 @@ async  function postNewUser(){
                         VerCompBtn.addEventListener('click', ()=>{
                            window.location.assign('../Customer/index.html');
                         })
-                    }, 4000);
+        }, 4000);
                 
-                }
-            }
-
-   postNewUser()
+        }
+    } catch (error) {
+        console.log('an error occured while creating your account');            
+    }
 })
 
-
-    // show passwords
-        const showPass = userSignForm.querySelector('.show-pass');
-            showPass.addEventListener('click', ()=>{
+// show passwords
+    const showPass = userSignForm.querySelector('.show-pass');
+        showPass.addEventListener('click', ()=>{
                 revPass(userSignPassword, showPass);
-            })
-        const passShow = userSignForm.querySelector('.show-pass-two');
-            passShow.addEventListener('click', ()=>{
+        })
+    const passShow = userSignForm.querySelector('.show-pass-two');
+        passShow.addEventListener('click', ()=>{
                 revPass(userConfirmPassword, passShow)
-            })
-    }
+        })
+}
 
 
 //bussiness user signup form validation
@@ -376,25 +361,24 @@ if(bussSignForm) {
     const bussSignEmail = document.getElementById('create-buss-email');
     const bussSignPassword = document.getElementById('create-buss-password')
     const bussConfirmPassword = document.getElementById('confirm-buss-password');
-    bussSignForm.addEventListener('submit', (e)=>{
-        e.preventDefault();
 
+
+    bussSignForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
         clearError();
 
+        try {
         const bussname = bussSignName.value;
         const bussCompany = companyName.value;
         const bussEmail = bussSignEmail.value;
         const bussPassword = bussSignPassword.value;
         const bussConPassword = bussConfirmPassword.value;
 
-        //find existing business users
+        //find existing business users from existing end point
+        // const res = await fetch('');
+        // const businessUsers = res.json();
+
         const findUser = businessUsers.find(user => user.email === bussEmail);
-
-            if(findUser) {
-                console.log(findUser);
-                
-            }
-
 
         //user name validation
         if(bussname === '') {
@@ -444,16 +428,15 @@ if(bussSignForm) {
                 return
             } 
 
-async function sendBuss(){
-            if(!findUser) {
-                const newBussOwner = {
-                            id : Date.now(),
-                            name : bussname,
-                            email : bussEmail,
-                            password : bussPassword,
-                            companyName : bussCompany,
-                            role : 'business'
-                };
+if(!findUser) {
+    const newBussOwner = {
+        id : Date.now(),
+        name : bussname,
+        email : bussEmail,
+        password : bussPassword,
+        companyName : bussCompany,
+        role : 'business'
+    };
 
             try {
                 const res = await fetch('url', {
@@ -466,14 +449,10 @@ async function sendBuss(){
                 })
                 console.log(newBussOwner);
                 console.log('data submitted');
-                
-                
             } catch (error) {
                 alert('Can not create your account at the moment')
             }    
-
-
-                businessUsers.push(newBussOwner);                        
+                businessUsers.push(newBussOwner);    //delete once there's an end point                    
                 const loader = document.querySelector('.loader')
                 loader.style.display = 'flex';
                 setTimeout(() => {
@@ -498,9 +477,10 @@ async function sendBuss(){
                     })
                 }, 4000);
             }
-}
-
-     sendBuss()  
+        } catch (error) {
+            console.log('an error occured while creating your account');
+            
+        }
     })
 
      const showPass = bussSignForm.querySelector('.show-pass');
@@ -529,7 +509,25 @@ function revPass(space, option) {
 
 
 
-
+//function showing input errors
+function showError(input, message){
+    const errorDiv = document.getElementById(input.id + '-error');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    input.classList.add('input-error');
+    return;
+}
+//function removing input errors
+function clearError(){
+    const error = document.querySelectorAll('.error');
+    error.forEach(err=>{
+        err.style.display = 'none';
+    })
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(inp=>{
+        inp.classList.remove('input-error')
+    })
+}
 
 
 

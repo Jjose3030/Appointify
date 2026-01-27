@@ -966,7 +966,7 @@ div.img3 {
     display: block;
     object-fit: cover;
 }
-.save-comp-btn, .save-bus-change-btn {
+.save-comp-btn, .save-bus-change-btn, .done-btn {
     width: max-content;
     margin: auto;
     padding: 12px 20px;
@@ -979,10 +979,10 @@ div.img3 {
     border-radius: 10px;
     box-shadow: 0 0 2px black;
 }
-.save-comp-btn:active, .save-bus-change-btn:active {
+.save-comp-btn:active, .save-bus-change-btn:active, .done-btn:active {
     scale: 0.89;
 }
-.save-comp-btn:hover, .save-bus-change-btn:hover {
+.save-comp-btn:hover, .save-bus-change-btn:hover, .done-btn:hover {
     background-color: var(--btn-col-hov);
 }
 
@@ -1474,6 +1474,51 @@ hr.rule {
 .foot-low-item a:visited {
     color: var(--pri-color3);
 }
+
+
+
+
+
+.upd-suc-cont {
+    background-color: var(--pri-color3);
+    box-shadow: 0 0 2px var(--dark);
+    position: fixed;
+    width: 300px;
+    max-width: 98%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 15px;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 2000;
+}
+.upd-suc-cont.active {
+    display: flex;
+}
+.upd-logo {
+    text-align: center;
+}
+.upd-logo svg {
+    width: 60px;
+}
+.upd-suc-cont h3 {
+    text-align: center;
+}
+
+.upd-suc-cont p {
+    text-align: center;
+    font-size: 16px;
+}
+.done-btn {
+    width: 100%;
+}
+
+
+
+
 
 .modal {
     width: 100%;
