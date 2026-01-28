@@ -796,7 +796,11 @@ div.img3 {
 .message-cust:hover {
     background-color: var(--btn-col-hov);
 }
-
+p.mes{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 .sample-img {
     width: 100%;
     height: 100%;

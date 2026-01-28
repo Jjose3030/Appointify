@@ -50,11 +50,6 @@ filt.addEventListener('click', ()=>{filt.classList.toggle('active')});
 //booking page details view
 
 
-
-
-
-
-
 async function showBooking(){
     try {
         // const res = await fetch('url');
@@ -223,6 +218,8 @@ function getImage(input, image, text) {
         text.style.display = 'none';
 }
    
+
+
 //display uploaded images for the gallery
 const galleryUpload = document.getElementById('work-img-up');
 const galleryCont = document.querySelector('.up-img-cont');
@@ -239,9 +236,11 @@ galleryUpload.addEventListener('input', ()=>{
         galleryImage.appendChild(disImg);
         galleryCont.appendChild(galleryImage);
     } 
+
+
 })
 
-  
+ 
 //function controlling the  companys form info validation and also sending it to an end point
 async function validateInputs(){
     const cName = document.getElementById('comp-name');
@@ -356,16 +355,20 @@ async function validateInputs(){
         companyMaxPrice : cMaxPrice.value,
         companyDescription : cDesc.value,
         companyDirection : cDir.value,
+        companyGallery: [...galleryUpload.files]
     }
+
+//this should still be converted to formData before sending to an end point
 
     if(companyProfile) {
         showSuccess();
+        
+        
     }
 //      try {
 //         const res = await fetch('url in here',{
 //             method : '',
 //             headers : {
-//                "Content-type" : 'application/json',
 //                "Accept" : 'application/json'
 //             },
 //             body : JSON.stringify(companyProfile)

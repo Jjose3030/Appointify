@@ -734,7 +734,7 @@ if(bookForm) {
                                 <path d="M3.61971 8.49C5.58971 -0.169998 18.4197 -0.159997 20.3797 8.5C21.5297 13.58 18.3697 17.88 15.5997 20.54C13.5897 22.48 10.4097 22.48 8.38971 20.54C5.62971 17.88 2.46971 13.57 3.61971 8.49Z" stroke="#292D32" stroke-width="1.5"/>
                                 <path d="M9.25 11.5L10.75 13L14.75 9" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <p class="top-rev-text">${selectedBussiness.companyData.address}</p>
+                            <p class="top-rev-text addre">${selectedBussiness.companyData.address}</p>
                         </div>
                         <div class="work-note">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -819,8 +819,28 @@ if(bookForm) {
     
     `
 
-    
+
+
+
 //booking form 
+const sampleUpload = document.getElementById('sample-upload');
+const sampleShow = document.querySelector('.sample-upload');
+const sampText = document.querySelector('.sample-up-text');
+let mand;
+
+//for displaying the uploaded  sample image
+sampleUpload.addEventListener('change', ()=>{
+    if(sampleUpload.files) {
+     sampText.classList.add('active')
+
+        const imgUrl = URL.createObjectURL(sampleUpload.files[0]);
+        sampleShow.style.backgroundImage = `url(${imgUrl})`;
+        mand = imgUrl
+        return mand;
+}
+});
+
+
 const dateValue = document.getElementById('date-value')
 const timeValue = document.getElementById('time-value');
 const weekDateCont = document.querySelector('.week-date-cont');
@@ -924,6 +944,7 @@ bookForm.addEventListener('submit', async (e)=> {
         
 // this would be the information displayed on the booking page in the business owner interface. swould be sent to an end point also so it gets fetched from there and displayed on the business page
 const bookingData = {
+            id: Date.now(),
             name : `username`,
             phone : phone,
             location : location,
@@ -931,11 +952,11 @@ const bookingData = {
             time : timeValue.value,
             day : dateValue.value,
             userImg : '../Images/img29.png',
-            sampleImg : '../Images/img34.jpg' ?? null, //haven't worked this out here on the booking page
+            sampleImg : mand ?? null, //haven't worked this out here on the booking page
             shortNote : shortNote,
             address : houseAddress,
             type : serviceType
-    }
+    }    
 
 //this would be used to dislay the booking or order history on the customer side, by merging the the details from the selected bussiness and from the booking form
 const bookingHistory = {

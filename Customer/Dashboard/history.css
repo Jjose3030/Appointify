@@ -206,7 +206,7 @@ nav ul li a:hover {
 }
 .spin {
     transition: var(--trans2);
-    font-size: 20px;
+    font-size: 15px;
 }
 .prof-summary.active .spin {
     rotate: 180deg;
@@ -268,7 +268,7 @@ nav ul li a:hover {
 .order-hist-header, .hist-item {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(6, minmax(0px, 1fr));
+    grid-template-columns: repeat(6, minmax(150px, 1fr));
     gap: 10px;
     align-items: center;
     overflow: auto;
@@ -285,7 +285,8 @@ nav ul li a:hover {
     width: 100%;
     display: flex;
     flex-direction: column-reverse;
-    gap: 15px;    
+    gap: 15px;  
+    overflow: auto;  
 }
 .hist-item::-webkit-scrollbar, .order-hist-header::-webkit-scrollbar {
     width: 0;
@@ -705,7 +706,7 @@ nav {
         box-shadow: 0 0 3px black;
         top: 0;
         left: -310px;
-        width: 300px;
+        width: 250px;
         max-width: 80%;
         height: 100vh;
         justify-content: start;
@@ -716,6 +717,7 @@ nav {
     flex-direction: column;
     gap: 5px;
     overflow: auto;
+    z-index: 544;
     }
 nav.active {
         left: 0;
@@ -793,6 +795,9 @@ a.nav-link:not(.nav-link6, .nav-link7){
 
 
 @media(max-width: 570px) {
+    .order-hist-header, .hist-item {
+    grid-template-columns: repeat(6, minmax(210px, 1fr));
+}
     .service-cont {
         grid-template-columns: 1fr;
     }

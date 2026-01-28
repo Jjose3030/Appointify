@@ -206,7 +206,7 @@ nav ul li a:hover {
 }
 .spin {
     transition: var(--trans2);
-    font-size: 20px;
+    font-size: 15px;
 }
 .prof-summary.active .spin {
     rotate: 180deg;
@@ -1072,7 +1072,7 @@ nav {
         box-shadow: 0 0 3px black;
         top: 0;
         left: -310px;
-        width: 300px;
+        width: 250px;
         max-width: 80%;
         height: 100vh;
         justify-content: start;
@@ -1083,6 +1083,7 @@ nav {
     flex-direction: column;
     gap: 5px;
     overflow: auto;
+     z-index: 544;
     }
 nav.active {
         left: 0;
