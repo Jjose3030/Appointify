@@ -951,8 +951,8 @@ const bookingData = {
             budget : budget,
             time : timeValue.value,
             day : dateValue.value,
-            userImg : '../Images/img29.png',
-            sampleImg : mand ?? null, //haven't worked this out here on the booking page
+            userImg : '/Images/img29.png',
+            sampleImg : "/Images/img29.png", //haven't worked this out here on the booking page but would be replaced with the sampleImg file when an image file get's uploaded
             shortNote : shortNote,
             address : houseAddress,
             type : serviceType

@@ -48,7 +48,8 @@ filt.addEventListener('click', ()=>{filt.classList.toggle('active')});
 
 
 //booking page details view
-
+  const bookingInfo = JSON.parse(localStorage.getItem('bookData'));
+let conversations = JSON.parse(localStorage.getItem('convo')) || [];
 
 async function showBooking(){
     try {
@@ -56,14 +57,15 @@ async function showBooking(){
         // const bookingInfo = await res.json();
 
         //this is a sample data i saved to the local storage from the customer side containing the booked appointment data that would later be gotten from an api instead of the local storage
-        const bookingInfo = JSON.parse(localStorage.getItem('bookData'));
-
+      
         const bookCont = document.querySelector('.book-cont');
         bookCont.innerHTML = '';
         if(!bookingInfo) {
             bookCont.innerHTML = `<p>No bookings available</p>`
         }
         bookingInfo.forEach((info)=>{
+            console.log('info', info);
+            
         const bookItem = document.createElement('div');
         bookItem.className = 'book-item';
         bookItem.innerHTML = `
@@ -140,6 +142,13 @@ async function showBooking(){
                             `
 
         bookCont.appendChild(bookItem);
+
+        //displays message page when the bussiness owner clicks on message customer button
+        const messageBtn = bookItem.querySelector('.message-cust');
+        messageBtn.addEventListener('click', () => {
+            displayMessage(info);
+}); 
+
     })
 
         const bookIt = document.querySelectorAll('.book-item');
@@ -160,10 +169,16 @@ async function showBooking(){
         });
         });
 
-        //displays message page when the bussiness owner clicks on message customer button
-        const messageCust = document.querySelectorAll('.message-cust');
-        messageCust.forEach(message=>{
-            message.addEventListener('click', ()=>{
+       
+       
+    } catch (error) {
+        // alert('An error occured while loading your availbale bookings, try again shortly')
+    }
+
+}
+
+//displays the message page when the message customer button from the booking page get's clicked
+function displayMessage(customer) {
                 const pages = document.querySelectorAll('.page');
                 const navLink = document.querySelectorAll('.nav-menu')
                 navLink.forEach(nav=>{nav.classList.remove('active')
@@ -171,25 +186,104 @@ async function showBooking(){
                     nav.classList.add('active')
                     
                 }
-             })
+                })
                 pages.forEach(p=>{
                     p.classList.remove('active');
                     if(p.classList.contains('message')) {
                         p.classList.add('active');
                     }
-                })
-            
-            
-             })
-         })  
+                });
 
-    } catch (error) {
-        // alert('An error occured while loading your availbale bookings, try again shortly')
-    }
+
+                if(!conversations.find(c=>c.phone === customer.phone)) {
+                    conversations.push({...customer, messages: []});
+                    localStorage.setItem('convo', JSON.stringify(conversations));
+                }
+            renderconvo();
+                
 
 }
 
-document.addEventListener('DOMContentLoaded', showBooking);
+//creates the message preview so that when it gets clicked the chatbox for the conversation would be displayed or visible but I can't figure the chat box for now just made a ststic design for that.
+
+function renderconvo(){
+    const mesRevBlock = document.querySelector('.mes-rev-block');
+    mesRevBlock.innerHTML = '';
+    
+
+
+    conversations.forEach(convos=>{
+    const mesItem = document.createElement('div');
+    mesItem.className = 'mes-item';
+    mesItem.innerHTML = `
+            <div class="mes-prof">
+                <div class="mes-img"><img src="${convos.userImg}"/></div>
+                    <div class="mes-name">
+                        <div class="mes-text">
+                            <p>${convos.name}</p>
+                            <p class="mes">Done with it already.</p>
+                        </div>
+                        <div class="mes-day">
+                            <p class="mes-time">${convos.phone}</p>
+                            <p class="mes-count">
+                                <svg width="23" height="13" viewBox="0 0 23 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.65625 7.65625L11.5625 11.5625L20.9375 1.40625M1.40625 7.65625L5.3125 11.5625L1.40625 7.65625ZM10.7812 5.3125L14.6875 1.40625L10.7812 5.3125Z" stroke="#042FBE" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </p>
+                        </div>
+                    </div>
+            </div>
+    `
+        mesRevBlock.appendChild(mesItem);
+
+    })
+
+
+
+
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    showBooking();
+    renderconvo();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //company form 

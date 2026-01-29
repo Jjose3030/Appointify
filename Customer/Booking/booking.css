@@ -1192,7 +1192,7 @@ a.nav-link:not(.nav-link6, .nav-link7){
     grid-template-columns: repeat(3, 1fr);
     justify-content: space-evenly;
 }
-.ser-type, .phone-cont, .location {
+.ser-type, .phone-cont, .locat {
     gap: 8px;
      width: max-content;
 }
@@ -1261,12 +1261,12 @@ a.nav-link:not(.nav-link6, .nav-link7){
 .rev-item {
     max-width: 500px;
 }
-.phone-cont, .location {
+.phone-cont, .locat {
      flex-direction: column;
      align-items: start;
      width: 100%;
 }
-.phone-cont input, .location input {
+.phone-cont input, .locat input {
     width: 100%;
 }
 
