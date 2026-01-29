@@ -53,7 +53,7 @@ const businesses = [
         
 Hygiene, comfort and customer satisfaction are at the core of everything we do. Our tools are properly sterilized after use and we maintain a calm, friendly enviroment where clients can relax while getting quality service. Every haircut is done with attention to detail, ensuring sharp finishing and long-lasting style`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
-            image : '/Images/img1.jpg',
+            image : '../Images/img1.jpg',
             rating : 4.5
         }
     },
@@ -80,7 +80,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 40,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : '/Images/img2.jpg',
+            image : '../Images/img2.jpg',
             rating : 4.5
         }
     },
@@ -107,7 +107,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 80,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : '/Images/img3.jpg',
+            image : '../Images/img3.jpg',
             rating : 4.5
         }
     },
@@ -134,7 +134,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 60,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : '/Images/img4.jpg',
+            image : '../Images/img4.jpg',
             rating : 4.5
         }
     },
@@ -161,7 +161,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 600,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : '/Images/img5.jpg',
+            image : '../Images/img5.jpg',
             rating : 4.5
         }
     },
@@ -188,7 +188,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 500,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : '/Images/img6.jpg',
+            image : '../Images/img6.jpg',
             rating : 4.5
         }
     },
@@ -215,7 +215,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 80,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : '/Images/img7.jpg',
+            image : '../Images/img7.jpg',
             rating : 4.5
         }
     },
@@ -242,7 +242,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 500,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : '/Images/img8.jpg',
+            image : '../Images/img8.jpg',
             rating : 4.5
         }
     },
@@ -269,7 +269,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 50,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : '/Images/img9.jpg',
+            image : '../Images/img9.jpg',
             rating : 4.5
         }
     },
@@ -296,7 +296,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 40,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming and custom styles tailored to each client's prefrence.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : '/Images/img2.jpg',
+            image : '../Images/img2.jpg',
             rating : 4.5
         }
     },
@@ -323,7 +323,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 80,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : '/Images/img10.jpg',
+            image : '../Images/img10.jpg',
             rating : 4.5
         }
     },
@@ -350,7 +350,7 @@ Hygiene, comfort and customer satisfaction are at the core of everything we do. 
             maxPrice : 60,
             descriptiption : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages. We specialize in a wide range of services including classic cuts, modern fades, low cuts, beard grooming.`,
             direction : `Our barbing salon is a modern and welcoming space dedicated to delivering clean, stylish and confidence-boosting haircuts for men and boys of all ages.`,
-            image : '/Images/img11.jpg',
+            image : '../Images/img11.jpg',
             rating : 4.5
         }
     },
