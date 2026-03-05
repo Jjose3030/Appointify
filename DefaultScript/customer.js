@@ -834,8 +834,9 @@ sampleUpload.addEventListener('change', ()=>{
      sampText.classList.add('active')
 
         const imgUrl = URL.createObjectURL(sampleUpload.files[0]);
-        sampleShow.style.backgroundImage = `url(${imgUrl})`;
         mand = imgUrl
+        sampleShow.style.backgroundImage = `url(${mand})`;
+        
         return mand;
 }
 });
@@ -1016,20 +1017,11 @@ localStorage.setItem('bookData', JSON.stringify(localBook));
         });
         
        setTimeout(() => {
-         bookForm.reset()
+         bookForm.reset();
+         mand = 'unset'       
+         sampleShow.style.backgroundImage = `url(${mand})`;
+         sampText.classList.remove('active')
        }, 1500);
-
-
-
-
-
-
-
-
-
-
-
-
 
     })
 
