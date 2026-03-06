@@ -500,7 +500,7 @@ function createCard(data) {
     // });
 
 
-     data.forEach(function (biz) {
+     data.forEach(function (buss) {
         var card = document.createElement('div');
         card.className = 'top-rev-item';
 
