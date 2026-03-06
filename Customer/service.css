@@ -294,7 +294,7 @@ nav ul li a:hover {
 }
 
 
-.top-rev-item, .card {
+.top-rev-item {
     box-shadow: 0px 0px 4px var(--dark);
     overflow: hidden;
     border-radius: 15px;
@@ -302,18 +302,18 @@ nav ul li a:hover {
     flex-direction: column;
     gap: 4px;
 }
-.top-header, .card-img {
+.top-header {
     width: 100%;
     aspect-ratio: 16/ 10;
     overflow: hidden;
     position: relative;
 }
-.top-header img, .card-img img {
+.top-header img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.heart, .love-icon {
+.heart {
     position: absolute;
     width: 40px;
     height: 40px;
@@ -326,7 +326,7 @@ nav ul li a:hover {
     align-items: center;
     cursor: pointer;
 }
-.heart.active, .love-icon.active {
+.heart.active {
     background-color: var(--like-col);
 }
 .heart svg {
@@ -335,16 +335,16 @@ nav ul li a:hover {
 .heart.active svg {
     stroke: var(--pri-color3);
 }
-.top-body, .card-body {
+.top-body {
     flex: 1;
 }
-.top-body, .top-footer, .card-body {
+.top-body, .top-footer {
     padding: 3px 5px;
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
-.bus-name, .business-name {
+.bus-name {
     font-weight: 500;
     font-size: 1.2rem;
 }

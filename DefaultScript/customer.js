@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         populateUserProfile();
         setupProfileForm();
     }
-});
+
+<<<<<<< HEAD
 
 //service landing page display cards
 const serviceCont = document.querySelector('.service-cont');
@@ -249,10 +250,14 @@ sampleUpload.addEventListener('change', ()=>{
         
         return mand;
 }
+=======
+    // Landing page sections — fetch real data from API
+    if (document.querySelector('.top-rate-cont') || document.querySelector('.recent-cont') || document.querySelector('.recommend-cont')) {
+        await fetchLandingPageData();
+    }
+>>>>>>> f1620dff819ee72bc502782bd62ec321737acdbd
 });
 
-
-}
 function checkAuth() {
     var token = localStorage.getItem('token');
     if (!token) return;
@@ -392,17 +397,80 @@ function setupUI() {
             e.stopPropagation();
             profSummary.classList.toggle('active');
         });
+<<<<<<< HEAD
         
        setTimeout(() => {
-        //  bookForm.reset();
+         bookForm.reset();
          mand = 'unset'       
          sampleShow.style.backgroundImage = `url(${mand})`;
          sampText.classList.remove('active')
        }, 1500);
 
+    })
+
+showDates();
+=======
     }
 
-// showDates();
+    // Mobile profile dropdown
+    var profSummary2 = document.querySelector('.prof-summary2');
+    if (profSummary2) {
+        profSummary2.addEventListener('click', function (e) {
+            e.stopPropagation();
+            profSummary2.classList.toggle('active');
+        });
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function () {
+        if (profSummary) profSummary.classList.remove('active');
+        if (profSummary2) profSummary2.classList.remove('active');
+    });
+
+    // Logout buttons (there can be multiple — desktop + mobile)
+    var logOutBtns = document.querySelectorAll('.user-log-out-btn');
+    logOutBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.assign('/index.html');
+        });
+    });
+
+    // Notification bell — navigate to booking history
+    var notiBell = document.querySelector('.noti-block-cont');
+    if (notiBell) {
+        notiBell.style.cursor = 'pointer';
+        notiBell.addEventListener('click', function () {
+            window.location.assign('/Customer/Dashboard/history.html');
+        });
+    }
+
+    // Mobile nav toggle
+    var bar = document.querySelector('.bar-tog');
+    var nav = document.querySelector('nav');
+    if (bar && nav) {
+        bar.addEventListener('click', function () {
+            nav.classList.toggle('active');
+            bar.classList.toggle('fa-xmark');
+            bar.classList.toggle('fa-bars');
+        });
+    }
+
+    // Search filter for services page
+    var searchInput = document.querySelector('.search-area input');
+    if (searchInput) {
+        searchInput.addEventListener('input', function (e) {
+            var term = e.target.value.toLowerCase();
+            var filtered = businesses.filter(function (b) {
+                var name = (b.name || '').toLowerCase();
+                var company = (b.companyName || '').toLowerCase();
+                return name.includes(term) || company.includes(term);
+            });
+            createCard(filtered);
+        });
+    }
+>>>>>>> f1620dff819ee72bc502782bd62ec321737acdbd
 }
 
 function safeText(str) {
