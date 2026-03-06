@@ -320,24 +320,16 @@ nav ul li a:hover {
 .mes-img, .mes-box-prof-img {
     width: 50px;
     height: 50px;
-    background-image: url(/Images/img32.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     border-radius: 50%;
     flex-shrink: 0;
-}
-.mes-item:nth-child(2) .mes-img {
-    background-image: url(/Images/img20.png);
-}
-.mes-item:nth-child(3) .mes-img {
-    background-image: url(/Images/img28.png);
-}
-.mes-item:nth-child(4) .mes-img {
-    background-image: url(/Images/img29.png);
-}
-.mes-item:nth-child(5) .mes-img {
-    background-image: url(/Images/img38.png);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    background-color: #345ADC;
+    overflow: hidden;
 }
 .mes-name {
     display: grid;

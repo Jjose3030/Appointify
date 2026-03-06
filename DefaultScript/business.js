@@ -1,638 +1,773 @@
+'use strict';
 
-const notiBell = document.querySelector('.noti-bell');
-const notiCont = document.querySelector('.noti-cont');
+var currentUser = null;
+var currentBusiness = null;
+var bookings = [];
 
-notiBell.addEventListener('click', ()=>{
-    notiCont.classList.toggle('active')
-})
-
-
-
-
-//logout operation
-const ownerSum = document.querySelectorAll('.owner-summary');
-const logOutBtn = document.querySelectorAll('.log-out-btn');
-const ownerDrop = document.querySelector('.owner-drop')
-
-ownerSum.forEach(owner=>{
-    owner.addEventListener('click', ()=>{
-        owner.classList.toggle('active');
-        logOutBtn.forEach(log=>{
-            log.addEventListener('click', ()=>{
-                window.location.replace('../Auth/bussiness-sign-in.html')
-            })
-        })
-    })
-})
-
-//for page menu navigation
-
-const pages = document.querySelectorAll('.page');
-const navMenus = document.querySelectorAll('.nav-menu');
-
-navMenus.forEach(menu=>{
-    menu.addEventListener('click', ()=>{
-        navMenus.forEach(n=>{n.classList.remove('active')})
-        pages.forEach(p=>{p.classList.remove('active')});
-        menu.classList.add('active');
-        document.getElementById(menu.dataset.page).classList.add('active')
-    })
-  
-    
-})
-
-
-//dashboard page dropdown 
-const filt = document.querySelector('.filt-cont');
-filt.addEventListener('click', ()=>{filt.classList.toggle('active')});
-
-
-//booking page details view
-  const bookingInfo = JSON.parse(localStorage.getItem('bookData'));
-let conversations = JSON.parse(localStorage.getItem('convo')) || [];
-
-async function showBooking(){
-    try {
-        // const res = await fetch('url');
-        // const bookingInfo = await res.json();
-
-        //this is a sample data i saved to the local storage from the customer side containing the booked appointment data that would later be gotten from an api instead of the local storage
-      
-        const bookCont = document.querySelector('.book-cont');
-        bookCont.innerHTML = '';
-        if(!bookingInfo) {
-            bookCont.innerHTML = `<p>No bookings available</p>`
-        }
-        bookingInfo.forEach((info)=>{
-            console.log('info', info);
-            
-        const bookItem = document.createElement('div');
-        bookItem.className = 'book-item';
-        bookItem.innerHTML = `
-                                <div class="book-left">
-                                    <div class="book-left-header">
-                                        <div class="book-det">
-                                            <div class="book-img">
-                                                <img src="${info.userImg}" alt="profile image" class="book-prof-img">
-                                            </div>
-                                            <div class="book-prof">
-                                                <p>${info.name}</p>
-                                                <div class="book-call">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M21.97 18.33C21.97 18.69 21.89 19.06 21.72 19.42C21.55 19.78 21.33 20.12 21.04 20.44C20.55 20.98 20.01 21.37 19.4 21.62C18.8 21.87 18.15 22 17.45 22C16.43 22 15.34 21.76 14.19 21.27C13.04 20.78 11.89 20.12 10.75 19.29C9.6 18.45 8.51 17.52 7.47 16.49C6.44 15.45 5.51 14.36 4.68 13.22C3.86 12.08 3.2 10.94 2.72 9.81C2.24 8.67 2 7.58 2 6.54C2 5.86 2.12 5.21 2.36 4.61C2.6 4 2.98 3.44 3.51 2.94C4.15 2.31 4.85 2 5.59 2C5.87 2 6.15 2.06 6.4 2.18C6.66 2.3 6.89 2.48 7.07 2.74L9.39 6.01C9.57 6.26 9.7 6.49 9.79 6.71C9.88 6.92 9.93 7.13 9.93 7.32C9.93 7.56 9.86 7.8 9.72 8.03C9.59 8.26 9.4 8.5 9.16 8.74L8.4 9.53C8.29 9.64 8.24 9.77 8.24 9.93C8.24 10.01 8.25 10.08 8.27 10.16C8.3 10.24 8.33 10.3 8.35 10.36C8.53 10.69 8.84 11.12 9.28 11.64C9.73 12.16 10.21 12.69 10.73 13.22C11.27 13.75 11.79 14.24 12.32 14.69C12.84 15.13 13.27 15.43 13.61 15.61C13.66 15.63 13.72 15.66 13.79 15.69C13.87 15.72 13.95 15.73 14.04 15.73C14.21 15.73 14.34 15.67 14.45 15.56L15.21 14.81C15.46 14.56 15.7 14.37 15.93 14.25C16.16 14.11 16.39 14.04 16.64 14.04C16.83 14.04 17.03 14.08 17.25 14.17C17.47 14.26 17.7 14.39 17.95 14.56L21.26 16.91C21.52 17.09 21.7 17.3 21.81 17.55C21.91 17.8 21.97 18.05 21.97 18.33Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"/>
-                                                    </svg> ${info.phone}
-                                                </div>
-                                                <div class="book-location">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M3.61971 8.49C5.58971 -0.169998 18.4197 -0.159997 20.3797 8.5C21.5297 13.58 18.3697 17.88 15.5997 20.54C13.5897 22.48 10.4097 22.48 8.38971 20.54C5.62971 17.88 2.46971 13.57 3.61971 8.49Z" stroke="#292D32" stroke-width="1.5"/>
-                                                        <path d="M9.25 11.5L10.75 13L14.75 9" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg> ${info.location}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <i class="fa-solid fa-chevron-down spin"></i>
-                                    </div>
-                                    <div class="book-budget">
-                                        <h2>Budget</h2>
-                                        <p class="budget-text">$${info.budget}</p>
-                                    </div>
-                                    <div class="book-serv-cont">
-                                        <div class="book-serv-header">
-                                            <div class="serv-type">
-                                                <p>Service type: <span class="type-text">${info.type}</span></p>
-                                            </div>
-                                            <div class="book-time">
-                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    <path d="M15.7099 15.1798L12.6099 13.3298C12.0699 13.0098 11.6299 12.2398 11.6299 11.6098V7.50977" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg> <span class="book-time-text">${info.time}</span>
-                                            </div>
-                                        </div>
-                                        <div class="book-serv-mid">
-                                            <div class="book-date">
-                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    <path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    <path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    <path d="M20.75 17.6001H3.25" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    <path d="M12 8.25C10.77 8.25 9.73 8.92 9.73 10.22C9.73 10.84 10.02 11.31 10.46 11.61C9.85 11.97 9.5 12.55 9.5 13.23C9.5 14.47 10.45 15.24 12 15.24C13.54 15.24 14.5 14.47 14.5 13.23C14.5 12.55 14.15 11.96 13.53 11.61C13.98 11.3 14.26 10.84 14.26 10.22C14.26 8.92 13.23 8.25 12 8.25ZM12 11.09C11.48 11.09 11.1 10.78 11.1 10.29C11.1 9.79 11.48 9.5 12 9.5C12.52 9.5 12.9 9.79 12.9 10.29C12.9 10.78 12.52 11.09 12 11.09ZM12 14C11.34 14 10.86 13.67 10.86 13.07C10.86 12.47 11.34 12.15 12 12.15C12.66 12.15 13.14 12.48 13.14 13.07C13.14 13.67 12.66 14 12 14Z" fill="#292D32"/>
-                                                </svg>
-                                                <span class="book-date-text">${info.day}</span>
-                                            </div>
-                                        </div>
-                                        <div class="book-serv-foot">
-                                            <p>Uploaded a sample</p>
-                                            <div class="book-samp-img">
-                                                <img src="${info.sampleImg}" alt="sample image" class="sample-img">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="book-right">
-                                    <div class="book-short-note">
-                                        <h2>Wrote a short note</h2>
-                                        <p class="short-note-text">${info.shortNote}</p>
-                                    </div>
-                                    <div class="book-addy">
-                                        <h2>Address Direction (home service was selected)</h2>
-                                        <p class="address">${info.address}</p>
-                                    </div>
-                                    <button class="message-cust">Message Customer</button>
-                                </div>
-                            `
-
-        bookCont.appendChild(bookItem);
-
-        //displays message page when the bussiness owner clicks on message customer button
-        const messageBtn = bookItem.querySelector('.message-cust');
-        messageBtn.addEventListener('click', () => {
-            displayMessage(info);
-}); 
-
-    })
-
-        const bookIt = document.querySelectorAll('.book-item');
-        const spins = document.querySelectorAll('.spin');
-    
-        bookIt.forEach(book => {
-        book.addEventListener('click', (e) => {
-            if (e.target.closest('.spin')) return; 
-            book.classList.add('active');
-        });
-        
-        });
-
-        spins.forEach(spin => {
-        spin.addEventListener('click', () => {
-            const book = spin.closest('.book-item');
-            book.classList.remove('active');
-        });
-        });
-
-       
-       
-    } catch (error) {
-        // alert('An error occured while loading your availbale bookings, try again shortly')
+document.addEventListener('DOMContentLoaded', async function () {
+    // Redirect to login if not authenticated (also catches stale "undefined"/"null" stored values)
+    var token = localStorage.getItem('token');
+    if (!token || token === 'undefined' || token === 'null') {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.assign('../Auth/bussiness-sign-in.html');
+        return;
     }
 
-}
+    checkAuth();
+    setupUI();
 
-//displays the message page when the message customer button from the booking page get's clicked
-function displayMessage(customer) {
-                const pages = document.querySelectorAll('.page');
-                const navLink = document.querySelectorAll('.nav-menu')
-                navLink.forEach(nav=>{nav.classList.remove('active')
-                if(nav.dataset.page === 'message') {
-                    nav.classList.add('active')
-                    
-                }
-                })
-                pages.forEach(p=>{
-                    p.classList.remove('active');
-                    if(p.classList.contains('message')) {
-                        p.classList.add('active');
-                    }
-                });
+    await fetchBusinessProfile();
+    if (currentBusiness) {
+        await fetchBookings();
+    }
 
-
-                if(!conversations.find(c=>c.phone === customer.phone)) {
-                    conversations.push({...customer, messages: []});
-                    localStorage.setItem('convo', JSON.stringify(conversations));
-                }
-            renderconvo();
-                
-
-}
-
-//creates the message preview so that when it gets clicked the chatbox for the conversation would be displayed or visible but I can't figure the chat box for now just made a ststic design for that.
-
-function renderconvo(){
-    const mesRevBlock = document.querySelector('.mes-rev-block');
-    mesRevBlock.innerHTML = '';
-    
-
-
-    conversations.forEach(convos=>{
-    const mesItem = document.createElement('div');
-    mesItem.className = 'mes-item';
-    mesItem.innerHTML = `
-            <div class="mes-prof">
-                <div class="mes-img"><img src="${convos.userImg}"/></div>
-                    <div class="mes-name">
-                        <div class="mes-text">
-                            <p>${convos.name}</p>
-                            <p class="mes">Done with it already.</p>
-                        </div>
-                        <div class="mes-day">
-                            <p class="mes-time">${convos.phone}</p>
-                            <p class="mes-count">
-                                <svg width="23" height="13" viewBox="0 0 23 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7.65625 7.65625L11.5625 11.5625L20.9375 1.40625M1.40625 7.65625L5.3125 11.5625L1.40625 7.65625ZM10.7812 5.3125L14.6875 1.40625L10.7812 5.3125Z" stroke="#042FBE" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </p>
-                        </div>
-                    </div>
-            </div>
-    `
-        mesRevBlock.appendChild(mesItem);
-
-    })
-
-
-
-
-}
-
-document.addEventListener('DOMContentLoaded', ()=>{
-    showBooking();
-    renderconvo();
+    // Wire up success modal done button
+    var doneBtn = document.querySelector('.done-btn');
+    if (doneBtn) {
+        doneBtn.addEventListener('click', function () {
+            var modal = document.querySelector('.upd-suc-cont');
+            if (modal) modal.classList.remove('active');
+        });
+    }
 });
 
+function checkAuth() {
+    var token = localStorage.getItem('token');
+    var userStr = localStorage.getItem('user');
 
+    if (!token || token === 'undefined' || token === 'null' || !userStr) {
+        return;
+    }
 
+    try {
+        currentUser = JSON.parse(userStr);
+    } catch (e) {
+        localStorage.removeItem('user');
+        return;
+    }
 
+    // Update displayed name
+    var nameEls = document.querySelectorAll('.owner-name .name');
+    if (nameEls.length > 0 && currentUser) {
+        var firstName = currentUser.name ? currentUser.name.split(' ')[0] : 'User';
+        nameEls.forEach(function (el) {
+            el.textContent = 'Hi, ' + firstName;
+        });
+    }
 
+    // Update profile image
+    var imgEls = document.querySelectorAll('.owner-img');
+    if (imgEls.length > 0 && currentUser) {
+        var imgSrc = currentUser.profileImage || currentUser.profileImg || null;
+        if (imgSrc) {
+            imgEls.forEach(function (el) {
+                el.style.backgroundImage = "url('" + imgSrc + "')";
+                el.style.backgroundSize = 'cover';
+                el.style.backgroundPosition = 'center';
+                el.style.borderRadius = '50%';
+            });
+        }
+    }
 
+    // Populate profile form with current user data
+    populateUserForm(currentUser);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//company form 
-const companyForm = document.getElementById('company-form');
-companyForm.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    clearError();
-    validateInputs();
-})
-
-//displaying uploaded image for the company
-const revImg = document.getElementById('rev-img');
-const imgText = document.querySelector('.prof-img-text');
-const showImg = document.querySelector('.show-comp-img')
-const compImg = document.getElementById('comp-img');
- compImg.addEventListener('input', ()=>{
-        clearError();
-        getImage(compImg, showImg, imgText)
-    })
-
-//controls the display of uploaded images for both the compan and personal profile
-function getImage(input, image, text) {
-        const getImg = URL.createObjectURL(input.files[0]);
-        image.style.display = 'flex';
-        image.src = getImg;
-        text.style.display = 'none';
+    // Show profile image in bus-form-img label
+    var bussImg = document.querySelector('.buss-img');
+    if (bussImg && (currentUser.profileImage || currentUser.profileImg)) {
+        bussImg.src = currentUser.profileImage || currentUser.profileImg;
+        bussImg.style.display = 'block';
+        var spanText = document.querySelector('.bus-span-text');
+        if (spanText) spanText.style.display = 'none';
+    }
 }
-   
 
+async function fetchBusinessProfile() {
+    try {
+        var data = await ApiService.getMyBusiness();
 
-//display uploaded images for the gallery
-const galleryUpload = document.getElementById('work-img-up');
-const galleryCont = document.querySelector('.up-img-cont');
-galleryUpload.addEventListener('input', ()=>{
-    const gallStock = galleryUpload.files;
-    galleryCont.innerHTML = '';
+        if (Array.isArray(data) && data.length > 0) {
+            currentBusiness = data[0];
+        } else if (data && data._id) {
+            currentBusiness = data;
+        }
 
-    for(let i = 0; i < gallStock.length; i++) {
-        const galleryImage = document.createElement('div');
-        galleryImage.classList.add('up-img');
-        const  disImg = document.createElement('img');
-        let url = URL.createObjectURL(gallStock[i]);
-        disImg.src = url;
-        galleryImage.appendChild(disImg);
-        galleryCont.appendChild(galleryImage);
-    } 
+        if (currentBusiness) {
+            populateProfileForm(currentBusiness);
+            updateDashboardStats(currentBusiness);
 
-
-})
-
- 
-//function controlling the  companys form info validation and also sending it to an end point
-async function validateInputs(){
-    const cName = document.getElementById('comp-name');
-    const cEmail = document.getElementById('comp-email');
-    const cPhone = document.getElementById('comp-phone');
-    const cJob = document.getElementById('comp-job');
-    const cWorkDay = document.getElementById('comp-work-day');
-    const cAddy = document.getElementById('comp-address');
-    const cMinPrice = document.getElementById('comp-min-price');
-    const cMaxPrice = document.getElementById('comp-max-price');
-    const cDesc = document.getElementById('comp-description');
-    const cDir = document.getElementById('comp-direction');
-    const compImg = document.getElementById('comp-img');
-
-    
-    if(compImg.files[0] === undefined || compImg.files[0] === null) {
-       showError(compImg, 'Upload an image for your company profile') 
+            // Show company image preview if available
+            var compImg = document.querySelector('.show-comp-img');
+            var compImgText = document.querySelector('.prof-img-text');
+            if (compImg && (currentBusiness.image)) {
+                compImg.src = currentBusiness.image;
+                compImg.style.display = 'block';
+                if (compImgText) compImgText.style.display = 'none';
+            }
+        }
+    } catch (error) {
+        // no business found yet — user can create one via the Company form
     }
-   
-    if(cName.value === '') {
-        showError(cName, 'Field can not be left empty');
-        return;
-    } else if(cName.value.trim().length < 5 || !isNaN(cName.value)) {
-        showError(cName, `Kindly input your company's full name`);
-        return;
+}
+
+async function fetchBookings() {
+    if (!currentBusiness) return;
+
+    try {
+        bookings = await ApiService.getBusinessBookings(currentBusiness._id);
+        if (Array.isArray(bookings)) {
+            renderBookings(bookings);
+            updateBookingStats(bookings);
+        }
+    } catch (error) {
+        // failed to load bookings
     }
+}
 
-    if(cEmail.value === '') {
-        showError(cEmail, 'Field can not be left empty');
-        return;
-    } else if(!cEmail.value.includes('@') || !cEmail.value.includes('.com')) {
-        showError(cEmail, `Input your company's email address`);
-        return;
-    }
+function setupUI() {
+    // Navigation — HTML uses .nav-menu links with data-page="pageid", pages use .page with matching id
+    var navLinks = document.querySelectorAll('.nav-menu');
+    var pages = document.querySelectorAll('.page');
 
-    if(cPhone.value === '') {
-        showError(cPhone, 'Field can not be left empty');
-        return;
-    } else if(cPhone.value.trim().length < 11 || cPhone.value.trim().length > 14 || isNaN(cPhone.value)) {
-        showError(cPhone, 'Enter a valid phone number for your company');
-        return;
-    }
+    navLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
 
+            var targetPage = link.getAttribute('data-page');
 
-    if(cJob.value === ''){
-        showError(cJob, 'Field can not be left empty');
-        return;
-    } else if(cJob.value.trim().length < 3 || !isNaN(cJob.value)) {
-        showError(cJob, 'Input the job title your company offers');
-        return;
-    }
+            // Update active link
+            navLinks.forEach(function (l) { l.classList.remove('active'); });
+            link.classList.add('active');
 
+            // Show matching page, hide others
+            pages.forEach(function (page) {
+                if (page.id === targetPage) {
+                    page.classList.add('active');
+                } else {
+                    page.classList.remove('active');
+                }
+            });
 
-    if(cWorkDay.value === "") {
-        showError(cWorkDay, 'Field can not be left empty');
-        return;
-        }  else if(cWorkDay.value.trim().length < 5 || !isNaN(cWorkDay.value)) {
-        showError(cWorkDay, 'Input the work days your company operates on');
-        return;
-    }
+            // Close responsive nav if open
+            var nav = document.querySelector('nav');
+            var bar = document.querySelector('.bar-tog');
+            var modal = document.querySelector('.modal');
+            if (nav && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+                if (bar) { bar.classList.add('fa-bars'); bar.classList.remove('fa-xmark'); }
+                if (modal) modal.classList.remove('active');
+            }
+        });
+    });
 
-    if(cAddy.value === "") {
-        showError(cAddy, 'Field can not be left empty');
-        return;
-        }  else if(cAddy.value.trim().length < 30 || !isNaN(cAddy.value)) {
-        showError(cAddy, 'Fill in a well detailed location about where your company is located');
-        return;
+    var compForm = document.getElementById('company-form');
+    if (compForm) {
+        compForm.addEventListener('submit', handleCompanyUpdate);
     }
 
-    if(cMinPrice.value === "") {
-        showError(cMinPrice, 'Field can not be left empty');
-        return;
-        }  else if(cMinPrice.value.trim().length < 1 || isNaN(cMinPrice.value)) {
-        showError(cMinPrice, 'Enter the minimum amount your company charges for a service session');
+    var userForm = document.getElementById('bus-prof-form');
+    if (userForm) {
+        userForm.addEventListener('submit', handleUserUpdate);
+    }
+
+    var logoutBtns = document.querySelectorAll('.log-out-btn');
+    logoutBtns.forEach(function(logoutBtn) {
+        logoutBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            localStorage.clear();
+            window.location.assign('../index.html');
+        });
+    });
+
+    // Profile dropdown toggle
+    var ownerSummaries = document.querySelectorAll('.owner-summary');
+    ownerSummaries.forEach(function (summary) {
+        summary.addEventListener('click', function (e) {
+            // Don't close when clicking the logout button itself
+            if (e.target.closest('.log-out-btn')) return;
+            summary.classList.toggle('active');
+        });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.owner-summary')) {
+            ownerSummaries.forEach(function (s) { s.classList.remove('active'); });
+        }
+    });
+
+    // Profile image upload (user)
+    var busFormImg = document.getElementById('bus-form-img');
+    if (busFormImg) {
+        busFormImg.addEventListener('change', async function () {
+            var file = busFormImg.files[0];
+            if (!file) return;
+
+            // Preview
+            var bussImg = document.querySelector('.buss-img');
+            var busSpan = document.querySelector('.bus-span-text');
+            if (bussImg) {
+                bussImg.src = URL.createObjectURL(file);
+                bussImg.style.display = 'block';
+                if (busSpan) busSpan.style.display = 'none';
+            }
+
+            try {
+                var formData = new FormData();
+                formData.append('image', file);
+                var token = ApiService.getToken();
+                if (!token) return;
+                var res = await fetch(ApiService.getBaseUrl() + '/api/auth/profile/image', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + token },
+                    body: formData
+                });
+                if (res.ok) {
+                    var updated = await res.json();
+                    if (updated && updated.user) {
+                        localStorage.setItem('user', JSON.stringify(updated.user));
+                        currentUser = updated.user;
+                    }
+                    showSuccess();
+                }
+            } catch (err) {
+                // image upload failed silently
+            }
+        });
+    }
+
+    // Company image upload
+    var compImgInput = document.getElementById('comp-img');
+    if (compImgInput) {
+        compImgInput.addEventListener('change', async function () {
+            var file = compImgInput.files[0];
+            if (!file) return;
+
+            // Preview
+            var compImgEl = document.querySelector('.show-comp-img');
+            var compImgText = document.querySelector('.prof-img-text');
+            if (compImgEl) {
+                compImgEl.src = URL.createObjectURL(file);
+                compImgEl.style.display = 'block';
+                if (compImgText) compImgText.style.display = 'none';
+            }
+
+            if (!currentBusiness || !currentBusiness._id) return;
+
+            try {
+                var formData = new FormData();
+                formData.append('image', file);
+                var token = ApiService.getToken();
+                if (!token) return;
+                var res = await fetch(ApiService.getBaseUrl() + '/api/businesses/' + currentBusiness._id + '/image', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + token },
+                    body: formData
+                });
+                if (res.ok) {
+                    var updated = await res.json();
+                    if (updated && updated._id) currentBusiness = updated;
+                    showSuccess();
+                }
+            } catch (err) {
+                // image upload failed silently
+            }
+        });
+    }
+
+    // Booking filter dropdown
+    var filtOptions = document.querySelectorAll('.drop-option');
+    filtOptions.forEach(function (opt) {
+        opt.addEventListener('click', function () {
+            var val = opt.textContent.trim().toLowerCase();
+            var filterStatus = val === 'approved' ? 'confirmed' : val === 'cancel' ? 'cancelled' : val;
+            var filtered = filterStatus === 'approved' || filterStatus === 'confirmed' || filterStatus === 'cancelled' || filterStatus === 'pending'
+                ? bookings.filter(function (b) { return b.status === filterStatus; })
+                : bookings;
+            renderBookings(filtered);
+        });
+    });
+}
+
+async function handleUserUpdate(e) {
+    e.preventDefault();
+
+    var token = ApiService.getToken();
+    if (!token) {
+        alert('Please log in first.');
         return;
     }
 
-    if(cMaxPrice.value === "") {
-        showError(cMaxPrice, 'Field can not be left empty');
-        return;
-        }  else if(cMaxPrice.value.trim().length < 1 || isNaN(cMaxPrice.value)) {
-        showError(cMaxPrice, 'Enter the maximum amount your company charges for a service session');
+    var profileData = {
+        name: getFieldValue('bus-name'),
+        email: getFieldValue('bus-email'),
+        phone: getFieldValue('bus-phone'),
+        address: getFieldValue('bus-addy'),
+        bio: getFieldValue('bus-bio')
+    };
+
+    // Remove empty fields
+    Object.keys(profileData).forEach(function (k) {
+        if (!profileData[k]) delete profileData[k];
+    });
+
+    try {
+        var updated = await ApiService.updateProfile(profileData);
+        if (updated) {
+            localStorage.setItem('user', JSON.stringify(updated));
+            currentUser = updated;
+            checkAuth();
+            showSuccess();
+        }
+    } catch (error) {
+        alert('Failed to update profile. Please try again.');
+    }
+}
+
+function safeText(str) {
+    if (!str) return '';
+    return String(str);
+}
+
+function renderBookings(data) {
+    var recentContainer = document.querySelector('.recent-booking-body');
+
+    if (recentContainer) {
+        recentContainer.textContent = '';
+
+        if (data.length === 0) {
+            var noMsg = document.createElement('p');
+            noMsg.textContent = 'No bookings yet.';
+            recentContainer.appendChild(noMsg);
+            return;
+        }
+
+        data.forEach(function (booking) {
+            var item = document.createElement('div');
+            item.className = 'booking-item';
+
+            var userInfo = document.createElement('div');
+            userInfo.className = 'user-info';
+
+            var imgCont = document.createElement('div');
+            imgCont.className = 'user-img-cont';
+            var imgEl = document.createElement('img');
+            imgEl.src = '/Images/img27.png';
+            imgEl.alt = '';
+            imgCont.appendChild(imgEl);
+
+            var userNameDiv = document.createElement('div');
+            userNameDiv.className = 'user-name';
+
+            var nameH2 = document.createElement('h2');
+            var customerName = 'Customer';
+            if (booking.user && booking.user.name) {
+                customerName = booking.user.name;
+            }
+            nameH2.textContent = safeText(customerName);
+
+            var serviceP = document.createElement('p');
+            serviceP.textContent = safeText(booking.serviceType || 'Service');
+
+            userNameDiv.appendChild(nameH2);
+            userNameDiv.appendChild(serviceP);
+
+            userInfo.appendChild(imgCont);
+            userInfo.appendChild(userNameDiv);
+
+            var dateTime = document.createElement('div');
+            dateTime.className = 'date-time';
+
+            var dateH2 = document.createElement('h2');
+            var bookingDate = booking.date ? new Date(booking.date).toLocaleDateString() : 'N/A';
+            dateH2.textContent = bookingDate;
+
+            var timeP = document.createElement('p');
+            timeP.textContent = safeText(booking.startTime || 'TBD');
+
+            dateTime.appendChild(dateH2);
+            dateTime.appendChild(timeP);
+
+            var statusDiv = document.createElement('div');
+            statusDiv.className = 'status ' + safeText(booking.status || '').toLowerCase();
+            statusDiv.textContent = safeText(booking.status || 'pending');
+
+            item.appendChild(userInfo);
+            item.appendChild(dateTime);
+            item.appendChild(statusDiv);
+
+            if (booking.status === 'pending') {
+                var actionDiv = document.createElement('div');
+                actionDiv.className = 'action-btn';
+
+                var acceptBtn = document.createElement('button');
+                acceptBtn.className = 'accept-btn';
+                var checkIcon = document.createElement('i');
+                checkIcon.className = 'fa-solid fa-check';
+                acceptBtn.appendChild(checkIcon);
+                acceptBtn.addEventListener('click', function () {
+                    updateBookingStatus(booking._id, 'confirmed');
+                });
+
+                var declineBtn = document.createElement('button');
+                declineBtn.className = 'decline-btn';
+                var xIcon = document.createElement('i');
+                xIcon.className = 'fa-solid fa-xmark';
+                declineBtn.appendChild(xIcon);
+                declineBtn.addEventListener('click', function () {
+                    updateBookingStatus(booking._id, 'cancelled');
+                });
+
+                actionDiv.appendChild(acceptBtn);
+                actionDiv.appendChild(declineBtn);
+                item.appendChild(actionDiv);
+            } else {
+                var emptyDiv = document.createElement('div');
+                item.appendChild(emptyDiv);
+            }
+
+            recentContainer.appendChild(item);
+        });
+    }
+}
+
+async function updateBookingStatus(bookingId, status) {
+    if (!bookingId || !status) return;
+
+    var confirmMsg = status === 'confirmed' ? 'Confirm this booking?' : 'Cancel this booking?';
+    if (!confirm(confirmMsg)) return;
+
+    try {
+        await ApiService.updateBooking(bookingId, { status: status });
+        await fetchBookings();
+    } catch (error) {
+        alert('Failed to update booking. Please try again.');
+    }
+}
+
+window.updateBookingStatus = updateBookingStatus;
+
+function populateProfileForm(data) {
+    var fields = {
+        'comp-name': data.name || data.companyName,
+        'comp-email': data.email,
+        'comp-phone': data.phone,
+        'comp-address': data.address,
+        'comp-description': data.description,
+        'comp-job': data.category,
+        'comp-work-day': data.workingHours || data.workingDays,
+        'comp-min-price': data.priceRange ? data.priceRange.min : '',
+        'comp-max-price': data.priceRange ? data.priceRange.max : '',
+        'comp-direction': data.direction
+    };
+
+    for (var id in fields) {
+        var el = document.getElementById(id);
+        if (el) el.value = fields[id] || '';
+    }
+}
+
+function populateUserForm(user) {
+    if (!user) return;
+
+    var fields = {
+        'bus-name': user.name,
+        'bus-email': user.email,
+        'bus-phone': user.phone,
+        'bus-addy': user.address,
+        'bus-bio': user.bio
+    };
+
+    for (var id in fields) {
+        var el = document.getElementById(id);
+        if (el) el.value = fields[id] || '';
+    }
+}
+
+function getFieldValue(id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+}
+
+async function handleCompanyUpdate(e) {
+    e.preventDefault();
+
+    var token = ApiService.getToken();
+    if (!token) {
+        alert('Please log in first.');
         return;
     }
 
-    if(cDesc.value === "") {
-        showError(cDesc, 'Field can not be left empty');
-        return;
-        }  else if(cDesc.value.trim().length < 200 || !isNaN(cDesc.value)) {
-        showError(cDesc, 'Input a well detailed information about your company so it gives customers a sense of trust. At least 200 characters');
-        return;
+    var payload = {
+        name: getFieldValue('comp-name'),
+        email: getFieldValue('comp-email'),
+        phone: getFieldValue('comp-phone'),
+        address: getFieldValue('comp-address'),
+        description: getFieldValue('comp-description'),
+        category: getFieldValue('comp-job'),
+        workingHours: getFieldValue('comp-work-day'),
+        direction: getFieldValue('comp-direction')
+    };
+
+    var minPrice = getFieldValue('comp-min-price');
+    var maxPrice = getFieldValue('comp-max-price');
+    if (minPrice || maxPrice) {
+        payload.priceRange = { min: minPrice, max: maxPrice };
     }
 
-    if(cDir.value === "") {
-        showError(cDir, 'Field can not be left empty');
-        return;
-        }  else if(cDir.value.trim().length < 80 || !isNaN(cDir.value)) {
-        showError(cDir, 'Input a well detailed information about where your company is located, so as to help customer in locating your company physically. At least 80 characters');
-        return;
-    }
+    // Remove empty fields
+    Object.keys(payload).forEach(function (k) {
+        if (!payload[k]) delete payload[k];
+    });
 
-
-    const companyProfile = {
-        companyImage : compImg.files[0],
-        companyName : cName.value,
-        companyEmail : cEmail.value,
-        companyPhone : cPhone.value,
-        companyJob : cJob.value,
-        companyWorkDay : cWorkDay.value,
-        companyAddress : cAddy.value,
-        companyMinPrice : cMinPrice.value,
-        companyMaxPrice : cMaxPrice.value,
-        companyDescription : cDesc.value,
-        companyDirection : cDir.value,
-        companyGallery: [...galleryUpload.files]
-    }
-
-//this should still be converted to formData before sending to an end point
-
-    if(companyProfile) {
+    try {
+        if (currentBusiness && currentBusiness._id) {
+            var updated = await ApiService.updateBusiness(currentBusiness._id, payload);
+            currentBusiness = updated;
+        } else {
+            var created = await ApiService.createBusiness(payload);
+            currentBusiness = created;
+        }
         showSuccess();
-        
-        
+    } catch (error) {
+        alert('Failed to save business profile. Please try again.');
     }
-//      try {
-//         const res = await fetch('url in here',{
-//             method : '',
-//             headers : {
-//                "Accept" : 'application/json'
-//             },
-//             body : JSON.stringify(companyProfile)
-//         });        
-//         const data = await res.JSON();
-//         console.log('data sent');     
-//   } catch (error) {
-//         alert(`Failed to upload your company's profile, try again later`)
-//   }
-
 }
 
-
-//Bussiness Profile page form validation
-
-//displaying business owner selected image
-const busImg = document.getElementById('bus-form-img');
-const revBusImg = document.querySelector('.rev-form-img');
-const busImgText = document.querySelector('.bus-span-text');
-const showBusImg = document.querySelector('.buss-img')
-
-busImg.addEventListener('input', ()=>{
-    getImage(busImg, showBusImg, busImgText)
-})
-
-
-const bussForm = document.getElementById('bus-prof-form');
-bussForm.addEventListener('submit', (e)=>{
-    e.preventDefault();
-
-    clearError();
-    validateBuss();
-
-})
-
-//controls the validation of the bussiness owner profile form
-async function validateBuss(){
-    const bName = document.getElementById('bus-name');
-    const bEmail = document.getElementById('bus-email');
-    const bPhone = document.getElementById('bus-phone');
-    const bAddy = document.getElementById('bus-addy');
-    const bBio = document.getElementById('bus-bio');
-
-
-
-     const busImg = document.getElementById('bus-form-img');
-    if(busImg.files[0] === undefined || busImg.files[0] === null) {
-       showError(busImg, 'Upload an image for your profile picture') 
+function updateDashboardStats(business) {
+    var nameEl = document.querySelector('.business-dash-name');
+    if (nameEl) {
+        nameEl.textContent = business.name || business.companyName || '';
     }
-   
-  
-
-    if(bName.value === '') {
-        showError(bName, 'Field can not be left empty');
-        return;
-    } else if(bName.value.trim().length < 5 || !isNaN(bName.value)) {
-        showError(bName, `Kindly input your full name`);
-        return;
-    }
-
-    if(bEmail.value === '') {
-        showError(bEmail, 'Field can not be left empty');
-        return;
-    } else if(!bEmail.value.includes('@') || !bEmail.value.includes('.com')) {
-        showError(bEmail, `Input a valid email address`);
-        return;
-    }
-
-    if(bPhone.value === '') {
-        showError(bPhone, 'Field can not be left empty');
-        return;
-    } else if(bPhone.value.trim().length < 11 || bPhone.value.trim().length > 14 || isNaN(bPhone.value)) {
-        showError(bPhone, 'Enter a valid phone number');
-        return;
-    }
-
-    if(bAddy.value === "") {
-        showError(bAddy, 'Field can not be left empty');
-        return;
-        }  else if(bAddy.value.trim().length < 30 || !isNaN(bAddy.value)) {
-        showError(bAddy, 'Input your residential  address');
-        return;
-    }
-
-
-    if(bBio.value === "") {
-        showError(bBio, 'Field can not be left empty');
-        return;
-        }  else if(bBio.value.trim().length < 80 || !isNaN(bBio.value)) {
-        showError(bBio, 'Tell us more about yourself, it would help customers understand you better. At least 80 characters');
-        return;
-    }
-
-
-
-    const busProfile = {
-        ownerImage : busImg.files[0],
-        ownerName : bName.value,
-        ownerEmail : bEmail.value,
-        ownerPhone : bPhone.value,
-        ownerAddress : bAddy.value,
-        ownerBio : bBio.value
-    }
-
-// displaying success message when the update is successful
-if(busProfile) {
-   showSuccess()
-    
 }
 
-
-//      try {
-//         const res = await fetch('',{
-//             method : '',
-//             headers : {
-//                "Content-type" : 'application/json',
-//                "Accept" : 'application/json'
-//             },
-//             body : JSON.stringify(busProfile)
-//         });        
-//         const data = await res.json();
-//         console.log('profile data sent');     
-//   } catch (error) {
-//         alert(`Failed to upload your profile, try again later`)
-//   }
-
+function showSuccess() {
+    var modal = document.querySelector('.upd-suc-cont');
+    if (modal) {
+        modal.classList.add('active');
+    }
 }
 
-//display the update successful message
-function showSuccess(){
-    // displaying success message when the update is successful
-    const updCont = document.querySelector('.upd-suc-cont');
-    updCont.classList.add('active', !updCont.classList.contains('active'));
-    modal.classList.add('active');
-    const doneBtn = document.querySelector('.done-btn')
+function updateBookingStats(bookingList) {
+    var total = bookingList.length;
+    var pending = bookingList.filter(function (b) { return b.status === 'pending'; }).length;
+    var confirmed = bookingList.filter(function (b) { return b.status === 'confirmed'; }).length;
 
-    modal.addEventListener('click', ()=>{
-        updCont.classList.remove('active');
-        modal.classList.remove('active');
-    })
-    doneBtn.addEventListener('click', ()=>{
-        updCont.classList.remove('active');
-        modal.classList.remove('active');
-    })
-    
+    var totalEl = document.querySelector('.total-count');
+    if (totalEl) totalEl.textContent = total;
+
+    var pendingEl = document.querySelector('.pending-count');
+    if (pendingEl) pendingEl.textContent = pending;
+
+    var confirmedEl = document.querySelector('.confirmed-count');
+    if (confirmedEl) confirmedEl.textContent = confirmed;
+
+    // Also render the Bookings page full list
+    renderBookingPage(bookingList);
 }
 
+// Renders the full bookings list in the Bookings page tab
+function renderBookingPage(data) {
+    var container = document.querySelector('.book-cont');
+    if (!container) return;
 
-//function showing input errors
-function showError(input, message){
-    const errorDiv = document.getElementById(input.id + '-error');
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
-    input.classList.add('input-error');
-    return;
+    container.textContent = '';
+
+    if (!data || data.length === 0) {
+        var empty = document.createElement('p');
+        empty.style.padding = '20px';
+        empty.textContent = 'No bookings found.';
+        container.appendChild(empty);
+        return;
+    }
+
+    data.forEach(function (booking) {
+        var customerName = (booking.user && booking.user.name) ? booking.user.name : 'Customer';
+        var customerPhone = (booking.user && booking.user.phone) ? booking.user.phone : '';
+        var customerAddr = (booking.user && booking.user.address) ? booking.user.address : '';
+        var bookingDate = booking.date ? new Date(booking.date).toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A';
+        var bookingTime = booking.startTime || 'TBD';
+        var endTime = booking.endTime || '';
+        var status = (booking.status || 'pending').toLowerCase();
+        var notes = booking.notes || 'No notes provided';
+        var budget = booking.budget || '';
+        var serviceType = booking.serviceType || booking.category || '';
+
+        var item = document.createElement('div');
+        item.className = 'book-item';
+
+        // LEFT SIDE
+        var left = document.createElement('div');
+        left.className = 'book-left';
+
+        // Header: avatar + name + chevron
+        var leftHeader = document.createElement('div');
+        leftHeader.className = 'book-left-header';
+
+        var det = document.createElement('div');
+        det.className = 'book-det';
+
+        var bookImg = document.createElement('div');
+        bookImg.className = 'book-img';
+        var profImg = document.createElement('img');
+        profImg.className = 'book-prof-img';
+        profImg.src = (booking.user && booking.user.profileImg) ? booking.user.profileImg : '/Images/img27.png';
+        profImg.alt = customerName;
+        bookImg.appendChild(profImg);
+
+        var bookProf = document.createElement('div');
+        bookProf.className = 'book-prof';
+        var nameLabel = document.createElement('p');
+        nameLabel.textContent = 'Customer';
+        var nameH3 = document.createElement('h3');
+        nameH3.textContent = safeText(customerName);
+        bookProf.appendChild(nameLabel);
+        bookProf.appendChild(nameH3);
+
+        if (customerPhone) {
+            var callDiv = document.createElement('div');
+            callDiv.className = 'book-call';
+            callDiv.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21.97 18.33c0 .36-.08.71-.25 1.05-.17.34-.39.66-.68.96-.49.54-1.03.8-1.6.8-.42 0-.87-.1-1.36-.31-.49-.21-.98-.49-1.46-.85-.49-.37-.95-.77-1.39-1.2-.44-.44-.84-.9-1.2-1.38-.35-.48-.63-.96-.84-1.43-.21-.48-.31-.93-.31-1.35 0-.41.09-.8.27-1.16.18-.37.45-.71.81-1.01.44-.35.92-.52 1.43-.52.2 0 .4.04.58.12.19.08.36.2.5.38l1.68 2.37c.14.19.24.37.31.54.07.16.11.31.11.45 0 .18-.05.36-.15.53-.1.17-.24.34-.42.51l-.57.59c-.08.08-.12.18-.12.3 0 .06.01.11.03.17.03.06.06.11.08.16.14.26.38.59.72.99.35.4.72.81 1.12 1.21.41.4.8.77 1.21 1.11.4.34.73.57.99.71.04.02.09.05.15.07.06.03.12.04.19.04.13 0 .23-.04.31-.13l.57-.56c.18-.18.35-.31.51-.4.16-.09.32-.13.49-.13.14 0 .29.03.45.1.16.07.33.17.51.31l2.4 1.7c.18.13.3.28.37.46.06.19.1.38.1.6z" stroke="#666" stroke-width="1.5"/></svg>';
+            var callText = document.createElement('span');
+            callText.textContent = customerPhone;
+            callDiv.appendChild(callText);
+            bookProf.appendChild(callDiv);
+        }
+
+        det.appendChild(bookImg);
+        det.appendChild(bookProf);
+
+        var chevron = document.createElement('i');
+        chevron.className = 'fa-solid fa-chevron-down spin';
+
+        leftHeader.appendChild(det);
+        leftHeader.appendChild(chevron);
+
+        // Status badge
+        var statusDiv = document.createElement('div');
+        statusDiv.className = 'status ' + status;
+        statusDiv.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+
+        // Service details (shown when expanded)
+        var servCont = document.createElement('div');
+        servCont.className = 'book-serv-cont';
+
+        if (serviceType) {
+            var servType = document.createElement('div');
+            servType.className = 'serv-type';
+            servType.innerHTML = '<p>Service: <span>' + safeText(serviceType) + '</span></p>';
+            servCont.appendChild(servType);
+        }
+
+        var dateRow = document.createElement('div');
+        dateRow.className = 'book-date';
+        dateRow.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 2v3M16 2v3M3 9h18M21 8V17c0 3-1.5 5-5 5H8c-3.5 0-5-2-5-5V8c0-3 1.5-5 5-5h8c3.5 0 5 2 5 5z" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        var dateText = document.createElement('span');
+        dateText.className = 'book-date-text';
+        dateText.textContent = bookingDate;
+        dateRow.appendChild(dateText);
+
+        var timeRow = document.createElement('div');
+        timeRow.className = 'book-time';
+        timeRow.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10z" stroke="#555" stroke-width="1.5"/><path d="M15.71 15.18L12.61 13.33C12.07 13.01 11.63 12.24 11.63 11.61V7.51" stroke="#555" stroke-width="1.5" stroke-linecap="round"/></svg>';
+        var timeText = document.createElement('span');
+        timeText.className = 'book-time-text';
+        timeText.textContent = bookingTime + (endTime ? ' – ' + endTime : '');
+        timeRow.appendChild(timeText);
+
+        servCont.appendChild(dateRow);
+        servCont.appendChild(timeRow);
+
+        if (budget) {
+            var budgetDiv = document.createElement('div');
+            budgetDiv.className = 'book-budget';
+            budgetDiv.innerHTML = '<p>Budget</p><h2>' + safeText(budget) + '</h2>';
+            servCont.appendChild(budgetDiv);
+        }
+
+        // Action buttons for pending
+        if (status === 'pending') {
+            var bookServHeader = document.createElement('div');
+            bookServHeader.className = 'book-serv-header';
+
+            var acceptBtn = document.createElement('button');
+            acceptBtn.className = 'accept-btn';
+            acceptBtn.innerHTML = '<i class="fa-solid fa-check"></i> Accept';
+            (function (id) {
+                acceptBtn.addEventListener('click', function (e) { e.stopPropagation(); updateBookingStatus(id, 'confirmed'); });
+            })(booking._id);
+
+            var declineBtn = document.createElement('button');
+            declineBtn.className = 'decline-btn';
+            declineBtn.innerHTML = '<i class="fa-solid fa-xmark"></i> Decline';
+            (function (id) {
+                declineBtn.addEventListener('click', function (e) { e.stopPropagation(); updateBookingStatus(id, 'cancelled'); });
+            })(booking._id);
+
+            bookServHeader.appendChild(acceptBtn);
+            bookServHeader.appendChild(declineBtn);
+            servCont.appendChild(bookServHeader);
+        }
+
+        left.appendChild(leftHeader);
+        left.appendChild(statusDiv);
+        left.appendChild(servCont);
+
+        // RIGHT SIDE (notes + address + message button)
+        var right = document.createElement('div');
+        right.className = 'book-right';
+
+        var shortNote = document.createElement('div');
+        shortNote.className = 'book-short-note';
+        shortNote.innerHTML = '<p>Notes</p><h2>' + safeText(notes) + '</h2>';
+
+        var addy = document.createElement('div');
+        addy.className = 'book-addy';
+        addy.innerHTML = '<p>Address</p><h2>' + safeText(customerAddr || 'Not provided') + '</h2>';
+
+        if (customerAddr) {
+            var locDiv = document.createElement('div');
+            locDiv.className = 'book-location';
+            locDiv.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#666" stroke-width="1.5"/></svg>';
+            var locText = document.createElement('span');
+            locText.textContent = customerAddr;
+            locDiv.appendChild(locText);
+            addy.appendChild(locDiv);
+        }
+
+        var msgBtn = document.createElement('button');
+        msgBtn.className = 'message-cust';
+        msgBtn.textContent = 'Message Customer';
+        (function (bId, bName) {
+            msgBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                // Switch to message tab and open chat
+                var msgNavLink = document.querySelector('[data-page="message"]');
+                if (msgNavLink) msgNavLink.click();
+                setTimeout(function () {
+                    var convItems = document.querySelectorAll('.mes-item');
+                    convItems.forEach(function (ci) {
+                        if (ci.textContent.includes(bName)) ci.click();
+                    });
+                }, 300);
+            });
+        })(booking._id, customerName);
+
+        right.appendChild(shortNote);
+        right.appendChild(addy);
+        right.appendChild(msgBtn);
+
+        item.appendChild(left);
+        item.appendChild(right);
+
+        // Toggle expand on click
+        item.addEventListener('click', function () {
+            var isActive = item.classList.contains('active');
+            document.querySelectorAll('.book-item.active').forEach(function (el) { el.classList.remove('active'); });
+            if (!isActive) item.classList.add('active');
+        });
+
+        container.appendChild(item);
+    });
 }
-//function removing input errors
-function clearError(){
-    const error = document.querySelectorAll('.error');
-    error.forEach(err=>{
-        err.style.display = 'none';
-    })
-    const inputs = document.querySelectorAll('input');
-    inputs.forEach(inp=>{
-        inp.classList.remove('input-error')
-    })
-}
-
-
-
-
-
-
