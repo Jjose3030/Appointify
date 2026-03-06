@@ -228,7 +228,7 @@ if(bookForm) {
                 </div>   
     
     `
-}
+
 
 
 
@@ -252,7 +252,7 @@ sampleUpload.addEventListener('change', ()=>{
 });
 
 
-
+}
 function checkAuth() {
     var token = localStorage.getItem('token');
     if (!token) return;
@@ -394,7 +394,7 @@ function setupUI() {
         });
         
        setTimeout(() => {
-         bookForm.reset();
+        //  bookForm.reset();
          mand = 'unset'       
          sampleShow.style.backgroundImage = `url(${mand})`;
          sampText.classList.remove('active')
@@ -402,7 +402,7 @@ function setupUI() {
 
     }
 
-showDates();
+// showDates();
 }
 
 function safeText(str) {
