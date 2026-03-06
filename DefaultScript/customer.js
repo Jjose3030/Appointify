@@ -427,181 +427,55 @@ function createCard(data) {
         return;
     }
 
-    // data.forEach(function (buss) {
-    //     var card = document.createElement('div');
-    //     card.className = 'card';
-
-    //     var cardImg = document.createElement('div');
-    //     cardImg.className = 'card-img';
-
-    //     var img = document.createElement('img');
-    //     img.src = buss.image || '/Images/img6.png';
-    //     img.alt = safeText(buss.name);
-
-    //     var loveIcon = document.createElement('div');
-    //     loveIcon.className = 'love-icon';
-    //     var heartI = document.createElement('i');
-    //     heartI.className = 'fa-regular fa-heart';
-    //     loveIcon.appendChild(heartI);
-
-    //     cardImg.appendChild(img);
-    //     cardImg.appendChild(loveIcon);
-
-    //     var cardBody = document.createElement('div');
-    //     cardBody.className = 'card-body';
-
-    //     var namePrice = document.createElement('div');
-    //     namePrice.className = 'card-name-price';
-
-    //     var companyH2 = document.createElement('h2');
-    //     companyH2.className = 'business-name';
-    //     companyH2.textContent = safeText(buss.companyName || buss.name);
-
-    //     // var priceH2 = document.createElement('h2');
-    //     // priceH2.className = 'price';
-    //     // priceH2.textContent = '$50/hr';
-
-    //     namePrice.appendChild(companyH2);
-    //     // namePrice.appendChild(priceH2);
-
-    //     // var nameP = document.createElement('p');
-    //     // nameP.className = 'name';
-    //     // nameP.textContent = safeText(buss.name);
-
-    //     var ratingDiv = document.createElement('div');
-    //     ratingDiv.className = 'card-rating';
-    //     var starI = document.createElement('i');
-    //     starI.className = 'fa-solid fa-star';
-    //     var ratingP = document.createElement('p');
-    //     ratingP.textContent = (buss.rating || '5.0') + ' (' + (buss.reviewCount || '10') + ' reviews)';
-    //     ratingDiv.appendChild(starI);
-    //     ratingDiv.appendChild(ratingP);
-
-    //     var btnCont = document.createElement('div');
-    //     btnCont.className = 'card-btn-cont';
-    //     var bookBtn = document.createElement('button');
-    //     bookBtn.className = 'card-btn';
-    //     bookBtn.textContent = 'Book Now';
-    //     var bussId = buss._id || buss.id;
-    //     bookBtn.addEventListener('click', function () {
-    //         showBookPage(bussId);
-    //     });
-    //     btnCont.appendChild(bookBtn);
-
-    //     cardBody.appendChild(namePrice);
-    //     cardBody.appendChild(nameP);
-    //     cardBody.appendChild(ratingDiv);
-    //     cardBody.appendChild(btnCont);
-
-    //     card.appendChild(cardImg);
-    //     card.appendChild(cardBody);
-
-    //     container.appendChild(card);
-    // });
-
-
-     data.forEach(function (buss) {
+    data.forEach(function (buss) {
         var card = document.createElement('div');
-        card.className = 'top-rev-item';
+        card.className = 'card';
 
-        var imgSrc = biz.image || '/Images/img6.png';
-        var name = safeText(biz.companyName || biz.name || 'Business');
-        var address = safeText(biz.address || 'Location varies');
-        var category = safeText(biz.category || biz.serviceType || 'General Services');
-        var availability = safeText(biz.availability || 'Mon - Sat');
-        var hours = safeText(biz.hours || '9:00 AM - 5:00 PM');
-        var rating = biz.rating || '5.0';
-        var minPrice = biz.minPrice || biz.price || '20';
-        var maxPrice = biz.maxPrice || '100';
-        var bussId = biz._id || biz.id;
+        var cardImg = document.createElement('div');
+        cardImg.className = 'card-img';
 
-        // Build card header
-        var topHeader = document.createElement('div');
-        topHeader.className = 'top-header';
         var img = document.createElement('img');
-        img.src = imgSrc;
-        img.alt = name;
-        topHeader.appendChild(img);
+        img.src = buss.image || '/Images/img6.png';
+        img.alt = safeText(buss.name);
 
-        var heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 8.69C22 10.66 21.49 12.4 20.69 13.91C19.81 12.98 18.57 12.4 17.2 12.4C14.55 12.4 12.4 14.55 12.4 17.2C12.4 18.43 12.87 19.55 13.63 20.4C13.26 20.57 12.92 20.71 12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.69C2 5.6 4.49 3.1 7.56 3.1C9.37 3.1 10.99 3.98 12 5.33C13.01 3.98 14.63 3.1 16.44 3.1C19.51 3.1 22 5.6 22 8.69Z" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        topHeader.appendChild(heart);
+        var loveIcon = document.createElement('div');
+        loveIcon.className = 'love-icon';
+        var heartI = document.createElement('i');
+        heartI.className = 'fa-regular fa-heart';
+        loveIcon.appendChild(heartI);
 
-        // Build card body
-        var topBody = document.createElement('div');
-        topBody.className = 'top-body';
+        cardImg.appendChild(img);
+        cardImg.appendChild(loveIcon);
 
-        var nameH2 = document.createElement('h2');
-        nameH2.className = 'bus-name';
-        nameH2.textContent = name;
+        var cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
 
-        var locDiv = document.createElement('div');
-        locDiv.className = 'location';
-        locDiv.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3.62 8.49C5.59 -0.17 18.42 -0.16 20.38 8.5C21.53 13.58 18.37 17.88 15.6 20.54C13.59 22.48 10.41 22.48 8.39 20.54C5.63 17.88 2.47 13.57 3.62 8.49Z" stroke="#292D32" stroke-width="1.5"/><path d="M9.25 11.5L10.75 13L14.75 9" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        var locP = document.createElement('p');
-        locP.className = 'top-rev-text';
-        locP.textContent = address;
-        locDiv.appendChild(locP);
+        var namePrice = document.createElement('div');
+        namePrice.className = 'card-name-price';
 
-        var workDiv = document.createElement('div');
-        workDiv.className = 'work-note';
-        workDiv.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 13H15" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 17H12" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        var workP = document.createElement('p');
-        workP.className = 'top-rev-text';
-        workP.textContent = category;
-        workDiv.appendChild(workP);
+        var companyH2 = document.createElement('h2');
+        companyH2.className = 'business-name';
+        companyH2.textContent = safeText(buss.companyName || buss.name);
 
-        var dayDiv = document.createElement('div');
-        dayDiv.className = 'day-cal';
-        dayDiv.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.75 17.6H3.25" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        var dayP = document.createElement('p');
-        dayP.className = 'top-rev-text';
-        dayP.textContent = availability;
-        dayDiv.appendChild(dayP);
+        // var priceH2 = document.createElement('h2');
+        // priceH2.className = 'price';
+        // priceH2.textContent = '$50/hr';
 
-        var btcDiv = document.createElement('div');
-        btcDiv.className = 'book-time-cont';
-        var btDiv = document.createElement('div');
-        btDiv.className = 'book-time';
-        btDiv.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.71 15.18L12.61 13.33C12.07 13.01 11.63 12.24 11.63 11.61V7.51" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        var btP = document.createElement('p');
-        btP.className = 'top-rev-text';
-        btP.textContent = hours;
-        btDiv.appendChild(btP);
+        namePrice.appendChild(companyH2);
+        // namePrice.appendChild(priceH2);
 
-        var rateDiv = document.createElement('div');
-        rateDiv.className = 'rate-cont';
-        rateDiv.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M10.3 2.63L11.62 5.27C11.8 5.64 12.28 5.99 12.68 6.06L15.08 6.46C16.61 6.71 16.97 7.82 15.86 8.92L14 10.78C13.69 11.09 13.52 11.7 13.61 12.14L14.15 14.44C14.57 16.26 13.6 16.97 11.99 16.01L9.74 14.69C9.34 14.45 8.67 14.45 8.26 14.69L6.02 16.01C4.41 16.97 3.44 16.25 3.86 14.44L4.39 12.14C4.49 11.7 4.31 11.09 4 10.78L2.14 8.92C1.04 7.82 1.4 6.71 2.93 6.46L5.32 6.06C5.72 5.99 6.2 5.64 6.38 5.27L7.7 2.63C8.42 1.2 9.59 1.2 10.3 2.63Z" fill="#FBC02D"/></svg>';
-        var rateP = document.createElement('p');
-        rateP.className = 'top-rev-text';
-        rateP.textContent = rating;
-        rateDiv.appendChild(rateP);
+        var nameP = document.createElement('p');
+        nameP.className = 'name';
+        nameP.textContent = safeText(buss.name);
 
-        btcDiv.appendChild(btDiv);
-        btcDiv.appendChild(rateDiv);
-
-        topBody.appendChild(nameH2);
-        topBody.appendChild(locDiv);
-        topBody.appendChild(workDiv);
-        topBody.appendChild(dayDiv);
-        topBody.appendChild(btcDiv);
-
-        // Build card footer
-        var topFooter = document.createElement('div');
-        topFooter.className = 'top-footer';
-
-        var fromP = document.createElement('p');
-        fromP.className = 'rev-range';
-        fromP.textContent = 'From';
-        var priceDiv = document.createElement('div');
-        priceDiv.className = 'price-range';
-        priceDiv.textContent = '$' + minPrice + ' - $' + maxPrice;
-        var perP = document.createElement('p');
-        perP.className = 'rev-range';
-        perP.textContent = 'Per Person';
-
-
+        var ratingDiv = document.createElement('div');
+        ratingDiv.className = 'card-rating';
+        var starI = document.createElement('i');
+        starI.className = 'fa-solid fa-star';
+        var ratingP = document.createElement('p');
+        ratingP.textContent = (buss.rating || '5.0') + ' (' + (buss.reviewCount || '10') + ' reviews)';
+        ratingDiv.appendChild(starI);
+        ratingDiv.appendChild(ratingP);
 
         var btnCont = document.createElement('div');
         btnCont.className = 'card-btn-cont';
@@ -614,54 +488,16 @@ function createCard(data) {
         });
         btnCont.appendChild(bookBtn);
 
+        cardBody.appendChild(namePrice);
+        cardBody.appendChild(nameP);
+        cardBody.appendChild(ratingDiv);
+        cardBody.appendChild(btnCont);
 
-
-
-        // var exploreBtn = document.createElement('a');
-        // exploreBtn.className = 'explore-btn';
-        // exploreBtn.textContent = 'Explore / Book';
-        // exploreBtn.href = '#';
-        // exploreBtn.addEventListener('click', (function(id, data) {
-        //     return function (ev) {
-        //         ev.preventDefault();
-        //         showBookPage(id, data);
-        //     };
-        // })(bussId, biz));
-
-        topFooter.appendChild(fromP);
-        topFooter.appendChild(priceDiv);
-        topFooter.appendChild(perP);
-        topFooter.appendChild(btnCont);
-
-        card.appendChild(topHeader);
-        card.appendChild(topBody);
-        card.appendChild(topFooter);
+        card.appendChild(cardImg);
+        card.appendChild(cardBody);
 
         container.appendChild(card);
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 function showBookPage(bussId, bizData) {
