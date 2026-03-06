@@ -400,7 +400,7 @@ function setupUI() {
          sampText.classList.remove('active')
        }, 1500);
 
-    })
+    }
 
 showDates();
 }
