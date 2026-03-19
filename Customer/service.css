@@ -180,7 +180,14 @@ nav ul li a:hover {
 .cust-img {
     width: 35px;
     height: 35px;
-    background-image: url(../Images/img32.png);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    background-color: var(--like-col);
+    text-transform: uppercase;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -301,6 +308,106 @@ nav ul li a:hover {
     display: flex;
     flex-direction: column;
     gap: 4px;
+}
+
+/* dynamically rendered service cards */
+.card {
+    box-shadow: 0px 0px 4px var(--dark);
+    overflow: hidden;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--pri-color3);
+    cursor: pointer;
+    transition: var(--trans2);
+}
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+}
+.card-img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    position: relative;
+}
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.love-icon {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: var(--pri-color3);
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1;
+}
+.love-icon i {
+    font-size: 16px;
+    color: #475569;
+}
+.card-body {
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.card-name-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+.business-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--dark);
+}
+.price {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--like-col);
+    white-space: nowrap;
+}
+.name {
+    font-size: 0.85rem;
+    color: var(--sec-color2);
+}
+.card-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--sec-color2);
+}
+.card-rating .fa-star {
+    color: #f59e0b;
+}
+.card-btn-cont {
+    padding: 5px 10px 10px;
+}
+.card-btn {
+    width: 100%;
+    padding: 9px;
+    border: none;
+    background-color: var(--btn-col);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: var(--trans2);
+}
+.card-btn:hover {
+    background-color: var(--btn-col-hov);
 }
 .top-header {
     width: 100%;

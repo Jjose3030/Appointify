@@ -180,12 +180,19 @@ nav ul li a:hover {
 .cust-img {
     width: 35px;
     height: 35px;
-    background-image: url(../Images/img32.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     border-radius: 50%;
-    box-shadow:  0 0 1px var(--dark);
+    box-shadow: 0 0 1px var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    background-color: var(--like-col);
+    text-transform: uppercase;
 }
 .cust-name-summary {
     font-weight: 600;

@@ -5,10 +5,19 @@ var WS_URL = 'https://appointyify-api.onrender.com';
 var socket = null;
 var wsCurrentBookingId = null;
 var wsCurrentUserRole = 'client';
+var wsJoinedBookingId = null;
+var wsPendingMessages = [];
 
 var wsRetryTimer = null;
 var wsRetryCount = 0;
 var WS_MAX_RETRIES = 3;
+
+function normalizeWsSenderRole(role) {
+    var value = (role || '').toString().toLowerCase();
+    if (value === 'business' || value === 'vendor' || value === 'provider') return 'business';
+    if (value === 'client' || value === 'customer' || value === 'user') return 'client';
+    return value;
+}
 
 function connectToChat() {
     var token = localStorage.getItem('token');
@@ -35,11 +44,16 @@ function connectToChat() {
 
     socket = io(WS_URL, {
         auth: { token: token },
+        withCredentials: true,
         reconnection: false  // we manage retries manually
     });
 
     socket.on('connect', function () {
         wsRetryCount = 0;
+        wsJoinedBookingId = null;
+        if (wsCurrentBookingId) {
+            ensureJoinedBooking(wsCurrentBookingId);
+        }
     });
 
     socket.on('connect_error', function (err) {
@@ -74,16 +88,39 @@ function connectToChat() {
         } catch (e) { }
     });
 
+    socket.on('joinedBooking', function (data) {
+        try {
+            document.dispatchEvent(new CustomEvent('ws:joinedBooking', { detail: data }));
+        } catch (e) { }
+    });
+
     socket.on('messagesMarkedAsRead', function (data) { });
+    socket.on('bookingCreated', function (booking) {
+        try {
+            document.dispatchEvent(new CustomEvent('ws:bookingCreated', { detail: booking }));
+        } catch (e) { }
+    });
+    socket.on('bookingUpdated', function (booking) {
+        try {
+            document.dispatchEvent(new CustomEvent('ws:bookingUpdated', { detail: booking }));
+        } catch (e) { }
+    });
+    socket.on('socketError', function (error) {
+        console.error('WebSocket socketError:', error);
+    });
 }
 
 function openChat(bookingId) {
-    if (!socket) return;
     wsCurrentBookingId = bookingId;
-    socket.emit('joinBooking', bookingId);
+    wsJoinedBookingId = null;
+    if (!socket) {
+        connectToChat();
+        return;
+    }
+    ensureJoinedBooking(bookingId);
 }
 
-function sendMessage(text) {
+function wsSendMessage(text) {
     if (!text) {
         var inputField = document.getElementById('message-input');
         if (inputField) text = inputField.value;
@@ -95,16 +132,21 @@ function sendMessage(text) {
 
     var messageData = {
         bookingId: wsCurrentBookingId,
-        content: text.trim(),
-        senderType: wsCurrentUserRole
+        content: text.trim()
     };
 
-    socket.emit('sendMessage', messageData);
+    if (wsJoinedBookingId === wsCurrentBookingId) {
+        socket.emit('sendMessage', messageData);
+        return;
+    }
+
+    wsPendingMessages.push(messageData);
+    ensureJoinedBooking(wsCurrentBookingId);
 }
 
-function markMessagesAsReadSocket(messageIds) {
-    if (!socket || !messageIds || messageIds.length === 0) return;
-    socket.emit('markAsRead', { messageIds: messageIds });
+function markMessagesAsReadSocket(bookingId) {
+    if (!socket || !bookingId) return;
+    socket.emit('markAsRead', { bookingId: bookingId });
 }
 
 function displayIncomingMessage(message) {
@@ -126,16 +168,18 @@ function displayIncomingMessage(message) {
     }
 
     var isMine = false;
+    var senderRole = normalizeWsSenderRole(message.senderType || message.role);
+
     if (senderId && currentUserId) {
         isMine = senderId === currentUserId;
-    } else if (message.senderType === wsCurrentUserRole) {
+    } else if (senderRole === wsCurrentUserRole) {
         isMine = true;
     }
 
     if (isMine) return;
 
     var msgDiv = document.createElement('div');
-    var msgClass = (message.senderType === 'client') ? 'customer' : 'bus-owner';
+    var msgClass = (senderRole === 'client') ? 'customer' : 'bus-owner';
     msgDiv.className = 'message-show ' + msgClass;
 
     var textP = document.createElement('p');
@@ -159,11 +203,54 @@ function displayIncomingMessage(message) {
     container.appendChild(msgDiv);
     container.scrollTop = container.scrollHeight;
 
-    if (message._id) {
-        markMessagesAsReadSocket([message._id]);
+    if (wsCurrentBookingId) {
+        markMessagesAsReadSocket(wsCurrentBookingId);
     }
+}
+
+function ensureJoinedBooking(bookingId, callback) {
+    if (!socket || !bookingId) return;
+
+    if (!socket.connected) {
+        wsCurrentBookingId = bookingId;
+        return;
+    }
+
+    if (wsJoinedBookingId === bookingId) {
+        if (typeof callback === 'function') callback(true);
+        flushPendingMessages();
+        return;
+    }
+
+    socket.emit('joinBooking', bookingId, function (ack) {
+        var joined = !ack || ack.success !== false;
+        if (joined) {
+            wsJoinedBookingId = bookingId;
+            flushPendingMessages();
+        }
+        if (typeof callback === 'function') callback(joined, ack);
+    });
+}
+
+function flushPendingMessages() {
+    if (!socket || !socket.connected || !wsCurrentBookingId || wsJoinedBookingId !== wsCurrentBookingId) return;
+
+    var queue = wsPendingMessages.slice();
+    wsPendingMessages = [];
+
+    queue.forEach(function (messageData) {
+        if (messageData && messageData.bookingId === wsCurrentBookingId) {
+            socket.emit('sendMessage', messageData);
+        }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     connectToChat();
 });
+
+window.connectToChat = connectToChat;
+window.openChat = openChat;
+window.wsSendMessage = wsSendMessage;
+window.sendMessage = wsSendMessage;
+window.markMessagesAsReadSocket = markMessagesAsReadSocket;

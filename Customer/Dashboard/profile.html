@@ -278,140 +278,32 @@
 
 
     <script>
+        // Show existing profile picture when page loads
+        // (runs after customer.js sets currentUser)
+        window.addEventListener('load', function () {
+            var user = null;
+            try { user = JSON.parse(localStorage.getItem('user')); } catch(e) {}
+            if (user && user.profileImg) {
+                var imgEl = document.querySelector('.user-img');
+                var spanEl = document.querySelector('.user-span-text');
+                if (imgEl) { imgEl.src = user.profileImg; imgEl.style.display = 'flex'; }
+                if (spanEl) spanEl.style.display = 'none';
+            }
+        });
 
-        //controls the display of uploaded image
-        function getImage(input, image, text) {
-            const getImg = URL.createObjectURL(input.files[0]);
-            image.style.display = 'flex';
-            image.src = getImg;
-            text.style.display = 'none';
+        // Show local preview when user picks a file
+        var userImgInput = document.getElementById('user-form-img');
+        var showUserImg  = document.querySelector('.user-img');
+        var userImgText  = document.querySelector('.user-span-text');
+        if (userImgInput) {
+            userImgInput.addEventListener('change', function () {
+                if (!this.files[0]) return;
+                var url = URL.createObjectURL(this.files[0]);
+                showUserImg.src = url;
+                showUserImg.style.display = 'flex';
+                userImgText.style.display = 'none';
+            });
         }
-
-
-        //displaying user selected image
-        const userImg = document.getElementById('user-form-img');
-        const revUserImg = document.querySelector('.rev-form-img');
-        const userImgText = document.querySelector('.user-span-text');
-        const showUserImg = document.querySelector('.user-img')
-
-        userImg.addEventListener('input', () => {
-            getImage(userImg, showUserImg, userImgText)
-        })
-
-        const userForm = document.getElementById('user-prof-form');
-        userForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            clearError();
-            validateBuss()
-        })
-
-        //controls the validation of the bussiness owner profile form
-        async function validateBuss() {
-            const uName = document.getElementById('user-name');
-            const uEmail = document.getElementById('user-email');
-            const uPhone = document.getElementById('user-phone');
-            const uAddy = document.getElementById('user-addy');
-
-
-            const userImg = document.getElementById('user-form-img');
-            if (userImg.files[0] === undefined || userImg.files[0] === null) {
-                showError(userImg, 'Upload an image for your profile picture')
-            }
-
-            if (uName.value === '') {
-                showError(uName, 'Field can not be left empty');
-                return;
-            } else if (uName.value.trim().length < 5 || !isNaN(uName.value)) {
-                showError(uName, `Kindly input your full name`);
-                return;
-            }
-
-            if (uEmail.value === '') {
-                showError(uEmail, 'Field can not be left empty');
-                return;
-            } else if (!uEmail.value.includes('@') || !uEmail.value.includes('.com')) {
-                showError(uEmail, `Input a valid email address`);
-                return;
-            }
-
-            if (uPhone.value === '') {
-                showError(uPhone, 'Field can not be left empty');
-                return;
-            } else if (uPhone.value.trim().length < 11 || uPhone.value.trim().length > 14 || isNaN(uPhone.value)) {
-                showError(uPhone, 'Enter a valid phone number');
-                return;
-            }
-
-            if (uAddy.value === "") {
-                showError(uAddy, 'Field can not be left empty');
-                return;
-            } else if (uAddy.value.trim().length < 30 || !isNaN(uAddy.value)) {
-                showError(uAddy, 'Input your residential  address, at least 30 characters');
-                return;
-            }
-
-            const userProfile = {
-                name: uName.value.trim(),
-                email: uEmail.value.trim(),
-                phone: uPhone.value.trim(),
-                address: uAddy.value.trim()
-            }
-
-            try {
-                var updated = await ApiService.updateProfile(userProfile);
-                if (updated) {
-                    localStorage.setItem('user', JSON.stringify(updated));
-                    showSuccess();
-                }
-            } catch (error) {
-                alert('Failed to update profile. Please try again.');
-            }
-        }
-
-
-        //displays update successful message
-        function showSuccess() {
-            // displaying success message when the update is successful
-            const modal = document.querySelector('.modal')
-            const updCont = document.querySelector('.upd-suc-cont');
-            updCont.classList.add('active', !updCont.classList.contains('active'));
-            modal.classList.add('active');
-            const doneBtn = document.querySelector('.done-btn')
-
-            modal.addEventListener('click', () => {
-                updCont.classList.remove('active');
-                modal.classList.remove('active');
-            })
-            doneBtn.addEventListener('click', () => {
-                updCont.classList.remove('active');
-                modal.classList.remove('active');
-            })
-        }
-
-
-
-
-        //function showing input errors
-        function showError(input, message) {
-            const errorDiv = document.getElementById(input.id + '-error');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            input.classList.add('input-error');
-            return;
-        }
-
-        //function removing input errors
-        function clearError() {
-            const error = document.querySelectorAll('.error');
-            error.forEach(err => {
-                err.style.display = 'none';
-            })
-            const inputs = document.querySelectorAll('input');
-            inputs.forEach(inp => {
-                inp.classList.remove('input-error')
-            })
-        }
-
     </script>
     <script src="/DefaultScript/api-service.js"></script>
     <script src="/DefaultScript/customer.js"></script>

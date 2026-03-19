@@ -281,15 +281,6 @@
                     <div class="stat-item stat-item1">
                         <div class="stat-item-header">
                             <p class="stat-title">Total Booking</p>
-                            <div class="trend-cont">
-                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.83315 6.07467L8.16649 8.408L11.4956 5.07892L12.8332 6.4165V2.9165H9.33315L10.6707 4.25409L8.16649 6.75834L5.83315 4.425L1.3374 8.92075L2.16224 9.74559L5.83315 6.07467Z"
-                                        fill="#0B8A00" />
-                                </svg>
-                                <span class="per">10.0%</span>
-                            </div>
                         </div>
                         <h2 class="total-count">0</h2>
                         <p>This month</p>
@@ -297,15 +288,6 @@
                     <div class="stat-item stat-item2">
                         <div class="stat-item-header">
                             <p class="stat-title">Completed</p>
-                            <div class="trend-cont">
-                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.83315 6.07467L8.16649 8.408L11.4956 5.07892L12.8332 6.4165V2.9165H9.33315L10.6707 4.25409L8.16649 6.75834L5.83315 4.425L1.3374 8.92075L2.16224 9.74559L5.83315 6.07467Z"
-                                        fill="#0B8A00" />
-                                </svg>
-                                <span class="per">22.0%</span>
-                            </div>
                         </div>
                         <h2 class="confirmed-count">0</h2>
                         <p>Services</p>
@@ -313,15 +295,6 @@
                     <div class="stat-item stat-item3">
                         <div class="stat-item-header">
                             <p class="stat-title">Booking Pending</p>
-                            <div class="trend-cont">
-                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.83315 6.07467L8.16649 8.408L11.4956 5.07892L12.8332 6.4165V2.9165H9.33315L10.6707 4.25409L8.16649 6.75834L5.83315 4.425L1.3374 8.92075L2.16224 9.74559L5.83315 6.07467Z"
-                                        fill="#0B8A00" />
-                                </svg>
-                                <span class="per">12.0%</span>
-                            </div>
                         </div>
                         <h2 class="pending-count">0</h2>
                         <p>Customer</p>
@@ -434,8 +407,11 @@
                                 <span class="prof-img-text">
                                     Click to add <br>profile image
                                 </span>
+                                <span class="comp-img-edit-overlay">
+                                    <i class="fa-solid fa-camera"></i> Change Photo
+                                </span>
                             </label>
-                            <span class="error" id="comp-img-error">kkk</span>
+                            <span class="error" id="comp-img-error" style="display:none"></span>
                         </div>
 
                         <div class="comp-form-body">
@@ -454,7 +430,7 @@
                                     </svg>
                                     <input type="text" placeholder="Company name" id="comp-name">
                                 </div>
-                                <div class="error" id="comp-name-error">d</div>
+                                <div class="error" id="comp-name-error"></div>
                             </div>
                             <div class="comp-group">
                                 <div class="comp-layer">
@@ -509,28 +485,7 @@
                                 </div>
                                 <div class="error" id="comp-job-error"></div>
                             </div>
-                            <div class="comp-group">
-                                <div class="comp-layer">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path
-                                            d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z"
-                                            stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M20.75 17.6001H3.25" stroke="#292D32" stroke-width="1.5"
-                                            stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path
-                                            d="M12 8.25C10.77 8.25 9.73 8.92 9.73 10.22C9.73 10.84 10.02 11.31 10.46 11.61C9.85 11.97 9.5 12.55 9.5 13.23C9.5 14.47 10.45 15.24 12 15.24C13.54 15.24 14.5 14.47 14.5 13.23C14.5 12.55 14.15 11.96 13.53 11.61C13.98 11.3 14.26 10.84 14.26 10.22C14.26 8.92 13.23 8.25 12 8.25ZM12 11.09C11.48 11.09 11.1 10.78 11.1 10.29C11.1 9.79 11.48 9.5 12 9.5C12.52 9.5 12.9 9.79 12.9 10.29C12.9 10.78 12.52 11.09 12 11.09ZM12 14C11.34 14 10.86 13.67 10.86 13.07C10.86 12.47 11.34 12.15 12 12.15C12.66 12.15 13.14 12.48 13.14 13.07C13.14 13.67 12.66 14 12 14Z"
-                                            fill="#292D32" />
-                                    </svg>
-                                    <input type="text" placeholder="Working days e.g Moday - Friday" id="comp-work-day">
-                                </div>
-                                <div class="error" id="comp-work-day-error"></div>
-                            </div>
+
                             <div class="comp-group">
                                 <div class="comp-layer">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -627,12 +582,132 @@
                             </div>
                         </div>
 
+                        <!-- Working Hours & Slot Duration Section -->
+                        <div class="comp-working-hours">
+                            <div class="comp-wh-header">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#292D32" stroke-width="1.5"/>
+                                    <path d="M15.71 15.18L12.61 13.33C12.07 13.01 11.63 12.24 11.63 11.61V7.51" stroke="#292D32" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                                <h3>Working Hours &amp; Appointments</h3>
+                            </div>
+                            <div class="wh-grid">
+                                <div class="wh-row" data-day="Monday">
+                                    <label class="wh-toggle">
+                                        <input type="checkbox" class="wh-day-check" id="wh-Monday" value="Monday">
+                                        <span class="wh-day-name">Monday</span>
+                                    </label>
+                                    <div class="wh-times">
+                                        <input type="time" class="wh-open" id="wh-open-Monday" value="09:00">
+                                        <span class="wh-sep">&#8211;</span>
+                                        <input type="time" class="wh-close" id="wh-close-Monday" value="17:00">
+                                    </div>
+                                    <span class="wh-closed-label">Closed</span>
+                                </div>
+                                <div class="wh-row" data-day="Tuesday">
+                                    <label class="wh-toggle">
+                                        <input type="checkbox" class="wh-day-check" id="wh-Tuesday" value="Tuesday">
+                                        <span class="wh-day-name">Tuesday</span>
+                                    </label>
+                                    <div class="wh-times">
+                                        <input type="time" class="wh-open" id="wh-open-Tuesday" value="09:00">
+                                        <span class="wh-sep">&#8211;</span>
+                                        <input type="time" class="wh-close" id="wh-close-Tuesday" value="17:00">
+                                    </div>
+                                    <span class="wh-closed-label">Closed</span>
+                                </div>
+                                <div class="wh-row" data-day="Wednesday">
+                                    <label class="wh-toggle">
+                                        <input type="checkbox" class="wh-day-check" id="wh-Wednesday" value="Wednesday">
+                                        <span class="wh-day-name">Wednesday</span>
+                                    </label>
+                                    <div class="wh-times">
+                                        <input type="time" class="wh-open" id="wh-open-Wednesday" value="09:00">
+                                        <span class="wh-sep">&#8211;</span>
+                                        <input type="time" class="wh-close" id="wh-close-Wednesday" value="17:00">
+                                    </div>
+                                    <span class="wh-closed-label">Closed</span>
+                                </div>
+                                <div class="wh-row" data-day="Thursday">
+                                    <label class="wh-toggle">
+                                        <input type="checkbox" class="wh-day-check" id="wh-Thursday" value="Thursday">
+                                        <span class="wh-day-name">Thursday</span>
+                                    </label>
+                                    <div class="wh-times">
+                                        <input type="time" class="wh-open" id="wh-open-Thursday" value="09:00">
+                                        <span class="wh-sep">&#8211;</span>
+                                        <input type="time" class="wh-close" id="wh-close-Thursday" value="17:00">
+                                    </div>
+                                    <span class="wh-closed-label">Closed</span>
+                                </div>
+                                <div class="wh-row" data-day="Friday">
+                                    <label class="wh-toggle">
+                                        <input type="checkbox" class="wh-day-check" id="wh-Friday" value="Friday">
+                                        <span class="wh-day-name">Friday</span>
+                                    </label>
+                                    <div class="wh-times">
+                                        <input type="time" class="wh-open" id="wh-open-Friday" value="09:00">
+                                        <span class="wh-sep">&#8211;</span>
+                                        <input type="time" class="wh-close" id="wh-close-Friday" value="17:00">
+                                    </div>
+                                    <span class="wh-closed-label">Closed</span>
+                                </div>
+                                <div class="wh-row" data-day="Saturday">
+                                    <label class="wh-toggle">
+                                        <input type="checkbox" class="wh-day-check" id="wh-Saturday" value="Saturday">
+                                        <span class="wh-day-name">Saturday</span>
+                                    </label>
+                                    <div class="wh-times">
+                                        <input type="time" class="wh-open" id="wh-open-Saturday" value="09:00">
+                                        <span class="wh-sep">&#8211;</span>
+                                        <input type="time" class="wh-close" id="wh-close-Saturday" value="17:00">
+                                    </div>
+                                    <span class="wh-closed-label">Closed</span>
+                                </div>
+                                <div class="wh-row" data-day="Sunday">
+                                    <label class="wh-toggle">
+                                        <input type="checkbox" class="wh-day-check" id="wh-Sunday" value="Sunday">
+                                        <span class="wh-day-name">Sunday</span>
+                                    </label>
+                                    <div class="wh-times">
+                                        <input type="time" class="wh-open" id="wh-open-Sunday" value="09:00">
+                                        <span class="wh-sep">&#8211;</span>
+                                        <input type="time" class="wh-close" id="wh-close-Sunday" value="17:00">
+                                    </div>
+                                    <span class="wh-closed-label">Closed</span>
+                                </div>
+                            </div>
+                            <div class="slot-duration-section">
+                                <div class="slot-duration-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#292D32" stroke-width="1.5"/>
+                                        <path d="M12 8V12L15 15" stroke="#292D32" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                    <span>Appointment Slot Duration</span>
+                                </div>
+                                <div class="slot-opts-cont">
+                                    <button type="button" class="slot-opt" data-min="15">15 min</button>
+                                    <button type="button" class="slot-opt" data-min="30">30 min</button>
+                                    <button type="button" class="slot-opt" data-min="45">45 min</button>
+                                    <button type="button" class="slot-opt" data-min="60">1 hr</button>
+                                    <button type="button" class="slot-opt" data-min="90">1.5 hr</button>
+                                    <button type="button" class="slot-opt" data-min="120">2 hr</button>
+                                </div>
+                                <div class="slot-custom-cont">
+                                    <label for="comp-slot-duration">Custom:</label>
+                                    <input type="number" id="comp-slot-duration" min="5" max="480" step="5" placeholder="Enter minutes">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="comp-form-footer">
                             <h2>Photo Gallery</h2>
                             <p>Add some of your work done for better experience</p>
                             <div class="comp-work-img-cont">
                                 <input type="file" id="work-img-up" accept="image/*" multiple>
-                                <label for="work-img-up" class="work-img-up">Click to upload images</label>
+                                <label for="work-img-up" class="work-img-up">
+                                    <i class="fa-solid fa-images"></i> Upload Photos
+                                </label>
                                 <div class="up-img-cont">
                                     <p>No images uploaded yet</p>
                                     <!-- <div class="up-img">
@@ -641,6 +716,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="error" id="comp-form-error" style="display:none;margin-bottom:12px;padding:10px 14px;border-radius:8px;background:#fff0f0;border:1px solid #f5c6cb;"></div>
                         <button class="save-comp-btn" type="submit">Save Changes</button>
                     </form>
                 </div>
@@ -1068,6 +1144,9 @@
             var sendBtn          = document.querySelector('.cha-send-btn');
             var messageInput     = document.querySelector('.mesage-content');
             var convList         = document.querySelector('.mes-rev-block');
+            var pendingConversation = null;
+            var messagePollTimer = null;
+            var lastMessageSignature = '';
 
             // ── Avatar helpers ────────────────────────────────────────────
             var avatarColors = ['#345ADC','#E85D75','#2BBFA0','#F5A623','#8B5CF6','#EC4899','#10B981','#F59E0B'];
@@ -1112,6 +1191,102 @@
                 var dt = new Date(d);
                 return isNaN(dt) ? '' : dt.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
             }
+            function setActiveConversationItem(bookingId) {
+                document.querySelectorAll('.mes-item').forEach(function(item) {
+                    if (item.dataset && item.dataset.bookingId === bookingId) item.style.background = '#f0f4ff';
+                    else item.style.background = '';
+                });
+            }
+            function readPendingConversation() {
+                try {
+                    var raw = localStorage.getItem('businessPendingConversation');
+                    return raw ? JSON.parse(raw) : null;
+                } catch (e) {
+                    return null;
+                }
+            }
+            function clearPendingConversation() {
+                try { localStorage.removeItem('businessPendingConversation'); } catch (e) {}
+            }
+            function extractBusinessId(rawBusiness) {
+                if (!rawBusiness) return null;
+                if (Array.isArray(rawBusiness) && rawBusiness.length > 0) {
+                    return extractBusinessId(rawBusiness[0]);
+                }
+                if (rawBusiness._id || rawBusiness.id) return rawBusiness._id || rawBusiness.id;
+                if (rawBusiness.data) return extractBusinessId(rawBusiness.data);
+                if (rawBusiness.business) return extractBusinessId(rawBusiness.business);
+                if (rawBusiness.businesses) return extractBusinessId(rawBusiness.businesses);
+                return null;
+            }
+            function normalizeList(raw, fallbackKeys) {
+                if (Array.isArray(raw)) return raw;
+                if (!raw || typeof raw !== 'object') return [];
+                for (var i = 0; i < fallbackKeys.length; i++) {
+                    var key = fallbackKeys[i];
+                    if (Array.isArray(raw[key])) return raw[key];
+                }
+                return [];
+            }
+            function extractId(value) {
+                if (!value) return '';
+                if (typeof value === 'string') return value;
+                if (typeof value === 'object') return value._id || value.id || '';
+                return String(value || '');
+            }
+            function normalizeSenderRole(role) {
+                var value = safeText(role).toLowerCase();
+                if (value === 'business' || value === 'vendor' || value === 'provider') return 'business';
+                if (value === 'client' || value === 'customer' || value === 'user') return 'client';
+                return value;
+            }
+            function normalizeSavedMessagePayload(payload) {
+                if (!payload || typeof payload !== 'object') return null;
+                if (payload.content || payload.sender || payload.senderType || payload.createdAt) return payload;
+                if (payload.data && typeof payload.data === 'object') return normalizeSavedMessagePayload(payload.data);
+                if (payload.message && typeof payload.message === 'object') return normalizeSavedMessagePayload(payload.message);
+                if (payload.result && typeof payload.result === 'object') return normalizeSavedMessagePayload(payload.result);
+                return null;
+            }
+            function getMessageSignature(messages) {
+                if (!Array.isArray(messages) || messages.length === 0) return '';
+                return messages.map(function(msg) {
+                    return [
+                        extractId(msg && msg._id),
+                        extractId(msg && msg.sender),
+                        safeText(msg && (msg.senderType || msg.role)),
+                        safeText(msg && msg.content),
+                        safeText(msg && msg.createdAt)
+                    ].join('|');
+                }).join('||');
+            }
+            function getConversationKey(conv, bookingId, name) {
+                if (bookingId) return 'booking:' + bookingId;
+                if (conv && (conv._id || conv.id)) return 'conversation:' + extractId(conv);
+                return 'name:' + safeText(name).toLowerCase();
+            }
+            async function refreshCurrentChatSilently() {
+                if (!currentBookingId || isSending) return;
+                if (!chatContainer) return;
+                try {
+                    var messages = await ApiService.getMessages(currentBookingId);
+                    if (!Array.isArray(messages)) messages = messages && (messages.messages || messages.data || []);
+                    if (!Array.isArray(messages)) messages = [];
+                    var nextSignature = getMessageSignature(messages);
+                    if (nextSignature !== lastMessageSignature) {
+                        renderMessages(messages);
+                        lastMessageSignature = nextSignature;
+                        loadConversations();
+                    }
+                } catch (e) {}
+            }
+            function startMessagePolling() {
+                if (messagePollTimer) clearInterval(messagePollTimer);
+                messagePollTimer = setInterval(function() {
+                    if (document.hidden) return;
+                    refreshCurrentChatSilently();
+                }, 3000);
+            }
 
             // ── Conversation list ─────────────────────────────────────────
             async function loadConversations() {
@@ -1120,10 +1295,16 @@
                     // Resolve business ID
                     var businessId = null;
                     try {
-                        var biz = await ApiService.getMyBusiness();
-                        if (Array.isArray(biz) && biz.length > 0) businessId = biz[0]._id;
-                        else if (biz && biz._id) businessId = biz._id;
+                        if (typeof currentBusiness !== 'undefined' && currentBusiness) {
+                            businessId = extractBusinessId(currentBusiness);
+                        }
                     } catch (e) {}
+                    if (!businessId) {
+                        try { businessId = extractBusinessId(await ApiService.getMyBusiness()); } catch (e) {}
+                    }
+                    if (!businessId) {
+                        try { businessId = extractBusinessId(await ApiService.getMyBusinesses()); } catch (e) {}
+                    }
 
                     var conversations = [];
                     var bookings = [];
@@ -1139,21 +1320,25 @@
                         if (businessId) bookings = await ApiService.getBusinessBookings(businessId);
                     } catch (e) {}
 
-                    // Normalise to arrays
-                    if (!Array.isArray(conversations)) conversations = conversations && (conversations.conversations || conversations.data || []);
-                    if (!Array.isArray(bookings))       bookings       = bookings       && (bookings.bookings       || bookings.data       || []);
-                    if (!Array.isArray(conversations)) conversations = [];
-                    if (!Array.isArray(bookings))       bookings       = [];
+                    // Normalise to arrays and fall back to the dashboard booking cache
+                    conversations = normalizeList(conversations, ['conversations', 'data', 'messages']);
+                    bookings = normalizeList(bookings, ['bookings', 'data']);
+                    if (bookings.length === 0 && typeof window.bookings !== 'undefined' && Array.isArray(window.bookings)) {
+                        bookings = window.bookings.slice();
+                    }
 
                     var items = [];
                     var seen  = {};
+                    var seenConversationKeys = {};
 
                     conversations.forEach(function(conv) {
                         var bkg      = conv.booking || {};
-                        var bkgId    = (typeof bkg === 'object') ? (bkg._id || '') : String(bkg || '');
+                        var bkgId    = extractId(bkg) || extractId(conv.bookingId) || extractId(conv._id) || extractId(conv.id);
                         var usr      = (typeof bkg === 'object') ? (bkg.user || {}) : {};
                         var custName = (typeof usr === 'object' && usr) ? (usr.name || 'Customer') : 'Customer';
                         var custImg  = (typeof usr === 'object' && usr) ? (usr.profileImage || usr.profileImg || usr.image || null) : null;
+                        var convKey  = getConversationKey(conv, bkgId, custName);
+                        if (seenConversationKeys[convKey]) return;
                         var lastMsg  = conv.lastMessage || {};
                         items.push({
                             bookingId:   bkgId,
@@ -1163,6 +1348,7 @@
                             lastTime:    fmtTime((typeof lastMsg === 'object') ? lastMsg.createdAt : ''),
                             unread:      conv.unreadCount || 0
                         });
+                        seenConversationKeys[convKey] = true;
                         if (bkgId) seen[bkgId] = true;
                     });
 
@@ -1199,6 +1385,7 @@
                         var item = document.createElement('div');
                         item.className = 'mes-item';
                         item.style.cursor = 'pointer';
+                        item.dataset.bookingId = ci.bookingId || '';
 
                         var prof = document.createElement('div');
                         prof.className = 'mes-prof';
@@ -1235,14 +1422,28 @@
 
                         (function(bookingId, name, img) {
                             item.addEventListener('click', function() {
-                                document.querySelectorAll('.mes-item').forEach(function(i) { i.style.background = ''; });
-                                item.style.background = '#f0f4ff';
+                                setActiveConversationItem(bookingId);
+                                var localUnread = item.querySelector('.mes-count');
+                                if (localUnread) localUnread.textContent = '';
                                 loadChat(bookingId, name, img);
                             });
                         })(ci.bookingId, ci.name, ci.image);
 
                         convList.appendChild(item);
                     });
+
+                    pendingConversation = pendingConversation || readPendingConversation();
+                    if (pendingConversation && pendingConversation.bookingId) {
+                        var existingItem = convList.querySelector('.mes-item[data-booking-id="' + pendingConversation.bookingId + '"]');
+                        if (existingItem) {
+                            existingItem.click();
+                        } else {
+                            loadChat(pendingConversation.bookingId, pendingConversation.name || 'Customer', pendingConversation.image || '');
+                            setActiveConversationItem(pendingConversation.bookingId);
+                        }
+                        clearPendingConversation();
+                        pendingConversation = null;
+                    }
                 } catch (e) {
                     if (convList) convList.innerHTML = '<p style="padding:12px;color:#888">Could not load conversations.</p>';
                 }
@@ -1267,16 +1468,31 @@
                     if (!Array.isArray(messages)) messages = messages && (messages.messages || messages.data || []);
                     if (!Array.isArray(messages)) messages = [];
                     renderMessages(messages);
+                    lastMessageSignature = getMessageSignature(messages);
 
                     var myId = null;
-                    try { myId = JSON.parse(localStorage.getItem('user') || '{}')._id; } catch(e) {}
+                    try {
+                        var parsedUser = JSON.parse(localStorage.getItem('user') || '{}');
+                        myId = parsedUser._id || parsedUser.id || null;
+                    } catch(e) {}
                     var unreadIds = messages
-                        .filter(function(m) { return !m.isRead && m.senderType !== 'business'; })
+                        .filter(function(m) {
+                            var senderType = normalizeSenderRole(m.senderType || m.role);
+                            return !m.isRead && senderType !== 'business';
+                        })
                         .map(function(m) { return m._id; });
-                    if (unreadIds.length) ApiService.markMessagesAsRead(unreadIds).catch(function(){});
+                    if (unreadIds.length) {
+                        ApiService.markMessagesAsRead(unreadIds)
+                            .then(function() { loadConversations(); })
+                            .catch(function(){});
+                    }
                 } catch (e) {
-                    chatContainer.innerHTML = '<p style="padding:12px;color:#888">Could not load messages.</p>';
-                    return;
+                    if (e && e.status === 404) {
+                        renderMessages([]);
+                    } else {
+                        chatContainer.innerHTML = '<p style="padding:12px;color:#888">Could not load messages.</p>';
+                        return;
+                    }
                 }
 
                 // Join WebSocket room
@@ -1302,10 +1518,15 @@
                 chatContainer.textContent = '';
                 if (!Array.isArray(messages) || messages.length === 0) {
                     chatContainer.innerHTML = '<p style="padding:12px;text-align:center;color:#888">No messages yet. Start the conversation!</p>';
+                    lastMessageSignature = '';
                     return;
                 }
                 var myId = null;
-                try { myId = JSON.parse(localStorage.getItem('user') || '{}')._id; } catch(e) {}
+                try {
+                    var parsedUser = JSON.parse(localStorage.getItem('user') || '{}');
+                    myId = parsedUser._id || parsedUser.id || null;
+                } catch(e) {}
+                lastMessageSignature = getMessageSignature(messages);
                 messages.forEach(function(msg) { appendMsgEl(msg, myId); });
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
@@ -1313,11 +1534,12 @@
             function appendMsgEl(msg, myId) {
                 if (!chatContainer) return;
                 // Remove empty-state placeholder
-                var ph = chatContainer.querySelector('p');
-                if (ph && chatContainer.children.length === 1) chatContainer.removeChild(ph);
+                var ph = chatContainer.firstElementChild;
+                if (ph && chatContainer.children.length === 1 && ph.tagName === 'P') chatContainer.removeChild(ph);
 
-                var senderId = (msg.sender && typeof msg.sender === 'object') ? msg.sender._id : msg.sender;
-                var isMine   = (myId && senderId === myId) || msg.senderType === 'business';
+                var senderId = extractId(msg.sender);
+                var senderType = normalizeSenderRole(msg.senderType || msg.role);
+                var isMine   = (myId && senderId === myId) || senderType === 'business';
                 var div = document.createElement('div');
                 div.className = 'message-show ' + (isMine ? 'bus-owner' : 'customer');
                 var time = msg.createdAt ? new Date(msg.createdAt).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
@@ -1343,27 +1565,24 @@
 
                 messageInput.value = '';
 
-                // Optimistic render
-                var myId = null;
-                try { myId = JSON.parse(localStorage.getItem('user') || '{}')._id; } catch(e) {}
-                appendMsgEl({ content: text, sender: myId, senderType: 'business', createdAt: new Date().toISOString() }, myId);
-
-                // Prefer WebSocket; fall back to REST
-                var wsSent = false;
                 try {
-                    if (typeof window.sendMessage === 'function' &&
-                        typeof socket !== 'undefined' && socket && socket.connected &&
-                        typeof wsCurrentBookingId !== 'undefined' && wsCurrentBookingId === currentBookingId) {
-                        window.sendMessage(text);
-                        wsSent = true;
-                    }
-                } catch(e) {}
-                if (!wsSent) {
+                    var myId = null;
                     try {
-                        await ApiService.sendMessage({ bookingId: currentBookingId, content: text, senderType: 'business' });
-                    } catch(e) {
-                        console.error('Message send failed:', e);
-                    }
+                        var parsedUser = JSON.parse(localStorage.getItem('user') || '{}');
+                        myId = parsedUser._id || parsedUser.id || null;
+                    } catch(e) {}
+                    var savedMessage = normalizeSavedMessagePayload(await ApiService.sendMessage({ bookingId: currentBookingId, content: text }));
+                    appendMsgEl(savedMessage || {
+                        content: text,
+                        sender: myId,
+                        senderType: 'business',
+                        createdAt: new Date().toISOString()
+                    }, myId);
+                    loadConversations();
+                } catch(e) {
+                    console.error('Message send failed:', e);
+                    messageInput.value = text;
+                    alert((e && e.message) ? e.message : 'Message could not be sent.');
                 }
 
                 isSending = false;
@@ -1379,7 +1598,7 @@
             document.addEventListener('ws:message', function(e) {
                 var msg = e.detail;
                 if (!msg || !currentBookingId) return;
-                var incomingBkgId = (msg.booking && typeof msg.booking === 'object') ? msg.booking._id : msg.booking;
+                var incomingBkgId = extractId(msg.booking) || extractId(msg.bookingId);
                 if (incomingBkgId && incomingBkgId !== currentBookingId) {
                     // Message for a different chat — just refresh sidebar
                     loadConversations();
@@ -1387,7 +1606,37 @@
                 // Current chat: websocket.js displayIncomingMessage already appended it
             });
 
+            window.openBusinessBookingConversation = function(details) {
+                if (!details || !details.bookingId) return;
+
+                pendingConversation = {
+                    bookingId: details.bookingId,
+                    name: details.name || 'Customer',
+                    image: details.image || ''
+                };
+
+                try {
+                    localStorage.setItem('businessPendingConversation', JSON.stringify(pendingConversation));
+                } catch (e) {}
+
+                var msgNavLink = document.querySelector('[data-page="message"]');
+                if (msgNavLink) msgNavLink.click();
+
+                var existingItem = convList ? convList.querySelector('.mes-item[data-booking-id="' + pendingConversation.bookingId + '"]') : null;
+                if (existingItem) {
+                    existingItem.click();
+                    clearPendingConversation();
+                    pendingConversation = null;
+                    return;
+                }
+
+                loadChat(pendingConversation.bookingId, pendingConversation.name, pendingConversation.image);
+                setActiveConversationItem(pendingConversation.bookingId);
+            };
+
+            pendingConversation = readPendingConversation();
             loadConversations();
+            startMessagePolling();
         })();
     </script>
     <script>

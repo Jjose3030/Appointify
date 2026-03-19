@@ -1,20 +1,7 @@
 'use strict';
 
-/**
- * Appointify API Service
- * Comprehensive API integration based on swagger.js documentation
- * Base URL: https://appointyify-api.onrender.com
- */
+const API_URL = 'https://appointyify-api.vercel.app';
 
-const API_URL = 'https://appointyify-api.onrender.com';
-
-// ============================================
-// HELPER FUNCTIONS
-// ============================================
-
-/**
- * Get authentication headers
- */
 function getAuthHeaders() {
     const token = localStorage.getItem('token');
     const headers = { 'Content-Type': 'application/json' };
@@ -25,25 +12,27 @@ function getAuthHeaders() {
     return headers;
 }
 
-/**
- * Get raw token string, or null if not available
- */
 function getToken() {
     const token = localStorage.getItem('token');
     if (!token || token === 'undefined' || token === 'null') return null;
     return token;
 }
 
-/**
- * Handle API response
- */
 async function handleResponse(response) {
-    const data = await response.json();
+    // Safely parse body — some endpoints return 204 No Content or HTML error pages
+    let data = null;
+    const contentType = response.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+        try { data = await response.json(); } catch (e) { data = null; }
+    } else if (!response.ok) {
+        // Non-JSON error body — read as text for the message
+        try { const txt = await response.text(); data = { msg: txt || 'Request failed' }; } catch (e) { data = { msg: 'Request failed' }; }
+    }
 
     if (!response.ok) {
         // Token expired or invalid — clear session and redirect to login
         if (response.status === 401) {
-            const storedUser = (() => { try { return JSON.parse(localStorage.getItem('user') || '{}'); } catch(e) { return {}; } })();
+            const storedUser = (() => { try { return JSON.parse(localStorage.getItem('user') || '{}'); } catch (e) { return {}; } })();
             const isBusiness = storedUser.role === 'business';
             localStorage.removeItem('token');
             localStorage.removeItem('user');
@@ -52,24 +41,14 @@ async function handleResponse(response) {
         }
         throw {
             status: response.status,
-            message: data.msg || 'Request failed',
-            errors: data.errors || []
+            message: (data && (data.msg || data.message)) || ('Request failed (' + response.status + ')'),
+            errors: (data && data.errors) || []
         };
     }
 
     return data;
 }
 
-// ============================================
-// AUTH APIs
-// ============================================
-
-/**
- * Register a new user
- * POST /api/auth/register
- * @param {Object} userData - { name, email, password, role, phone }
- * @returns {Promise<{token: string, user: Object}>}
- */
 async function register(userData) {
     try {
         const response = await fetch(`${API_URL}/api/auth/register`, {
@@ -85,12 +64,6 @@ async function register(userData) {
     }
 }
 
-/**
- * Login user
- * POST /api/auth/login
- * @param {Object} credentials - { email, password }
- * @returns {Promise<{token: string, user: Object}>}
- */
 async function login(credentials) {
     try {
         const response = await fetch(`${API_URL}/api/auth/login`, {
@@ -106,11 +79,6 @@ async function login(credentials) {
     }
 }
 
-/**
- * Get current user profile
- * GET /api/auth/me
- * @returns {Promise<Object>} Current user data
- */
 async function getCurrentUser() {
     try {
         const response = await fetch(`${API_URL}/api/auth/me`, {
@@ -125,12 +93,6 @@ async function getCurrentUser() {
     }
 }
 
-/**
- * Update user profile
- * PUT /api/auth/profile
- * @param {Object} updates - { name, email, phone, address, bio }
- * @returns {Promise<Object>} Updated user data
- */
 async function updateProfile(updates) {
     try {
         const response = await fetch(`${API_URL}/api/auth/profile`, {
@@ -146,19 +108,33 @@ async function updateProfile(updates) {
     }
 }
 
-// ============================================
-// BUSINESS APIs
-// ============================================
+async function updateProfileWithImage(updates, imageFile) {
+    try {
+        var formData = new FormData();
+        formData.append('name', updates.name || '');
+        formData.append('email', updates.email || '');
+        formData.append('phone', updates.phone || '');
+        formData.append('address', updates.address || '');
+        if (imageFile) formData.append('image', imageFile);
 
-/**
- * Create a new business
- * POST /api/business
- * @param {Object} businessData - Business details
- * @returns {Promise<Object>} Created business
- */
+        var token = localStorage.getItem('token');
+        var headers = token ? { 'Authorization': 'Bearer ' + token } : {};
+
+        const response = await fetch(`${API_URL}/api/auth/profile`, {
+            method: 'PUT',
+            headers: headers,
+            body: formData
+        });
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Update profile with image error:', error);
+        throw error;
+    }
+}
+
 async function createBusiness(businessData) {
     try {
-        const response = await fetch(`${API_URL}/api/business`, {
+        const response = await fetch(`${API_URL}/api/businesses`, {
             method: 'POST',
             headers: getAuthHeaders(),
             body: JSON.stringify(businessData)
@@ -171,12 +147,6 @@ async function createBusiness(businessData) {
     }
 }
 
-/**
- * Get all businesses (with optional filters)
- * GET /api/businesses?category=...&search=...
- * @param {Object} filters - { category, search, isActive }
- * @returns {Promise<Array>} List of businesses
- */
 async function getBusinesses(filters = {}) {
     try {
         const params = new URLSearchParams();
@@ -198,12 +168,6 @@ async function getBusinesses(filters = {}) {
     }
 }
 
-/**
- * Get business by ID
- * GET /api/businesses/:id
- * @param {string} businessId
- * @returns {Promise<Object>} Business details
- */
 async function getBusinessById(businessId) {
     try {
         const response = await fetch(`${API_URL}/api/businesses/${businessId}`, {
@@ -218,13 +182,6 @@ async function getBusinessById(businessId) {
     }
 }
 
-/**
- * Update business
- * PATCH /api/businesses/:id
- * @param {string} businessId
- * @param {Object} updates - Business fields to update
- * @returns {Promise<Object>} Updated business
- */
 async function updateBusiness(businessId, updates) {
     try {
         const response = await fetch(`${API_URL}/api/businesses/${businessId}`, {
@@ -240,12 +197,6 @@ async function updateBusiness(businessId, updates) {
     }
 }
 
-/**
- * Delete business
- * DELETE /api/businesses/:id
- * @param {string} businessId
- * @returns {Promise<Object>} Deletion confirmation
- */
 async function deleteBusiness(businessId) {
     try {
         const response = await fetch(`${API_URL}/api/businesses/${businessId}`, {
@@ -260,15 +211,11 @@ async function deleteBusiness(businessId) {
     }
 }
 
-/**
- * Get my business (for business owners)
- * GET /api/businesses/my-business
- * @returns {Promise<Object>} Owner's business
- */
 async function getMyBusiness() {
     try {
         const response = await fetch(`${API_URL}/api/businesses/my-business`, {
             method: 'GET',
+            cache: 'no-store',
             headers: getAuthHeaders()
         });
 
@@ -279,22 +226,34 @@ async function getMyBusiness() {
     }
 }
 
-// ============================================
-// BOOKING APIs
-// ============================================
-
-/**
- * Create a new booking
- * POST /api/bookings
- * @param {Object} bookingData - { business, date, startTime, endTime, notes }
- * @returns {Promise<Object>} Created booking
- */
 async function createBooking(bookingData) {
     try {
+        var hasSampleFile = bookingData && bookingData.sample && typeof FormData !== 'undefined' && typeof File !== 'undefined' && bookingData.sample instanceof File;
+        var headers = getAuthHeaders();
+        var body = null;
+
+        if (hasSampleFile) {
+            var formData = new FormData();
+            formData.append('business', bookingData.business || '');
+            formData.append('date', bookingData.date || '');
+            formData.append('startTime', bookingData.startTime || '');
+            formData.append('note', bookingData.note || '');
+            formData.append('serviceType', bookingData.serviceType || '');
+            formData.append('phone', bookingData.phone || '');
+            formData.append('location', bookingData.location || '');
+            formData.append('addressDirection', bookingData.addressDirection || '');
+            formData.append('budget', bookingData.budget || '');
+            formData.append('sample', bookingData.sample);
+            delete headers['Content-Type'];
+            body = formData;
+        } else {
+            body = JSON.stringify(bookingData);
+        }
+
         const response = await fetch(`${API_URL}/api/bookings`, {
             method: 'POST',
-            headers: getAuthHeaders(),
-            body: JSON.stringify(bookingData)
+            headers: headers,
+            body: body
         });
 
         return await handleResponse(response);
@@ -304,12 +263,6 @@ async function createBooking(bookingData) {
     }
 }
 
-/**
- * Get user's bookings
- * GET /api/bookings
- * @param {Object} filters - { status, startDate, endDate }
- * @returns {Promise<Array>} List of bookings
- */
 async function getMyBookings(filters = {}) {
     try {
         const params = new URLSearchParams();
@@ -331,12 +284,6 @@ async function getMyBookings(filters = {}) {
     }
 }
 
-/**
- * Get booking by ID
- * GET /api/bookings/:id
- * @param {string} bookingId
- * @returns {Promise<Object>} Booking details
- */
 async function getBookingById(bookingId) {
     try {
         const response = await fetch(`${API_URL}/api/bookings/${bookingId}`, {
@@ -351,13 +298,6 @@ async function getBookingById(bookingId) {
     }
 }
 
-/**
- * Update booking status
- * PUT /api/bookings/:id
- * @param {string} bookingId
- * @param {Object} updates - { status, notes }
- * @returns {Promise<Object>} Updated booking
- */
 async function updateBooking(bookingId, updates) {
     try {
         const response = await fetch(`${API_URL}/api/bookings/${bookingId}`, {
@@ -373,12 +313,6 @@ async function updateBooking(bookingId, updates) {
     }
 }
 
-/**
- * Cancel booking
- * PUT /api/bookings/:id/cancel
- * @param {string} bookingId
- * @returns {Promise<Object>} Cancelled booking
- */
 async function cancelBooking(bookingId) {
     try {
         const response = await fetch(`${API_URL}/api/bookings/${bookingId}/cancel`, {
@@ -393,13 +327,6 @@ async function cancelBooking(bookingId) {
     }
 }
 
-/**
- * Get bookings for a business
- * GET /api/bookings/business/:businessId
- * @param {string} businessId
- * @param {Object} filters - { status, date }
- * @returns {Promise<Array>} Business bookings
- */
 async function getBusinessBookings(businessId, filters = {}) {
     try {
         const params = new URLSearchParams();
@@ -420,13 +347,6 @@ async function getBusinessBookings(businessId, filters = {}) {
     }
 }
 
-/**
- * Check availability for a business
- * GET /api/bookings/availability/:businessId?date=YYYY-MM-DD
- * @param {string} businessId
- * @param {string} date - ISO date string
- * @returns {Promise<Array>} Available time slots
- */
 async function checkAvailability(businessId, date) {
     try {
         const response = await fetch(`${API_URL}/api/bookings/availability/${businessId}?date=${date}`, {
@@ -441,16 +361,6 @@ async function checkAvailability(businessId, date) {
     }
 }
 
-// ============================================
-// MESSAGE APIs
-// ============================================
-
-/**
- * Get messages for a booking
- * GET /api/messages/:bookingId
- * @param {string} bookingId
- * @returns {Promise<Array>} Messages
- */
 async function getMessages(bookingId) {
     try {
         const response = await fetch(`${API_URL}/api/messages/${bookingId}`, {
@@ -465,18 +375,16 @@ async function getMessages(bookingId) {
     }
 }
 
-/**
- * Send a message (REST API, though WebSocket is preferred)
- * POST /api/messages
- * @param {Object} messageData - { bookingId, content, senderType }
- * @returns {Promise<Object>} Sent message
- */
 async function sendMessage(messageData) {
     try {
+        var payload = {
+            bookingId: messageData && messageData.bookingId,
+            content: messageData && messageData.content
+        };
         const response = await fetch(`${API_URL}/api/messages`, {
             method: 'POST',
             headers: getAuthHeaders(),
-            body: JSON.stringify(messageData)
+            body: JSON.stringify(payload)
         });
 
         return await handleResponse(response);
@@ -486,12 +394,6 @@ async function sendMessage(messageData) {
     }
 }
 
-/**
- * Mark messages as read
- * PUT /api/messages/read
- * @param {Array<string>} messageIds - Array of message IDs
- * @returns {Promise<Object>} Update result
- */
 async function markMessagesAsRead(messageIds) {
     try {
         const response = await fetch(`${API_URL}/api/messages/read`, {
@@ -507,11 +409,6 @@ async function markMessagesAsRead(messageIds) {
     }
 }
 
-/**
- * Get all conversations for current user
- * GET /api/messages/conversations
- * @returns {Promise<Array>} List of conversations with last message and unread count
- */
 async function getConversations() {
     try {
         const response = await fetch(`${API_URL}/api/messages/conversations`, {
@@ -526,12 +423,6 @@ async function getConversations() {
     }
 }
 
-/**
- * Get all conversations for a specific business
- * GET /api/messages/business/:businessId/conversations
- * @param {string} businessId
- * @returns {Promise<Array>} List of conversations for the business
- */
 async function getBusinessConversations(businessId) {
     try {
         const response = await fetch(`${API_URL}/api/messages/business/${businessId}/conversations`, {
@@ -546,15 +437,6 @@ async function getBusinessConversations(businessId) {
     }
 }
 
-// ============================================
-// ADMIN APIs
-// ============================================
-
-/**
- * Get platform statistics (Admin only)
- * GET /api/admin/stats
- * @returns {Promise<Object>} Platform stats
- */
 async function getAdminStats() {
     try {
         const response = await fetch(`${API_URL}/api/admin/stats`, {
@@ -569,12 +451,6 @@ async function getAdminStats() {
     }
 }
 
-/**
- * Get all users (Admin only)
- * GET /api/admin/users?role=...&search=...
- * @param {Object} filters - { role, search, page, limit }
- * @returns {Promise<Array>} List of users
- */
 async function getAdminUsers(filters = {}) {
     try {
         const params = new URLSearchParams();
@@ -597,13 +473,6 @@ async function getAdminUsers(filters = {}) {
     }
 }
 
-/**
- * Update user role (Admin only)
- * PUT /api/admin/users/:userId/role
- * @param {string} userId
- * @param {string} role - 'user', 'business', or 'admin'
- * @returns {Promise<Object>} Updated user
- */
 async function updateUserRole(userId, role) {
     try {
         const response = await fetch(`${API_URL}/api/admin/users/${userId}/role`, {
@@ -619,12 +488,6 @@ async function updateUserRole(userId, role) {
     }
 }
 
-/**
- * Delete user (Admin only)
- * DELETE /api/admin/users/:userId
- * @param {string} userId
- * @returns {Promise<Object>} Deletion confirmation
- */
 async function deleteUser(userId) {
     try {
         const response = await fetch(`${API_URL}/api/admin/users/${userId}`, {
@@ -639,9 +502,278 @@ async function deleteUser(userId) {
     }
 }
 
-// ============================================
-// EXPORT API SERVICE
-// ============================================
+async function resendOTP(email) {
+    try {
+        const response = await fetch(`${API_URL}/api/auth/resend-otp`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Resend OTP error:', error);
+        throw error;
+    }
+}
+
+async function verifyOTP(email, otp) {
+    try {
+        const response = await fetch(`${API_URL}/api/auth/verify-otp`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, otp })
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Verify OTP error:', error);
+        throw error;
+    }
+}
+
+async function forgotPassword(email) {
+    try {
+        const response = await fetch(`${API_URL}/api/auth/forgot-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Forgot password error:', error);
+        throw error;
+    }
+}
+
+async function resetPassword(token, password) {
+    try {
+        const response = await fetch(`${API_URL}/api/auth/reset-password/${token}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password })
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Reset password error:', error);
+        throw error;
+    }
+}
+
+async function uploadProfileImage(file) {
+    try {
+        var formData = new FormData();
+        formData.append('image', file);
+
+        const response = await fetch(`${API_URL}/api/auth/profile/image`, {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + getToken() },
+            body: formData
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Upload profile image error:', error);
+        throw error;
+    }
+}
+
+async function deleteProfileImage() {
+    try {
+        const response = await fetch(`${API_URL}/api/auth/profile/image`, {
+            method: 'DELETE',
+            headers: getAuthHeaders()
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Delete profile image error:', error);
+        throw error;
+    }
+}
+
+async function getMyBusinesses() {
+    try {
+        const response = await fetch(`${API_URL}/api/businesses/mine`, {
+            method: 'GET',
+            cache: 'no-store',
+            headers: getAuthHeaders()
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Get my businesses error:', error);
+        throw error;
+    }
+}
+
+async function uploadBusinessImage(businessId, file) {
+    try {
+        var formData = new FormData();
+        formData.append('image', file);
+
+        const response = await fetch(`${API_URL}/api/businesses/${businessId}/image`, {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + getToken() },
+            body: formData
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Upload business image error:', error);
+        throw error;
+    }
+}
+
+async function deleteBusinessImage(businessId) {
+    try {
+        const response = await fetch(`${API_URL}/api/businesses/${businessId}/image`, {
+            method: 'DELETE',
+            headers: getAuthHeaders()
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Delete business image error:', error);
+        throw error;
+    }
+}
+
+async function updateBookingStatus(bookingId, status) {
+    try {
+        const response = await fetch(`${API_URL}/api/bookings/${bookingId}/status`, {
+            method: 'PATCH',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ status })
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Update booking status error:', error);
+        throw error;
+    }
+}
+
+async function cancelBookingPatch(bookingId) {
+    try {
+        const response = await fetch(`${API_URL}/api/bookings/${bookingId}/cancel`, {
+            method: 'PATCH',
+            headers: getAuthHeaders()
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Cancel booking (patch) error:', error);
+        throw error;
+    }
+}
+
+async function getMyConversations() {
+    try {
+        const response = await fetch(`${API_URL}/api/messages/my-conversations`, {
+            method: 'GET',
+            headers: getAuthHeaders()
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Get my conversations error:', error);
+        throw error;
+    }
+}
+
+async function markMessagesAsReadAlt(messageIds) {
+    try {
+        const response = await fetch(`${API_URL}/api/messages/mark-read`, {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ messageIds })
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Mark messages as read (alt) error:', error);
+        throw error;
+    }
+}
+
+async function getBookingMessages(bookingId) {
+    try {
+        const response = await fetch(`${API_URL}/api/messages/booking/${bookingId}`, {
+            method: 'GET',
+            headers: getAuthHeaders()
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Get booking messages error:', error);
+        throw error;
+    }
+}
+
+async function getAdminUserById(userId) {
+    try {
+        const response = await fetch(`${API_URL}/api/admin/users/${userId}`, {
+            method: 'GET',
+            headers: getAuthHeaders()
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Get admin user by ID error:', error);
+        throw error;
+    }
+}
+
+async function getAdminBusinesses(filters = {}) {
+    try {
+        const params = new URLSearchParams();
+        if (filters.page) params.append('page', filters.page);
+        if (filters.limit) params.append('limit', filters.limit);
+        if (filters.search) params.append('search', filters.search);
+        if (filters.category) params.append('category', filters.category);
+        if (filters.owner) params.append('owner', filters.owner);
+
+        const url = `${API_URL}/api/admin/businesses${params.toString() ? '?' + params.toString() : ''}`;
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: getAuthHeaders()
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Get admin businesses error:', error);
+        throw error;
+    }
+}
+
+async function getAdminBookings(filters = {}) {
+    try {
+        const params = new URLSearchParams();
+        if (filters.page) params.append('page', filters.page);
+        if (filters.limit) params.append('limit', filters.limit);
+        if (filters.business) params.append('business', filters.business);
+        if (filters.user) params.append('user', filters.user);
+        if (filters.status) params.append('status', filters.status);
+        if (filters.dateFrom) params.append('dateFrom', filters.dateFrom);
+        if (filters.dateTo) params.append('dateTo', filters.dateTo);
+
+        const url = `${API_URL}/api/admin/bookings${params.toString() ? '?' + params.toString() : ''}`;
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: getAuthHeaders()
+        });
+
+        return await handleResponse(response);
+    } catch (error) {
+        console.error('Get admin bookings error:', error);
+        throw error;
+    }
+}
 
 const ApiService = {
     // Auth
@@ -649,6 +781,12 @@ const ApiService = {
     login,
     getCurrentUser,
     updateProfile,
+    resendOTP,
+    verifyOTP,
+    forgotPassword,
+    resetPassword,
+    uploadProfileImage,
+    deleteProfileImage,
 
     // Business
     createBusiness,
@@ -657,6 +795,9 @@ const ApiService = {
     updateBusiness,
     deleteBusiness,
     getMyBusiness,
+    getMyBusinesses,
+    uploadBusinessImage,
+    deleteBusinessImage,
 
     // Booking
     createBooking,
@@ -666,6 +807,8 @@ const ApiService = {
     cancelBooking,
     getBusinessBookings,
     checkAvailability,
+    updateBookingStatus,
+    cancelBookingPatch,
 
     // Messages
     getMessages,
@@ -673,15 +816,21 @@ const ApiService = {
     markMessagesAsRead,
     getConversations,
     getBusinessConversations,
+    getMyConversations,
+    markMessagesAsReadAlt,
+    getBookingMessages,
 
     // Admin
     getAdminStats,
     getAdminUsers,
     updateUserRole,
     deleteUser,
+    getAdminUserById,
+    getAdminBusinesses,
+    getAdminBookings,
 
     // Utility
-    getBaseUrl: function() { return API_URL; },
+    getBaseUrl: function () { return API_URL; },
     getToken
 };
 

@@ -18,8 +18,21 @@ document.addEventListener('DOMContentLoaded', async function () {
     setupUI();
 
     await fetchBusinessProfile();
-    if (currentBusiness) {
-        await fetchBookings();
+    await fetchBookings();
+
+    // If no business profile set up yet, redirect to Company tab automatically
+    if (!isValidBusiness(currentBusiness)) {
+        var companyLink = document.querySelector('[data-page="company"]');
+        if (companyLink) companyLink.click();
+
+        var compForm = document.querySelector('.company-form');
+        if (compForm && !document.getElementById('setup-notice')) {
+            var notice = document.createElement('div');
+            notice.id = 'setup-notice';
+            notice.style.cssText = 'background:#fff3cd;border:1px solid #ffc107;color:#856404;padding:12px 16px;border-radius:10px;margin-bottom:16px;font-size:0.9rem;';
+            notice.textContent = 'Welcome! Please fill in your company details and click Save Changes to complete your setup.';
+            compForm.insertAdjacentElement('afterbegin', notice);
+        }
     }
 
     // Wire up success modal done button
@@ -83,45 +96,106 @@ function checkAuth() {
     }
 }
 
+// Normalise a raw business object: copy 'id' → '_id' when '_id' is absent
+function normalizeBusiness(obj) {
+    if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return obj;
+    if (!obj._id && obj.id) {
+        obj._id = obj.id;
+    }
+    return obj;
+}
+
+function extractBusiness(data) {
+    if (!data) return null;
+    if (Array.isArray(data) && data.length > 0) return normalizeBusiness(data[0]);
+    if (data._id || data.id) return normalizeBusiness(data);
+    if (data.data) {
+        if (Array.isArray(data.data) && data.data.length > 0) return normalizeBusiness(data.data[0]);
+        if (data.data._id || data.data.id) return normalizeBusiness(data.data);
+    }
+    if (data.business && (data.business._id || data.business.id)) return normalizeBusiness(data.business);
+    if (data.businesses) {
+        if (Array.isArray(data.businesses) && data.businesses.length > 0) return normalizeBusiness(data.businesses[0]);
+    }
+    return null;
+}
+
+function isValidBusiness(b) {
+    if (!b) return false;
+    if (Array.isArray(b)) return false;
+    if (typeof b !== 'object') return false;
+    if (!b._id && !b.id) return false;
+    // Ensure _id is always set
+    if (!b._id) b._id = b.id;
+    return true;
+}
+
 async function fetchBusinessProfile() {
     try {
         var data = await ApiService.getMyBusiness();
+        currentBusiness = extractBusiness(data);
 
-        if (Array.isArray(data) && data.length > 0) {
-            currentBusiness = data[0];
-        } else if (data && data._id) {
-            currentBusiness = data;
+        // Fallback: try /mine endpoint if first call gave nothing
+        if (!isValidBusiness(currentBusiness)) {
+            try {
+                var data2 = await ApiService.getMyBusinesses();
+                currentBusiness = extractBusiness(data2);
+            } catch (e2) { /* ignore */ }
         }
 
-        if (currentBusiness) {
+        if (isValidBusiness(currentBusiness)) {
             populateProfileForm(currentBusiness);
             updateDashboardStats(currentBusiness);
 
             // Show company image preview if available
             var compImg = document.querySelector('.show-comp-img');
             var compImgText = document.querySelector('.prof-img-text');
-            if (compImg && (currentBusiness.image)) {
+            if (compImg && currentBusiness.image) {
                 compImg.src = currentBusiness.image;
                 compImg.style.display = 'block';
                 if (compImgText) compImgText.style.display = 'none';
+                var revImgLabel = document.getElementById('rev-img');
+                if (revImgLabel) revImgLabel.classList.add('has-image');
             }
+
+            // Render gallery from API images array
+            var apiGallery = Array.isArray(currentBusiness.images) ? currentBusiness.images : [];
+            renderGallery(apiGallery);
         }
     } catch (error) {
-        // no business found yet — user can create one via the Company form
+        console.warn('fetchBusinessProfile error:', error);
+        // No business yet — user can create one via the Company form
     }
 }
 
 async function fetchBookings() {
-    if (!currentBusiness) return;
+    // Always show a state immediately so the booking page is never blank
+    renderBookingPage('loading');
+
+    if (!isValidBusiness(currentBusiness)) {
+        renderBookingPage([]);
+        return;
+    }
 
     try {
-        bookings = await ApiService.getBusinessBookings(currentBusiness._id);
-        if (Array.isArray(bookings)) {
-            renderBookings(bookings);
-            updateBookingStats(bookings);
+        var raw = await ApiService.getBusinessBookings(currentBusiness._id);
+        // Handle wrapped responses: { data: [...] } or { bookings: [...] } or plain array
+        if (Array.isArray(raw)) {
+            bookings = raw;
+        } else if (raw && Array.isArray(raw.data)) {
+            bookings = raw.data;
+        } else if (raw && Array.isArray(raw.bookings)) {
+            bookings = raw.bookings;
+        } else {
+            bookings = [];
         }
+
+        renderBookings(bookings);
+        updateBookingStats(bookings);
+        renderBookingPage(bookings);
     } catch (error) {
-        // failed to load bookings
+        console.warn('fetchBookings error:', error);
+        renderBookingPage([]);
     }
 }
 
@@ -251,13 +325,27 @@ function setupUI() {
                 compImgEl.src = URL.createObjectURL(file);
                 compImgEl.style.display = 'block';
                 if (compImgText) compImgText.style.display = 'none';
+                var revImgLabel = document.getElementById('rev-img');
+                if (revImgLabel) revImgLabel.classList.add('has-image');
             }
 
-            if (!currentBusiness || !currentBusiness._id) return;
+            if (!isValidBusiness(currentBusiness)) {
+                // Show inline notice instead of blocking alert
+                var notice = document.getElementById('comp-img-error');
+                if (notice) {
+                    notice.textContent = 'Save your company profile first before uploading an image.';
+                    notice.style.display = 'block';
+                    setTimeout(function () { notice.textContent = ''; notice.style.display = 'none'; }, 4000);
+                }
+                if (compImgEl) { compImgEl.src = ''; compImgEl.style.display = 'none'; }
+                if (compImgText) compImgText.style.display = '';
+                compImgInput.value = '';
+                return;
+            }
 
             try {
                 var formData = new FormData();
-                formData.append('image', file);
+                formData.append('images', file);
                 var token = ApiService.getToken();
                 if (!token) return;
                 var res = await fetch(ApiService.getBaseUrl() + '/api/businesses/' + currentBusiness._id + '/image', {
@@ -266,13 +354,94 @@ function setupUI() {
                     body: formData
                 });
                 if (res.ok) {
-                    var updated = await res.json();
-                    if (updated && updated._id) currentBusiness = updated;
+                    var result = await res.json();
+                    var uploadedImgs = result.images || [];
+                    if (uploadedImgs.length > 0) {
+                        currentBusiness.image = uploadedImgs[0].url;
+                        currentBusiness.imagePublicId = uploadedImgs[0].publicId;
+                    }
                     showSuccess();
+                } else {
+                    alert('Image upload failed. Please try again.');
                 }
             } catch (err) {
                 // image upload failed silently
             }
+        });
+    }
+
+    // Gallery image upload
+    var workImgUp = document.getElementById('work-img-up');
+    if (workImgUp) {
+        workImgUp.addEventListener('change', async function () {
+            var files = Array.from(workImgUp.files);
+            if (!files.length) return;
+
+            if (!isValidBusiness(currentBusiness)) {
+                var notice = document.getElementById('comp-img-error');
+                if (notice) {
+                    notice.textContent = 'Save your company profile first before uploading gallery images.';
+                    notice.style.display = 'block';
+                    setTimeout(function () { notice.textContent = ''; notice.style.display = 'none'; }, 4000);
+                }
+                workImgUp.value = '';
+                return;
+            }
+
+            var token = ApiService.getToken();
+            if (!token) return;
+
+            var formData = new FormData();
+            files.forEach(function (f) { formData.append('images', f); });
+
+            try {
+                var res = await fetch(ApiService.getBaseUrl() + '/api/businesses/' + currentBusiness._id + '/image', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + token },
+                    body: formData
+                });
+                if (res.ok) {
+                    var result = await res.json();
+                    var newImgs = result.images || [];
+                    var existing = Array.isArray(currentBusiness.images) ? currentBusiness.images : [];
+                    currentBusiness.images = existing.concat(newImgs);
+                    renderGallery(currentBusiness.images);
+                    showSuccess();
+                } else {
+                    alert('Gallery upload failed. Please try again.');
+                }
+            } catch (err) {
+                alert('Gallery upload failed. Please try again.');
+            }
+
+            workImgUp.value = '';
+        });
+    }
+
+    // Slot duration quick-select buttons
+    var slotOpts = document.querySelectorAll('.slot-opt');
+    slotOpts.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            slotOpts.forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var slotInput = document.getElementById('comp-slot-duration');
+            if (slotInput) slotInput.value = btn.dataset.min;
+        });
+    });
+
+    // Sync custom slot input: deselect quick-select buttons when custom value typed
+    var slotCustom = document.getElementById('comp-slot-duration');
+    if (slotCustom) {
+        slotCustom.addEventListener('input', function () {
+            // Only deselect if the typed value doesn't match any button
+            var val = parseInt(slotCustom.value, 10);
+            slotOpts.forEach(function (b) {
+                if (parseInt(b.dataset.min, 10) === val) {
+                    b.classList.add('active');
+                } else {
+                    b.classList.remove('active');
+                }
+            });
         });
     }
 
@@ -353,8 +522,10 @@ function renderBookings(data) {
             var imgCont = document.createElement('div');
             imgCont.className = 'user-img-cont';
             var imgEl = document.createElement('img');
-            imgEl.src = '/Images/img27.png';
-            imgEl.alt = '';
+            imgEl.src = (booking.user && (booking.user.profileImage || booking.user.profileImg || booking.user.image))
+                ? (booking.user.profileImage || booking.user.profileImg || booking.user.image)
+                : '/Images/img27.png';
+            imgEl.alt = customerName + ' profile image';
             imgCont.appendChild(imgEl);
 
             var userNameDiv = document.createElement('div');
@@ -407,7 +578,7 @@ function renderBookings(data) {
                 checkIcon.className = 'fa-solid fa-check';
                 acceptBtn.appendChild(checkIcon);
                 acceptBtn.addEventListener('click', function () {
-                    updateBookingStatus(booking._id, 'confirmed');
+                    updateBookingStatus(booking._id || booking.id, 'confirmed');
                 });
 
                 var declineBtn = document.createElement('button');
@@ -416,7 +587,7 @@ function renderBookings(data) {
                 xIcon.className = 'fa-solid fa-xmark';
                 declineBtn.appendChild(xIcon);
                 declineBtn.addEventListener('click', function () {
-                    updateBookingStatus(booking._id, 'cancelled');
+                    updateBookingStatus(booking._id || booking.id, 'cancelled');
                 });
 
                 actionDiv.appendChild(acceptBtn);
@@ -439,26 +610,33 @@ async function updateBookingStatus(bookingId, status) {
     if (!confirm(confirmMsg)) return;
 
     try {
-        await ApiService.updateBooking(bookingId, { status: status });
+        if (status === 'cancelled' && ApiService.cancelBookingPatch) {
+            await ApiService.cancelBookingPatch(bookingId);
+        } else if (ApiService.updateBookingStatus) {
+            await ApiService.updateBookingStatus(bookingId, status);
+        } else {
+            await ApiService.updateBooking(bookingId, { status: status });
+        }
         await fetchBookings();
     } catch (error) {
-        alert('Failed to update booking. Please try again.');
+        var msg = (error && error.message) ? error.message : 'Failed to update booking. Please try again.';
+        alert(msg);
     }
 }
 
 window.updateBookingStatus = updateBookingStatus;
 
 function populateProfileForm(data) {
+    var u = currentUser || {};
     var fields = {
-        'comp-name': data.name || data.companyName,
-        'comp-email': data.email,
-        'comp-phone': data.phone,
+        'comp-name': data.name || data.companyName || u.companyName || u.name,
+        'comp-email': data.email || u.email,
+        'comp-phone': data.phone || u.phone,
         'comp-address': data.address,
         'comp-description': data.description,
         'comp-job': data.category,
-        'comp-work-day': data.workingHours || data.workingDays,
-        'comp-min-price': data.priceRange ? data.priceRange.min : '',
-        'comp-max-price': data.priceRange ? data.priceRange.max : '',
+        'comp-min-price': data.minPrice != null ? data.minPrice : '',
+        'comp-max-price': data.maxPrice != null ? data.maxPrice : '',
         'comp-direction': data.direction
     };
 
@@ -466,7 +644,109 @@ function populateProfileForm(data) {
         var el = document.getElementById(id);
         if (el) el.value = fields[id] || '';
     }
+
+    populateWorkingHours(data);
 }
+
+// ─── Working Hours helpers ───────────────────────────────────────
+
+function getWorkingSchedule() {
+    var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    var schedule = [];
+    days.forEach(function (day) {
+        var check = document.getElementById('wh-' + day);
+        if (check && check.checked) {
+            var open = document.getElementById('wh-open-' + day);
+            var close = document.getElementById('wh-close-' + day);
+            schedule.push({
+                day: day,
+                open: open ? open.value : '09:00',
+                close: close ? close.value : '17:00'
+            });
+        }
+    });
+    return schedule;
+}
+
+function getSlotDuration() {
+    var el = document.getElementById('comp-slot-duration');
+    return (el && el.value) ? parseInt(el.value, 10) : null;
+}
+
+function populateWorkingHours(data) {
+    if (!data) return;
+
+    // Slot duration
+    var slotEl = document.getElementById('comp-slot-duration');
+    if (slotEl && data.slotDuration) slotEl.value = data.slotDuration;
+    var slotOpts = document.querySelectorAll('.slot-opt');
+    slotOpts.forEach(function (btn) {
+        btn.classList.remove('active');
+        if (data.slotDuration && parseInt(btn.dataset.min, 10) === parseInt(data.slotDuration, 10)) {
+            btn.classList.add('active');
+        }
+    });
+
+    var DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    var DAY_ABBR = { Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday' };
+
+    function resolveDay(name) {
+        if (!name) return null;
+        var n = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+        if (DAYS.indexOf(n) !== -1) return n;
+        return DAY_ABBR[n.substring(0, 3)] || null;
+    }
+
+    var activeDays = [];
+
+    if (data.workingHours && typeof data.workingHours === 'object' && !Array.isArray(data.workingHours)) {
+        // New object format: { monday: { open, close, enabled }, ... }
+        Object.keys(data.workingHours).forEach(function (key) {
+            var entry = data.workingHours[key];
+            var resolved = resolveDay(key);
+            if (resolved && entry && entry.enabled) {
+                activeDays.push({ day: resolved, open: entry.open, close: entry.close });
+            }
+        });
+    } else if (Array.isArray(data.workingSchedule) && data.workingSchedule.length > 0) {
+        activeDays = data.workingSchedule;
+    } else if (typeof data.workingHours === 'string' && data.workingHours.trim()) {
+        var str = data.workingHours.trim();
+        var rangeMatch = str.match(/([A-Za-z]+)\s*[-\u2013]\s*([A-Za-z]+)/);
+        if (rangeMatch) {
+            var fromDay = resolveDay(rangeMatch[1]);
+            var toDay   = resolveDay(rangeMatch[2]);
+            if (fromDay && toDay) {
+                var from = DAYS.indexOf(fromDay);
+                var to   = DAYS.indexOf(toDay);
+                if (from !== -1 && to !== -1) {
+                    for (var i = from; i <= to; i++) activeDays.push({ day: DAYS[i] });
+                }
+            }
+        } else {
+            DAYS.forEach(function (d) {
+                if (str.indexOf(d) !== -1 || str.indexOf(d.substring(0, 3)) !== -1) {
+                    activeDays.push({ day: d });
+                }
+            });
+        }
+    }
+
+    if (activeDays.length === 0) return;
+    document.querySelectorAll('.wh-day-check').forEach(function (c) { c.checked = false; });
+    activeDays.forEach(function (item) {
+        var check = document.getElementById('wh-' + item.day);
+        if (check) {
+            check.checked = true;
+            var open  = document.getElementById('wh-open-'  + item.day);
+            var close = document.getElementById('wh-close-' + item.day);
+            if (open  && item.open)  open.value  = item.open;
+            if (close && item.close) close.value = item.close;
+        }
+    });
+}
+
+// ─────────────────────────────────────────────────────────────────
 
 function populateUserForm(user) {
     if (!user) return;
@@ -499,6 +779,23 @@ async function handleCompanyUpdate(e) {
         return;
     }
 
+    var saveBtn = document.querySelector('.save-comp-btn');
+    var originalText = saveBtn ? saveBtn.textContent : 'Save Changes';
+    if (saveBtn) { saveBtn.textContent = 'Saving...'; saveBtn.disabled = true; }
+
+    var schedule = getWorkingSchedule();
+
+    // Build workingHours as the object format the API expects
+    var ALL_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    var workingHoursObj = {};
+    ALL_DAYS.forEach(function (day) {
+        var key = day.toLowerCase();
+        var inSchedule = schedule.find(function (s) { return s.day === day; });
+        workingHoursObj[key] = inSchedule
+            ? { open: inSchedule.open || '09:00', close: inSchedule.close || '17:00', enabled: true }
+            : { open: '09:00', close: '17:00', enabled: false };
+    });
+
     var payload = {
         name: getFieldValue('comp-name'),
         email: getFieldValue('comp-email'),
@@ -506,34 +803,163 @@ async function handleCompanyUpdate(e) {
         address: getFieldValue('comp-address'),
         description: getFieldValue('comp-description'),
         category: getFieldValue('comp-job'),
-        workingHours: getFieldValue('comp-work-day'),
-        direction: getFieldValue('comp-direction')
+        workingSchedule: schedule,
+        workingHours: workingHoursObj,
+        slotDuration: getSlotDuration(),
+        direction: getFieldValue('comp-direction'),
+        image: (currentBusiness && currentBusiness.image) ? currentBusiness.image : undefined
     };
 
     var minPrice = getFieldValue('comp-min-price');
     var maxPrice = getFieldValue('comp-max-price');
-    if (minPrice || maxPrice) {
-        payload.priceRange = { min: minPrice, max: maxPrice };
-    }
+    if (minPrice) payload.minPrice = parseFloat(minPrice);
+    if (maxPrice) payload.maxPrice = parseFloat(maxPrice);
 
-    // Remove empty fields
+    // Remove falsy fields (but keep arrays/objects and valid numbers including 0)
     Object.keys(payload).forEach(function (k) {
-        if (!payload[k]) delete payload[k];
+        var v = payload[k];
+        if (!v && v !== 0 && !Array.isArray(v) && typeof v !== 'object') delete payload[k];
     });
+    // Clean up: remove null/NaN slotDuration
+    if (!payload.slotDuration || isNaN(payload.slotDuration)) delete payload.slotDuration;
+
+    // Helper: show inline form error
+    function showFormError(msg) {
+        var errEl = document.getElementById('comp-form-error');
+        if (errEl) {
+            errEl.textContent = msg;
+            errEl.style.display = 'block';
+            setTimeout(function () { errEl.style.display = 'none'; errEl.textContent = ''; }, 6000);
+        } else {
+            // Fallback to the image error span at top of form
+            var imgErr = document.getElementById('comp-img-error');
+            if (imgErr) {
+                imgErr.textContent = msg;
+                imgErr.style.display = 'block';
+                setTimeout(function () { imgErr.textContent = ''; imgErr.style.display = 'none'; }, 6000);
+            }
+        }
+    }
 
     try {
-        if (currentBusiness && currentBusiness._id) {
-            var updated = await ApiService.updateBusiness(currentBusiness._id, payload);
-            currentBusiness = updated;
+        var response;
+        if (isValidBusiness(currentBusiness)) {
+            response = await ApiService.updateBusiness(currentBusiness._id, payload);
         } else {
-            var created = await ApiService.createBusiness(payload);
-            currentBusiness = created;
+            response = await ApiService.createBusiness(payload);
         }
+
+        // Extract from any wrapper shape: { business }, { data }, or plain object
+        var updated = extractBusiness(response) || response;
+        if (updated && (updated._id || updated.id)) {
+            if (!updated._id) updated._id = updated.id;
+            // Merge: payload keeps fields the API doesn't persist; API response wins for fields it returns
+            currentBusiness = Object.assign({}, currentBusiness, payload, updated);
+            populateProfileForm(currentBusiness);
+
+            // Refresh company image preview
+            var compImg = document.querySelector('.show-comp-img');
+            var compImgText = document.querySelector('.prof-img-text');
+            if (compImg && currentBusiness.image) {
+                compImg.src = currentBusiness.image;
+                compImg.style.display = 'block';
+                if (compImgText) compImgText.style.display = 'none';
+            }
+        }
+
+        if (saveBtn) { saveBtn.textContent = originalText; saveBtn.disabled = false; }
+
+        // Remove the first-time setup notice if present
+        var setupNotice = document.getElementById('setup-notice');
+        if (setupNotice) setupNotice.remove();
+
         showSuccess();
     } catch (error) {
-        alert('Failed to save business profile. Please try again.');
+        console.error('handleCompanyUpdate error:', error);
+        if (saveBtn) { saveBtn.textContent = originalText; saveBtn.disabled = false; }
+        var msg = (error && error.message) ? error.message : 'Failed to save business profile. Please try again.';
+        showFormError(msg);
     }
 }
+
+// ── Gallery helpers ──────────────────────────────────────────────
+
+function getLocalGallery(businessId) {
+    try {
+        var raw = localStorage.getItem('gallery_' + businessId);
+        return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+}
+
+function saveLocalGallery(businessId, images) {
+    try {
+        localStorage.setItem('gallery_' + businessId, JSON.stringify(images));
+    } catch (e) { /* storage full — silently skip */ }
+}
+
+function fileToDataURL(file) {
+    return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function (e) { resolve(e.target.result); };
+        reader.onerror = function (e) { reject(e); };
+        reader.readAsDataURL(file);
+    });
+}
+
+function renderGallery(images) {
+    var container = document.querySelector('.up-img-cont');
+    if (!container) return;
+
+    container.textContent = '';
+
+    if (!images || images.length === 0) {
+        var empty = document.createElement('p');
+        empty.textContent = 'No images uploaded yet';
+        container.appendChild(empty);
+        return;
+    }
+
+    images.forEach(function (item, idx) {
+        // item can be a string URL or { url, publicId } object
+        var src = typeof item === 'string' ? item : item.url;
+        var publicId = (typeof item === 'object' && item.publicId) ? item.publicId : null;
+
+        var wrapper = document.createElement('div');
+        wrapper.className = 'up-img';
+
+        var img = document.createElement('img');
+        img.src = src;
+        img.alt = 'gallery image';
+
+        var delBtn = document.createElement('button');
+        delBtn.className = 'del-gallery-img';
+        delBtn.type = 'button';
+        delBtn.title = 'Remove image';
+        delBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        delBtn.addEventListener('click', async function () {
+            if (!isValidBusiness(currentBusiness)) return;
+            // Delete from API if we have a publicId
+            if (publicId) {
+                try {
+                    var token = ApiService.getToken();
+                    await fetch(ApiService.getBaseUrl() + '/api/businesses/' + currentBusiness._id + '/image', {
+                        method: 'DELETE',
+                        headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ publicId: publicId })
+                    });
+                } catch (e) { /* ignore */ }
+            }
+            currentBusiness.images = (currentBusiness.images || []).filter(function (_, i) { return i !== idx; });
+            renderGallery(currentBusiness.images);
+        });
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(delBtn);
+        container.appendChild(wrapper);
+    });
+}
+
+// ─────────────────────────────────────────────────────────────────
 
 function updateDashboardStats(business) {
     var nameEl = document.querySelector('.business-dash-name');
@@ -562,9 +988,6 @@ function updateBookingStats(bookingList) {
 
     var confirmedEl = document.querySelector('.confirmed-count');
     if (confirmedEl) confirmedEl.textContent = confirmed;
-
-    // Also render the Bookings page full list
-    renderBookingPage(bookingList);
 }
 
 // Renders the full bookings list in the Bookings page tab
@@ -574,10 +997,18 @@ function renderBookingPage(data) {
 
     container.textContent = '';
 
+    if (data === 'loading') {
+        var loading = document.createElement('p');
+        loading.className = 'booking-empty-state';
+        loading.textContent = 'Loading bookings...';
+        container.appendChild(loading);
+        return;
+    }
+
     if (!data || data.length === 0) {
         var empty = document.createElement('p');
-        empty.style.padding = '20px';
-        empty.textContent = 'No bookings found.';
+        empty.className = 'booking-empty-state';
+        empty.textContent = 'No bookings available.';
         container.appendChild(empty);
         return;
     }
@@ -585,12 +1016,13 @@ function renderBookingPage(data) {
     data.forEach(function (booking) {
         var customerName = (booking.user && booking.user.name) ? booking.user.name : 'Customer';
         var customerPhone = (booking.user && booking.user.phone) ? booking.user.phone : '';
-        var customerAddr = (booking.user && booking.user.address) ? booking.user.address : '';
+        var customerAddr = booking.addressDirection || booking.location ||
+            ((booking.user && booking.user.address) ? booking.user.address : '');
         var bookingDate = booking.date ? new Date(booking.date).toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A';
         var bookingTime = booking.startTime || 'TBD';
         var endTime = booking.endTime || '';
         var status = (booking.status || 'pending').toLowerCase();
-        var notes = booking.notes || 'No notes provided';
+        var notes = booking.note || booking.notes || 'No notes provided';
         var budget = booking.budget || '';
         var serviceType = booking.serviceType || booking.category || '';
 
@@ -612,7 +1044,9 @@ function renderBookingPage(data) {
         bookImg.className = 'book-img';
         var profImg = document.createElement('img');
         profImg.className = 'book-prof-img';
-        profImg.src = (booking.user && booking.user.profileImg) ? booking.user.profileImg : '/Images/img27.png';
+        profImg.src = (booking.user && (booking.user.profileImage || booking.user.profileImg || booking.user.image))
+            ? (booking.user.profileImage || booking.user.profileImg || booking.user.image)
+            : '/Images/img27.png';
         profImg.alt = customerName;
         bookImg.appendChild(profImg);
 
@@ -696,14 +1130,14 @@ function renderBookingPage(data) {
             acceptBtn.innerHTML = '<i class="fa-solid fa-check"></i> Accept';
             (function (id) {
                 acceptBtn.addEventListener('click', function (e) { e.stopPropagation(); updateBookingStatus(id, 'confirmed'); });
-            })(booking._id);
+            })(booking._id || booking.id);
 
             var declineBtn = document.createElement('button');
             declineBtn.className = 'decline-btn';
             declineBtn.innerHTML = '<i class="fa-solid fa-xmark"></i> Decline';
             (function (id) {
                 declineBtn.addEventListener('click', function (e) { e.stopPropagation(); updateBookingStatus(id, 'cancelled'); });
-            })(booking._id);
+            })(booking._id || booking.id);
 
             bookServHeader.appendChild(acceptBtn);
             bookServHeader.appendChild(declineBtn);
@@ -739,20 +1173,30 @@ function renderBookingPage(data) {
         var msgBtn = document.createElement('button');
         msgBtn.className = 'message-cust';
         msgBtn.textContent = 'Message Customer';
-        (function (bId, bName) {
+        (function (bId, bName, bImg) {
             msgBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
-                // Switch to message tab and open chat
+                if (typeof window.openBusinessBookingConversation === 'function') {
+                    window.openBusinessBookingConversation({
+                        bookingId: bId,
+                        name: bName,
+                        image: bImg
+                    });
+                    return;
+                }
+
+                try {
+                    localStorage.setItem('businessPendingConversation', JSON.stringify({
+                        bookingId: bId,
+                        name: bName,
+                        image: bImg || ''
+                    }));
+                } catch (err) { }
+
                 var msgNavLink = document.querySelector('[data-page="message"]');
                 if (msgNavLink) msgNavLink.click();
-                setTimeout(function () {
-                    var convItems = document.querySelectorAll('.mes-item');
-                    convItems.forEach(function (ci) {
-                        if (ci.textContent.includes(bName)) ci.click();
-                    });
-                }, 300);
             });
-        })(booking._id, customerName);
+        })(booking._id || booking.id, customerName, profImg.src);
 
         right.appendChild(shortNote);
         right.appendChild(addy);

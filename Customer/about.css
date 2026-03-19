@@ -180,7 +180,14 @@ nav ul li a:hover {
 .cust-img {
     width: 35px;
     height: 35px;
-    background-image: url(../Images/img32.png);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    background-color: var(--like-col);
+    text-transform: uppercase;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

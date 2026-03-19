@@ -28,6 +28,28 @@ if (userLogForm) {
 
             var data = await ApiService.login({ email: emailValue, password: passValue });
 
+            // Support server sending { requireOTP: true } or a message indicating OTP
+            var msg = data.msg || data.message || '';
+            if (data.requireOTP || data.requiresOTP || msg.toLowerCase().includes('otp')) {
+                if (loader) loader.style.display = 'none';
+                
+                window.pendingOtpEmail = emailValue;
+                window.pendingOtpRole = 'user';
+                
+                var modal = document.querySelector('.modal');
+                var verifyCont = document.querySelector('.verify-cont');
+                if (modal && verifyCont) {
+                    modal.classList.add('active');
+                    verifyCont.classList.add('active');
+                    goToVerify('verify-item1');
+                    var verContBtn = verifyCont.querySelector('.ver-cont');
+                    if (verContBtn) {
+                        verContBtn.onclick = function (e) { e.preventDefault(); goToVerify('verify-item2'); };
+                    }
+                }
+                return;
+            }
+
             if (!data.token) throw { message: 'Login failed: no token received.' };
             localStorage.setItem('token', data.token);
 
@@ -85,6 +107,27 @@ if (bussLogForm) {
             if (loader) loader.style.display = 'flex';
 
             var data = await ApiService.login({ email: emailValue, password: passValue });
+
+            var msg = data.msg || data.message || '';
+            if (data.requireOTP || data.requiresOTP || msg.toLowerCase().includes('otp')) {
+                if (loader) loader.style.display = 'none';
+                
+                window.pendingOtpEmail = emailValue;
+                window.pendingOtpRole = 'business';
+                
+                var modal = document.querySelector('.modal');
+                var verifyCont = document.querySelector('.verify-cont');
+                if (modal && verifyCont) {
+                    modal.classList.add('active');
+                    verifyCont.classList.add('active');
+                    goToVerify('verify-item1');
+                    var verContBtn = verifyCont.querySelector('.ver-cont');
+                    if (verContBtn) {
+                        verContBtn.onclick = function (e) { e.preventDefault(); goToVerify('verify-item2'); };
+                    }
+                }
+                return;
+            }
 
             if (!data.token) throw { message: 'Login failed: no token received.' };
             localStorage.setItem('token', data.token);
@@ -162,11 +205,12 @@ if (userSignForm) {
                 role: 'user'
             });
 
-            if (!data.token) throw { message: 'Registration failed: no token received.' };
-            localStorage.setItem('token', data.token);
+            if (!data.token && !data.msg) throw { message: 'Registration failed: no successful response.' };
 
-            var user = data.user || await ApiService.getCurrentUser();
-            localStorage.setItem('user', JSON.stringify(user));
+            // Wait until OTP is verified to store token
+            // Store email for verification
+            window.pendingOtpEmail = userEmail;
+            window.pendingOtpRole = 'user';
 
             if (loader) loader.style.display = 'none';
 
@@ -176,11 +220,15 @@ if (userSignForm) {
             if (modal && verifyCont) {
                 modal.classList.add('active');
                 verifyCont.classList.add('active');
+                
+                if (typeof goToVerify === 'function') goToVerify('verify-item1'); // Start at first step
 
-                var verDoneBtn = document.querySelector('.ver-done-btn');
-                if (verDoneBtn) {
-                    verDoneBtn.addEventListener('click', function () {
-                        window.location.assign('../Customer/index.html');
+                // Bind continue button to go to next OTP entry step
+                var verContBtn = document.querySelector('.ver-cont');
+                if (verContBtn) {
+                    verContBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        goToVerify('verify-item2');
                     });
                 }
             } else {
@@ -254,11 +302,10 @@ if (bussSignForm) {
                 companyName: bussCompany
             });
 
-            if (!data.token) throw { message: 'Registration failed: no token received.' };
-            localStorage.setItem('token', data.token);
+            if (!data.token && !data.msg) throw { message: 'Registration failed: no successful response.' };
 
-            var user = data.user || await ApiService.getCurrentUser();
-            localStorage.setItem('user', JSON.stringify(user));
+            window.pendingOtpEmail = bussEmail;
+            window.pendingOtpRole = 'business';
 
             if (loader) loader.style.display = 'none';
 
@@ -268,11 +315,14 @@ if (bussSignForm) {
             if (modal && verifyCont) {
                 modal.classList.add('active');
                 verifyCont.classList.add('active');
+                
+                if (typeof goToVerify === 'function') goToVerify('verify-item1'); 
 
-                var verDoneBtn = document.querySelector('.ver-done-btn');
-                if (verDoneBtn) {
-                    verDoneBtn.addEventListener('click', function () {
-                        window.location.assign('../Business/index.html');
+                var verContBtn = document.querySelector('.ver-cont');
+                if (verContBtn) {
+                    verContBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        goToVerify('verify-item2');
                     });
                 }
             } else {
@@ -340,3 +390,182 @@ forgotBtns.forEach(function (btn) {
         }
     });
 });
+
+// Missing goTo function used in HTML inline handlers (Login/Reset Logic)
+window.goTo = function (targetId) {
+    var items = document.querySelectorAll('.reset-item');
+    items.forEach(function (item) {
+        item.classList.remove('active');
+    });
+    var target = document.getElementById(targetId) || document.querySelector('.' + targetId);
+    if (target) {
+        target.classList.add('active');
+    }
+};
+
+// Function for traversing registration modal steps
+window.goToVerify = function (targetClass) {
+    var items = document.querySelectorAll('.verify-item');
+    items.forEach(function (item) {
+        item.classList.remove('active');
+    });
+    var target = document.querySelector('.' + targetClass);
+    if (target) {
+        target.classList.add('active');
+    }
+};
+
+// Login OTP Verification Logic (From password reset / login UI)
+var resVerBtn = document.querySelector('.res-ver-btn');
+if (resVerBtn) {
+    // Override the generic goTo('ver-new') so it verifies OTP FIRST
+    resVerBtn.removeAttribute('onclick');
+    resVerBtn.addEventListener('click', async function (e) {
+        e.preventDefault();
+        
+        var optInput = document.querySelector('.code-box-cont input');
+        var otpCode = optInput ? optInput.value : '';
+        
+        if (otpCode.length < 6) {
+            alert('Please enter the full 6 digit OTP code');
+            return;
+        }
+        
+        var emailForOtp = window.pendingOtpEmail;
+        if (!emailForOtp) {
+            var resEmailInput = document.getElementById('res-email');
+            if (resEmailInput) emailForOtp = resEmailInput.value;
+        }
+
+        if (!emailForOtp) {
+            alert('Email is missing for validation. Please restart the process.');
+            return;
+        }
+
+        try {
+            var loader = document.querySelector('.loader');
+            if (loader) loader.style.display = 'flex';
+
+            var data = await ApiService.verifyOTP(emailForOtp, otpCode);
+            
+            if (data.token) {
+                // Successful verification returns a login token
+                localStorage.setItem('token', data.token);
+                var user = data.user || await ApiService.getCurrentUser();
+                localStorage.setItem('user', JSON.stringify(user));
+                
+                if (loader) loader.style.display = 'none';
+                
+                // Check where to route
+                var role = window.pendingOtpRole || user.role;
+                if (role === 'business' || user.role === 'business') {
+                    window.location.assign('../Business/index.html');
+                } else {
+                    window.location.assign('../Customer/index.html');
+                }
+            } else {
+                // Not a login token, maybe just password reset verification success
+                if (loader) loader.style.display = 'none';
+                goTo('ver-new');
+            }
+            
+        } catch (error) {
+            if (document.querySelector('.loader')) document.querySelector('.loader').style.display = 'none';
+            alert(error.message || 'OTP verification failed. Invalid or expired code.');
+        }
+    });
+}
+
+// Resend OTP (login / reset flow — .resend inside .reset-cont)
+var resendLinks = document.querySelectorAll('.reset-cont .resend, .verify-cont .resend');
+resendLinks.forEach(function (link) {
+    link.addEventListener('click', async function (e) {
+        e.preventDefault();
+
+        var email = window.pendingOtpEmail;
+        if (!email) {
+            var resEmailInput = document.getElementById('res-email');
+            if (resEmailInput) email = resEmailInput.value.trim();
+        }
+
+        if (!email) {
+            alert('Could not determine your email. Please restart the process.');
+            return;
+        }
+
+        link.textContent = 'Sending...';
+        link.style.pointerEvents = 'none';
+
+        try {
+            await ApiService.resendOTP(email);
+            link.textContent = 'Code sent!';
+            setTimeout(function () {
+                link.textContent = 'Resend code';
+                link.style.pointerEvents = '';
+            }, 30000);
+        } catch (error) {
+            link.textContent = 'Resend code';
+            link.style.pointerEvents = '';
+            alert(error.message || 'Failed to resend code. Please try again.');
+        }
+    });
+});
+
+// Registration OTP Verification Logic
+var regVerBtn = document.querySelector('.ver-btn');
+if (regVerBtn) {
+    regVerBtn.addEventListener('click', async function (e) {
+        e.preventDefault();
+        
+        var optInput = document.querySelector('.verify-item2 .code-box-cont input');
+        var otpCode = optInput ? optInput.value : '';
+        
+        if (otpCode.length < 6) {
+            alert('Please enter the full 6 digit OTP code');
+            return;
+        }
+        
+        var emailForOtp = window.pendingOtpEmail;
+
+        if (!emailForOtp) {
+            alert('Email is missing for validation. Please restart registration.');
+            return;
+        }
+
+        try {
+            var loader = document.querySelector('.loader');
+            if (loader) loader.style.display = 'flex';
+
+            var data = await ApiService.verifyOTP(emailForOtp, otpCode);
+            
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+                var user = data.user || await ApiService.getCurrentUser();
+                localStorage.setItem('user', JSON.stringify(user));
+                
+                if (loader) loader.style.display = 'none';
+                
+                // Show success screen
+                goToVerify('verify-item3');
+
+                var verDoneBtn = document.querySelector('.ver-done-btn');
+                if (verDoneBtn) {
+                    verDoneBtn.addEventListener('click', function () {
+                        var role = window.pendingOtpRole || user.role;
+                        if (role === 'business' || user.role === 'business') {
+                            window.location.assign('../Business/index.html');
+                        } else {
+                            window.location.assign('../Customer/index.html');
+                        }
+                    });
+                }
+            } else {
+                throw new Error("No token returned from verify.");
+            }
+            
+        } catch (error) {
+            if (document.querySelector('.loader')) document.querySelector('.loader').style.display = 'none';
+            alert(error.message || 'OTP verification failed. Invalid or expired code.');
+        }
+    });
+}

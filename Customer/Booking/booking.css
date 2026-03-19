@@ -180,7 +180,14 @@ nav ul li a:hover {
 .cust-img {
     width: 35px;
     height: 35px;
-    background-image: url(/Images/img32.png);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    background-color: var(--like-col);
+    text-transform: uppercase;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -320,7 +327,79 @@ nav ul li a:hover {
 .buss-sum-view {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    margin-bottom: 16px;
+}
+
+/* Business banner image */
+.buss-banner {
+    width: 100%;
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    background-color: var(--sec-bg-col);
+}
+.buss-banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55) 100%);
+}
+
+/* Info block below banner */
+.buss-info-block {
+    background-color: var(--pri-color3);
+    padding: 14px 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.buss-info-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--pri-color);
+}
+.buss-info-addr {
+    font-size: 0.95rem;
+    color: var(--sec-color2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.buss-info-addr i {
+    color: var(--sec-color);
+    font-size: 0.9rem;
+}
+.buss-info-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.95rem;
+    color: var(--pri-color);
+}
+.buss-info-rating .fa-star {
+    color: var(--gold-col);
+    font-size: 1rem;
+}
+.buss-info-price {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background-color: var(--sec-color);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 5px 14px;
+    border-radius: 20px;
+    width: fit-content;
+    margin-top: 2px;
+}
+.buss-info-price i {
+    font-size: 0.85rem;
 }
 img {
     width: 100px;
@@ -541,6 +620,10 @@ img {
 .cal-cont-header button:active {
     scale: 0.95;
 }
+.cal-cont-header button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 .month-year {
     font-size: 1.2rem;
     font-weight: 600;
@@ -580,6 +663,14 @@ img {
 }
 .week-date-cont input:disabled + label {
     opacity: 0.5;
+    cursor: not-allowed;
+}
+.week-date-cont label.available-day {
+    background-color: rgba(4, 47, 190, 0.08);
+}
+.week-date-cont label.unavailable-day {
+    background-color: rgba(0, 0, 0, 0.04);
+    color: var(--sec-color2);
 }
 
 .form-time-cont {
@@ -591,6 +682,41 @@ img {
     padding: 10px;
     border-radius: 20px;
 }
+.booking-mode-cont {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 0 2px var(--dark);
+    padding: 14px;
+    border-radius: 20px;
+    background-color: var(--pri-color3);
+}
+.date-mode-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.date-mode-cont label,
+.date-mode-cont p {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+.date-mode-cont input[type=date],
+.time-section input[type=time] {
+    padding: 9px 10px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 2px var(--dark);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background-color: var(--pri-color3);
+    color: var(--pri-color);
+}
+.working-hours-hint {
+    font-size: 0.85rem;
+    color: var(--sec-color2);
+}
 .time-section, .upload-section {
     display: flex;
     flex-direction: column;
@@ -599,6 +725,43 @@ img {
 }
 .time-section > p, .upload-section > p {
     font-size: 0.95rem;
+}
+
+.time-slots-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 0;
+    min-height: 44px;
+}
+.slot-hint {
+    font-size: 0.85rem;
+    color: var(--sec-color2);
+    font-style: italic;
+}
+.time-slot-btn {
+    padding: 7px 14px;
+    border: 1.5px solid var(--sec-color);
+    border-radius: 8px;
+    background-color: var(--pri-color3);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: var(--trans2);
+}
+.time-slot-btn:hover {
+    background-color: var(--sec-color);
+    color: var(--pri-color3);
+}
+.time-slot-btn.selected {
+    background-color: var(--btn-col);
+    border-color: var(--btn-col);
+    color: #fff;
+    font-weight: 600;
+}
+.time-slot-btn.slot-unavailable {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-style: dashed;
 }
 
 .time-display-cont > p {
@@ -1048,10 +1211,30 @@ hr.rule {
     text-align: center;
     font-size: 15px;
 }
+.book-suc-details {
+    color: var(--sec-color);
+    font-weight: 600;
+}
 
 .suc-done {
     width: 100%;
     padding: 15px;
+}
+.suc-msg-btn {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--btn-col);
+    background-color: transparent;
+    color: var(--btn-col);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--trans2);
+}
+.suc-msg-btn:hover {
+    background-color: var(--btn-col);
+    color: var(--pri-color3);
 }
 
 

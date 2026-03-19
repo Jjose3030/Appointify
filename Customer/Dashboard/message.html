@@ -96,8 +96,8 @@
                     <div class="mes-box-prof">
                         <div class="mes-box-prof-img"></div>
                         <div class="mes-box-name">
-                            <h2>Abiodun</h2>
-                            <p>Online - Last seen, 2:02pm</p>
+                            <h2 id="chat-header-name">Select a conversation</h2>
+                            <p id="chat-header-status">Click a person on the left to open the chat</p>
                         </div>
                     </div>
                     <div class="mes-box-tool">
@@ -280,6 +280,8 @@
         var currentBookingId = null;
         var currentUserId = null;
         var isSending = false;
+        var messagePollTimer = null;
+        var lastMessageSignature = '';
 
         try {
             var userStr = localStorage.getItem('user');
@@ -335,6 +337,66 @@
                 el.style.fontSize = '18px';
             }
         }
+        function extractId(value) {
+            if (!value) return '';
+            if (typeof value === 'string') return value;
+            if (typeof value === 'object') return value._id || value.id || '';
+            return String(value || '');
+        }
+        function normalizeSenderRole(role) {
+            var value = safeText(role).toLowerCase();
+            if (value === 'business' || value === 'vendor' || value === 'provider') return 'business';
+            if (value === 'client' || value === 'customer' || value === 'user') return 'client';
+            return value;
+        }
+        function normalizeSavedMessagePayload(payload) {
+            if (!payload || typeof payload !== 'object') return null;
+            if (payload.content || payload.sender || payload.senderType || payload.createdAt) return payload;
+            if (payload.data && typeof payload.data === 'object') return normalizeSavedMessagePayload(payload.data);
+            if (payload.message && typeof payload.message === 'object') return normalizeSavedMessagePayload(payload.message);
+            if (payload.result && typeof payload.result === 'object') return normalizeSavedMessagePayload(payload.result);
+            return null;
+        }
+        function getMessageSignature(messages) {
+            if (!Array.isArray(messages) || messages.length === 0) return '';
+            return messages.map(function(msg) {
+                return [
+                    extractId(msg && msg._id),
+                    extractId(msg && msg.sender),
+                    safeText(msg && (msg.senderType || msg.role)),
+                    safeText(msg && msg.content),
+                    safeText(msg && msg.createdAt)
+                ].join('|');
+            }).join('||');
+        }
+        function getConversationKey(conv, bookingId, name) {
+            if (bookingId) return 'booking:' + bookingId;
+            if (conv && (conv._id || conv.id)) return 'conversation:' + extractId(conv);
+            return 'name:' + safeText(name).toLowerCase();
+        }
+        async function refreshCurrentChatSilently() {
+            if (!currentBookingId || isSending) return;
+            var chatBody = document.getElementById('chat-messages-container');
+            if (!chatBody) return;
+            try {
+                var messages = await ApiService.getMessages(currentBookingId);
+                if (!Array.isArray(messages)) messages = messages && (messages.messages || messages.data || []);
+                if (!Array.isArray(messages)) messages = [];
+                var nextSignature = getMessageSignature(messages);
+                if (nextSignature !== lastMessageSignature) {
+                    renderMessages(messages, chatBody);
+                    lastMessageSignature = nextSignature;
+                    loadConversations();
+                }
+            } catch (e) {}
+        }
+        function startMessagePolling() {
+            if (messagePollTimer) clearInterval(messagePollTimer);
+            messagePollTimer = setInterval(function() {
+                if (document.hidden) return;
+                refreshCurrentChatSilently();
+            }, 3000);
+        }
 
         // ── Conversation list ──────────────────────────────────────────────
         async function loadConversations() {
@@ -357,14 +419,17 @@
 
             var items = [];
             var seenBookingIds = {};
+            var seenConversationKeys = {};
 
             // 1. Conversations from API (have actual messages)
             conversations.forEach(function(conv) {
                 var bkg     = conv.booking     || {};
-                var bkgId   = (typeof bkg === 'object') ? (bkg._id || '') : String(bkg || '');
+                var bkgId   = extractId(bkg) || extractId(conv.bookingId) || extractId(conv._id) || extractId(conv.id);
                 var biz     = (typeof bkg === 'object') ? (bkg.business || {}) : {};
                 var bizName = (typeof biz === 'object' && biz) ? (biz.name || 'Business') : 'Business';
                 var bizImg  = (typeof biz === 'object' && biz) ? (biz.image || biz.profileImage || biz.profileImg || null) : null;
+                var convKey = getConversationKey(conv, bkgId, bizName);
+                if (seenConversationKeys[convKey]) return;
                 var lastMsg = conv.lastMessage || {};
                 items.push({
                     bookingId:       bkgId,
@@ -375,6 +440,7 @@
                     unreadCount:     conv.unreadCount || 0,
                     status:          (typeof bkg === 'object') ? (bkg.status || '') : ''
                 });
+                seenConversationKeys[convKey] = true;
                 if (bkgId) seenBookingIds[bkgId] = true;
             });
 
@@ -450,12 +516,23 @@
                 el.appendChild(prof);
 
                 (function(bookingId, contactName, contactImg) {
+                    el.setAttribute('data-booking-id', bookingId || '');
                     el.addEventListener('click', function() {
                         document.querySelectorAll('.mes-item').forEach(function(i) { i.style.background = ''; });
                         el.style.background = '#f0f4ff';
+                        var localUnread = el.querySelector('.mes-count');
+                        if (localUnread) localUnread.textContent = '';
                         loadChat(bookingId, contactName, contactImg);
                     });
                 })(item.bookingId, item.name, item.image);
+
+                // Status badge
+                if (item.status) {
+                    var badge = document.createElement('span');
+                    badge.className = 'conv-status-badge conv-status-' + item.status.toLowerCase();
+                    badge.textContent = item.status.charAt(0).toUpperCase() + item.status.slice(1);
+                    prof.appendChild(badge);
+                }
 
                 container.appendChild(el);
             });
@@ -485,17 +562,27 @@
                 if (!Array.isArray(messages)) messages = [];
 
                 renderMessages(messages, chatBody);
+                lastMessageSignature = getMessageSignature(messages);
 
                 // Mark incoming as read
                 var unreadIds = messages
-                    .filter(function(m) { return !m.isRead && m.senderType !== 'client'; })
+                    .filter(function(m) {
+                        var senderType = normalizeSenderRole(m.senderType || m.role);
+                        return !m.isRead && senderType !== 'client';
+                    })
                     .map(function(m) { return m._id; });
                 if (unreadIds.length > 0) {
-                    ApiService.markMessagesAsRead(unreadIds).catch(function(){});
+                    ApiService.markMessagesAsRead(unreadIds)
+                        .then(function() { loadConversations(); })
+                        .catch(function(){});
                 }
             } catch (err) {
-                chatBody.textContent = 'Could not load messages.';
-                return;
+                if (err && err.status === 404) {
+                    renderMessages([], chatBody);
+                } else {
+                    chatBody.textContent = 'Could not load messages.';
+                    return;
+                }
             }
 
             // Join WebSocket room
@@ -525,21 +612,24 @@
                 p.textContent = 'No messages yet. Start the conversation!';
                 p.style.cssText = 'padding:20px;text-align:center;color:#888';
                 container.appendChild(p);
+                lastMessageSignature = '';
                 return;
             }
+            lastMessageSignature = getMessageSignature(messages);
             messages.forEach(function(msg) { appendMessageEl(msg, container); });
             container.scrollTop = container.scrollHeight;
         }
 
         function appendMessageEl(msg, container) {
             // Remove empty-state placeholder if present
-            var ph = container.querySelector('p');
-            if (ph && container.children.length === 1) container.removeChild(ph);
+            var ph = container.firstElementChild;
+            if (ph && container.children.length === 1 && ph.tagName === 'P') container.removeChild(ph);
 
             var div = document.createElement('div');
-            var senderId = (msg.sender && typeof msg.sender === 'object') ? msg.sender._id : msg.sender;
-            var isMine   = (senderId && senderId === currentUserId) || msg.senderType === 'client';
-            div.className = 'message-show ' + (isMine ? 'customer' : 'bus-owner');
+            var senderId = extractId(msg.sender);
+            var senderType = normalizeSenderRole(msg.senderType || msg.role);
+            var isMine   = (senderId && senderId === currentUserId) || senderType === 'client';
+            div.className = 'message-show ' + (isMine ? 'bus-owner' : 'customer');
 
             var textP = document.createElement('p');
             textP.className = 'message-text';
@@ -575,27 +665,20 @@
             input.value = '';
             input.focus();
 
-            // Optimistic render
-            var chatBody = document.getElementById('chat-messages-container');
-            appendMessageEl({ content: text, sender: currentUserId, senderType: 'client', createdAt: new Date().toISOString() }, chatBody);
-
-            // Prefer WebSocket; fall back to REST
-            var wsSent = false;
             try {
-                if (typeof window.sendMessage === 'function' &&
-                    typeof socket !== 'undefined' && socket && socket.connected &&
-                    typeof wsCurrentBookingId !== 'undefined' && wsCurrentBookingId === currentBookingId) {
-                    window.sendMessage(text);
-                    wsSent = true;
-                }
-            } catch (e) {}
-
-            if (!wsSent) {
-                try {
-                    await ApiService.sendMessage({ bookingId: currentBookingId, content: text, senderType: 'client' });
-                } catch (e) {
-                    console.error('Message send failed:', e);
-                }
+                var chatBody = document.getElementById('chat-messages-container');
+                var savedMessage = normalizeSavedMessagePayload(await ApiService.sendMessage({ bookingId: currentBookingId, content: text }));
+                appendMessageEl(savedMessage || {
+                    content: text,
+                    sender: currentUserId,
+                    senderType: 'client',
+                    createdAt: new Date().toISOString()
+                }, chatBody);
+                loadConversations();
+            } catch (e) {
+                console.error('Message send failed:', e);
+                input.value = text;
+                alert((e && e.message) ? e.message : 'Message could not be sent.');
             }
 
             isSending = false;
@@ -608,7 +691,7 @@
             var msg = e.detail;
             if (!msg) return;
             // If the incoming message is for a DIFFERENT booking, just refresh sidebar
-            var incomingBkgId = (msg.booking && typeof msg.booking === 'object') ? msg.booking._id : msg.booking;
+            var incomingBkgId = extractId(msg.booking) || extractId(msg.bookingId);
             if (incomingBkgId && incomingBkgId !== currentBookingId) {
                 loadConversations();
             }
@@ -616,7 +699,25 @@
             // appended it — nothing else to do here.
         });
 
-        loadConversations();
+        loadConversations().then(function() {
+            // Auto-open conversation from URL query param (e.g. after booking)
+            var urlParams = new URLSearchParams(window.location.search);
+            var targetBookingId = urlParams.get('bookingId');
+            if (targetBookingId) {
+                // Wait for DOM items to render, then click the matching one
+                setTimeout(function() {
+                    var items = document.querySelectorAll('.mes-item[data-booking-id]');
+                    for (var i = 0; i < items.length; i++) {
+                        if (items[i].getAttribute('data-booking-id') === targetBookingId) {
+                            items[i].click();
+                            items[i].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            break;
+                        }
+                    }
+                }, 300);
+            }
+        });
+        startMessagePolling();
     </script>
     <script src="/DefaultScript/customer.js"></script>
     <script src="/DefaultScript/websocket.js"></script>

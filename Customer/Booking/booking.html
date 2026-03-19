@@ -103,51 +103,44 @@
             <div class="book-form-cont">
                 <h2>Book Us Now</h2>
                 <form action="" class="book-form" id="book-form">
-                    <input type="hidden" name="" id="date-value">
-                    <input type="hidden" name="" id="time-value">
+                    <input type="hidden" name="business" id="business-id">
                     <div class="form-book-header">
                         <div class="form-book-item f-book1">
-                            <div class="form-calendar-cont">
-                                <div class="cal-cont">
-                                    <div class="cal-cont-header">
-                                        <button class="prev-month" id="prev-month" type="button"><i
-                                                class="fa-solid fa-chevron-left"></i></button>
-                                        <div class="month-year">jan 2025</div>
-                                        <button class="next-month" type="button"><i
-                                                class="fa-solid fa-chevron-right"></i></button>
-                                    </div>
-                                    <div class="cal-cont-body">
-                                        <div class="week-day-cont">
-                                            <div class="week-day">SUN</div>
-                                            <div class="week-day">MON</div>
-                                            <div class="week-day">TUE</div>
-                                            <div class="week-day">WED</div>
-                                            <div class="week-day">THUR</div>
-                                            <div class="week-day">FRI</div>
-                                            <div class="week-day">SAT</div>
+                                <div class="form-calendar-cont">
+                                    <div class="booking-mode-cont">
+                                        <div class="date-mode-cont">
+                                            <p>Pick a date</p>
+                                            <input type="hidden" id="date-picker" name="date">
+                                        <div class="cal-cont">
+                                            <div class="cal-cont-header">
+                                                <button class="prev-month" id="prev-month" type="button"><i
+                                                        class="fa-solid fa-chevron-left"></i></button>
+                                                <div class="month-year">Jan 2026</div>
+                                                <button class="next-month" id="next-month" type="button"><i
+                                                        class="fa-solid fa-chevron-right"></i></button>
+                                            </div>
+                                            <div class="cal-cont-body">
+                                                <div class="week-day-cont">
+                                                    <div class="week-day">SUN</div>
+                                                    <div class="week-day">MON</div>
+                                                    <div class="week-day">TUE</div>
+                                                    <div class="week-day">WED</div>
+                                                    <div class="week-day">THU</div>
+                                                    <div class="week-day">FRI</div>
+                                                    <div class="week-day">SAT</div>
+                                                </div>
+                                                <div class="week-date-cont"></div>
+                                            </div>
                                         </div>
-                                        <div class="week-date-cont"></div>
                                     </div>
+                                    <p class="working-hours-hint" id="working-hours-hint"></p>
                                 </div>
                             </div>
                             <div class="form-time-cont">
                                 <div class="time-section">
-                                    <p>Select time:</p>
-                                    <div class="time-display-cont">
-                                        <p>Time</p>
-                                        <div class="time-group">
-                                            <input type="text" id="hour" required placeholder="04" maxlength="2"
-                                                max="2"><span class="coll">:</span>
-                                            <input type="text" id="minute" required placeholder="04" maxlength="2"
-                                                max="2">
-                                            <div class="time-ampm-cont">
-                                                <input type="radio" name="ampm" id="am" value="AM" checked>
-                                                <label for="am">AM</label>
-                                                <input type="radio" name="ampm" id="pm" value="PM">
-                                                <label for="pm">PM</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <p>Select start time:</p>
+                                    <input type="time" id="start-time" name="time" step="60">
+                                    <div class="time-slots-container"></div>
                                 </div>
                                 <div class="upload-section">
                                     <p>Upload a sample (Optional)</p>
@@ -179,7 +172,7 @@
                         <div class="form-book-item budgg">
                             <div class="note-cont">
                                 <p>Write short note</p>
-                                <textarea name="note" required id="short-note"
+                                <textarea name="note" id="short-note"
                                     placeholder="write a short note aout the service need"></textarea>
                             </div>
                             <div class="budget-cont">
@@ -385,6 +378,7 @@
         </div>
         <h3>🎉 Successful </h3>
         <p>Thanks !!! <br> Your booking has been submitted successfully. <br>Check your history page!</p>
+        <p class="book-suc-details" id="book-suc-details"></p>
         <button class="suc-done">Done</button>
     </div>
 

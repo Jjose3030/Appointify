@@ -20,242 +20,11 @@ document.addEventListener('DOMContentLoaded', async function () {
         setupProfileForm();
     }
 
-<<<<<<< HEAD
 
-//service landing page display cards
-const serviceCont = document.querySelector('.service-cont');
-if(serviceCont){
-    const allService = document.querySelector('.service-cont');
-
-
-async function serviceCard(){
-//gets all the availble business cards that already exist when a business owner creates an account but would leave it like this so that cards can be displayed on the landing pages and when there's enough businessses it can then be changed
-        // const res = await fetch('');
-        // const businesses = await res.JSON();
-        businesses.forEach(card=>{
-        const revCard = document.createElement('div');
-        revCard.className = 'top-rev-item';
-        revCard.innerHTML = `
-            <div class="top-header">
-                        <img src="${card.companyData.image}" alt="business image">
-                        <div class="heart">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M22.0004 17.1999C22.0004 18.0999 21.7504 18.9499 21.3004 19.6699C20.4704 21.0599 18.9504 21.9999 17.2004 21.9999C15.4504 21.9999 13.9204 21.0599 13.1004 19.6699C12.6604 18.9499 12.4004 18.0999 12.4004 17.1999C12.4004 14.5499 14.5504 12.3999 17.2004 12.3999C19.8504 12.3999 22.0004 14.5499 22.0004 17.1999Z" stroke="" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M15.3301 17.2L16.5101 18.38L19.0701 16.02" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M22 8.69012C22 10.6601 21.49 12.4001 20.69 13.9101C19.81 12.9801 18.57 12.4001 17.2 12.4001C14.55 12.4001 12.4 14.5501 12.4 17.2001C12.4 18.4301 12.87 19.5501 13.63 20.4001C13.26 20.5701 12.92 20.7101 12.62 20.8101C12.28 20.9301 11.72 20.9301 11.38 20.8101C8.48 19.8201 2 15.6901 2 8.69012C2 5.60012 4.49 3.1001 7.56 3.1001C9.37 3.1001 10.99 3.98014 12 5.33014C13.01 3.98014 14.63 3.1001 16.44 3.1001C19.51 3.1001 22 5.60012 22 8.69012Z" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="top-body">
-                        <h2 class="bus-name">${card.companyData.name}</h2>
-                        <div class="location">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3.61971 8.49C5.58971 -0.169998 18.4197 -0.159997 20.3797 8.5C21.5297 13.58 18.3697 17.88 15.5997 20.54C13.5897 22.48 10.4097 22.48 8.38971 20.54C5.62971 17.88 2.46971 13.57 3.61971 8.49Z" stroke="#292D32" stroke-width="1.5"/>
-                                <path d="M9.25 11.5L10.75 13L14.75 9" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <p class="top-rev-text">${card.companyData.address}</p>
-                        </div>
-                        <div class="work-note">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M7 13H15" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M7 17H12" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <p class="top-rev-text">${card.companyData.job}</p>
-                        </div>
-                        <div class="day-cal">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M20.75 17.6001H3.25" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 8.25C10.77 8.25 9.73 8.92 9.73 10.22C9.73 10.84 10.02 11.31 10.46 11.61C9.85 11.97 9.5 12.55 9.5 13.23C9.5 14.47 10.45 15.24 12 15.24C13.54 15.24 14.5 14.47 14.5 13.23C14.5 12.55 14.15 11.96 13.53 11.61C13.98 11.3 14.26 10.84 14.26 10.22C14.26 8.92 13.23 8.25 12 8.25ZM12 11.09C11.48 11.09 11.1 10.78 11.1 10.29C11.1 9.79 11.48 9.5 12 9.5C12.52 9.5 12.9 9.79 12.9 10.29C12.9 10.78 12.52 11.09 12 11.09ZM12 14C11.34 14 10.86 13.67 10.86 13.07C10.86 12.47 11.34 12.15 12 12.15C12.66 12.15 13.14 12.48 13.14 13.07C13.14 13.67 12.66 14 12 14Z" fill="#292D32"/>
-                            </svg>
-                            <p class="top-rev-text">${card.companyData.work}</p>
-                        </div>
-                        <div class="book-time-cont">
-                            <div class="book-time">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M15.7099 15.1798L12.6099 13.3298C12.0699 13.0098 11.6299 12.2398 11.6299 11.6098V7.50977" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                                <p class="top-rev-text">${card.companyData.availability}</p>
-                            </div>
-                            <div class="rate-cont">
-                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.2977 2.63248L11.6177 5.27248C11.7977 5.63998 12.2777 5.99248 12.6827 6.05998L15.0752 6.45748C16.6052 6.71248 16.9652 7.82248 15.8627 8.91748L14.0027 10.7775C13.6877 11.0925 13.5152 11.7 13.6127 12.135L14.1452 14.4375C14.5652 16.26 13.5977 16.965 11.9852 16.0125L9.74268 14.685C9.33768 14.445 8.67018 14.445 8.25768 14.685L6.01518 16.0125C4.41018 16.965 3.43518 16.2525 3.85518 14.4375L4.38768 12.135C4.48518 11.7 4.31268 11.0925 3.99768 10.7775L2.13768 8.91748C1.04268 7.82248 1.39518 6.71248 2.92518 6.45748L5.31768 6.05998C5.71518 5.99248 6.19518 5.63998 6.37518 5.27248L7.69518 2.63248C8.41518 1.19998 9.58518 1.19998 10.2977 2.63248Z" fill="#FBC02D"/>
-                                </svg>
-                                <p class="top-rev-text">${card.companyData.rating}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="top-footer">
-                        <p class="rev-range">From</p>
-                        <div class="price-range">$${card.companyData.minPrice} - $${card.companyData.maxPrice}</div>
-                        <p class="rev-range">Per Person</p>
-                        <button class="explore-btn" onclick="showBookPage(${card.id})">Explore / Book</button>
-                    </div>
- `
-       allService.appendChild(revCard);    
-    })
-}
-serviceCard();
-}
-
-
-//this function displays the booking interface of the bussiness book button that got clicked and storing it to the local storage which would later be used to display the full details on the booking page
-function showBookPage(bussId){
-    const selectedBussiness = businesses.find(b => b.id === bussId);
-    localStorage.setItem('bookBuss', JSON.stringify(selectedBussiness));
-    window.location.assign('/Customer/Booking/booking.html')
-}
-
-const bookForm = document.getElementById('book-form');
-if(bookForm) {
-    const returnBtn = document.querySelector('.ret-btn');
-    returnBtn.addEventListener('click', ()=>{
-        window.history.back()
-    })
-
-    //displaying the information of the bussiness card that got clicked from either the service page or from the home page by getting the stored item it the local storage and displaying it dynamically
-    const selectedBussiness = JSON.parse(localStorage.getItem('bookBuss'));
-    
-    //display in book area for showing the bussiness details or summary
-    const BussShowCont = document.querySelector('.buss-sum-view');
-
-    BussShowCont.innerHTML = `
-        <div class="buss-book-header">
-                <div class="book-head-item">
-                    <img src="${selectedBussiness.companyData.image}" alt="business image">
-                    <div class="heart">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M22.0004 17.1999C22.0004 18.0999 21.7504 18.9499 21.3004 19.6699C20.4704 21.0599 18.9504 21.9999 17.2004 21.9999C15.4504 21.9999 13.9204 21.0599 13.1004 19.6699C12.6604 18.9499 12.4004 18.0999 12.4004 17.1999C12.4004 14.5499 14.5504 12.3999 17.2004 12.3999C19.8504 12.3999 22.0004 14.5499 22.0004 17.1999Z" stroke="" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M15.3301 17.2L16.5101 18.38L19.0701 16.02" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M22 8.69012C22 10.6601 21.49 12.4001 20.69 13.9101C19.81 12.9801 18.57 12.4001 17.2 12.4001C14.55 12.4001 12.4 14.5501 12.4 17.2001C12.4 18.4301 12.87 19.5501 13.63 20.4001C13.26 20.5701 12.92 20.7101 12.62 20.8101C12.28 20.9301 11.72 20.9301 11.38 20.8101C8.48 19.8201 2 15.6901 2 8.69012C2 5.60012 4.49 3.1001 7.56 3.1001C9.37 3.1001 10.99 3.98014 12 5.33014C13.01 3.98014 14.63 3.1001 16.44 3.1001C19.51 3.1001 22 5.60012 22 8.69012Z" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                    </div>
-                </div>
-                <div class="book-head-item buss-book-sum">
-                    <div class="top-body">
-                        <h2 class="bus-name">${selectedBussiness.companyData.name}</h2>
-                        <div class="location">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3.61971 8.49C5.58971 -0.169998 18.4197 -0.159997 20.3797 8.5C21.5297 13.58 18.3697 17.88 15.5997 20.54C13.5897 22.48 10.4097 22.48 8.38971 20.54C5.62971 17.88 2.46971 13.57 3.61971 8.49Z" stroke="#292D32" stroke-width="1.5"/>
-                                <path d="M9.25 11.5L10.75 13L14.75 9" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <p class="top-rev-text addre">${selectedBussiness.companyData.address}</p>
-                        </div>
-                        <div class="work-note">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M20 8.25V18C20 21 18.21 22 16 22H8C5.79 22 4 21 4 18V8.25C4 5 5.79 4.25 8 4.25C8 4.87 8.24997 5.43 8.65997 5.84C9.06997 6.25 9.63 6.5 10.25 6.5H13.75C14.99 6.5 16 5.49 16 4.25C18.21 4.25 20 5 20 8.25Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M16 4.25C16 5.49 14.99 6.5 13.75 6.5H10.25C9.63 6.5 9.06997 6.25 8.65997 5.84C8.24997 5.43 8 4.87 8 4.25C8 3.01 9.01 2 10.25 2H13.75C14.37 2 14.93 2.25 15.34 2.66C15.75 3.07 16 3.63 16 4.25Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M8 13H12" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M8 17H16" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <p class="top-rev-text">${selectedBussiness.companyData.job} </p>
-                        </div>
-                        <div class="day-cal">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16 2V5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16 3.5C19.33 3.68 21 4.95 21 9.65V15.83C21 19.95 20 22.01 15 22.01H9C4 22.01 3 19.95 3 15.83V9.65C3 4.95 4.67 3.69 8 3.5H16Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M20.75 17.6001H3.25" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 8.25C10.77 8.25 9.73 8.92 9.73 10.22C9.73 10.84 10.02 11.31 10.46 11.61C9.85 11.97 9.5 12.55 9.5 13.23C9.5 14.47 10.45 15.24 12 15.24C13.54 15.24 14.5 14.47 14.5 13.23C14.5 12.55 14.15 11.96 13.53 11.61C13.98 11.3 14.26 10.84 14.26 10.22C14.26 8.92 13.23 8.25 12 8.25ZM12 11.09C11.48 11.09 11.1 10.78 11.1 10.29C11.1 9.79 11.48 9.5 12 9.5C12.52 9.5 12.9 9.79 12.9 10.29C12.9 10.78 12.52 11.09 12 11.09ZM12 14C11.34 14 10.86 13.67 10.86 13.07C10.86 12.47 11.34 12.15 12 12.15C12.66 12.15 13.14 12.48 13.14 13.07C13.14 13.67 12.66 14 12 14Z" fill="#292D32"/>
-                            </svg>
-                            <p class="top-rev-text">${selectedBussiness.companyData.work}</p>
-                        </div>
-                        <div class="phone-cal">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21.97 18.33C21.97 18.69 21.89 19.06 21.72 19.42C21.55 19.78 21.33 20.12 21.04 20.44C20.55 20.98 20.01 21.37 19.4 21.62C18.8 21.87 18.15 22 17.45 22C16.43 22 15.34 21.76 14.19 21.27C13.04 20.78 11.89 20.12 10.75 19.29C9.6 18.45 8.51 17.52 7.47 16.49C6.44 15.45 5.51 14.36 4.68 13.22C3.86 12.08 3.2 10.94 2.72 9.81C2.24 8.67 2 7.58 2 6.54C2 5.86 2.12 5.21 2.36 4.61C2.6 4 2.98 3.44 3.51 2.94C4.15 2.31 4.85 2 5.59 2C5.87 2 6.15 2.06 6.4 2.18C6.66 2.3 6.89 2.48 7.07 2.74L9.39 6.01C9.57 6.26 9.7 6.49 9.79 6.71C9.88 6.92 9.93 7.13 9.93 7.32C9.93 7.56 9.86 7.8 9.72 8.03C9.59 8.26 9.4 8.5 9.16 8.74L8.4 9.53C8.29 9.64 8.24 9.77 8.24 9.93C8.24 10.01 8.25 10.08 8.27 10.16C8.3 10.24 8.33 10.3 8.35 10.36C8.53 10.69 8.84 11.12 9.28 11.64C9.73 12.16 10.21 12.69 10.73 13.22C11.27 13.75 11.79 14.24 12.32 14.69C12.84 15.13 13.27 15.43 13.61 15.61C13.66 15.63 13.72 15.66 13.79 15.69C13.87 15.72 13.95 15.73 14.04 15.73C14.21 15.73 14.34 15.67 14.45 15.56L15.21 14.81C15.46 14.56 15.7 14.37 15.93 14.25C16.16 14.11 16.39 14.04 16.64 14.04C16.83 14.04 17.03 14.08 17.25 14.17C17.47 14.26 17.7 14.39 17.95 14.56L21.26 16.91C21.52 17.09 21.7 17.3 21.81 17.55C21.91 17.8 21.97 18.05 21.97 18.33Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10"/>
-                            </svg>
-                            <p class="top-rev-text">${selectedBussiness.companyData.phone}</p>
-                        </div>
-                        <div class="email-cal">
-                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2 8.5C2 5 4 3.5 7 3.5H17C20 3.5 22 5 22 8.5V15.5C22 19 20 20.5 17 20.5H7" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M17 9L13.87 11.5C12.84 12.32 11.15 12.32 10.12 11.5L7 9" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2 16.5H8" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2 12.5H5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <p class="top-rev-text">${selectedBussiness.companyData.email}</p>
-                        </div>
-                        <div class="book-time-cont">
-                            <div class="book-time">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M15.7099 15.1798L12.6099 13.3298C12.0699 13.0098 11.6299 12.2398 11.6299 11.6098V7.50977" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                                <p class="top-rev-text">${selectedBussiness.companyData.availability}</p>
-                            </div>
-                            <div class="rate-cont">
-                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.2977 2.63248L11.6177 5.27248C11.7977 5.63998 12.2777 5.99248 12.6827 6.05998L15.0752 6.45748C16.6052 6.71248 16.9652 7.82248 15.8627 8.91748L14.0027 10.7775C13.6877 11.0925 13.5152 11.7 13.6127 12.135L14.1452 14.4375C14.5652 16.26 13.5977 16.965 11.9852 16.0125L9.74268 14.685C9.33768 14.445 8.67018 14.445 8.25768 14.685L6.01518 16.0125C4.41018 16.965 3.43518 16.2525 3.85518 14.4375L4.38768 12.135C4.48518 11.7 4.31268 11.0925 3.99768 10.7775L2.13768 8.91748C1.04268 7.82248 1.39518 6.71248 2.92518 6.45748L5.31768 6.05998C5.71518 5.99248 6.19518 5.63998 6.37518 5.27248L7.69518 2.63248C8.41518 1.19998 9.58518 1.19998 10.2977 2.63248Z" fill="#FBC02D"/>
-                                </svg>
-                                <p class="top-rev-text">${selectedBussiness.companyData.rating}</p>
-                            </div>
-                        </div>
-                        <div class="top-footer">
-                            <p class="rev-range">From</p>
-                            <div class="price-range">$${selectedBussiness.companyData.minPrice} - $${selectedBussiness.companyData.maxPrice}</div>
-                            <p class="rev-range">Per Person</p>
-                         </div>
-                    </div>
-                </div>
-                <div class="book-head-item buss-ceo-sum">
-                    <div class="ceo-header">
-                        <div class="ceo-img"><img src="${selectedBussiness.ownerData.image}" alt="ceo image"></div>
-                        <div class="ceo-det">
-                            <h2>${selectedBussiness.name}</h2>
-                            <p>C.E.O</p>
-                        </div>
-                    </div>
-                    <div class="ceo-bio">
-                        <h2>Bio</h2>
-                        <p>${selectedBussiness.ownerData.bio}"</p>
-                    </div>
-                </div>
-                </div>
-                <div class="buss-book-body">
-                <div class="book-desc-item">
-                    <h2>Descriptions</h2>
-                    <p>${selectedBussiness.companyData.descriptiption}"</p>
-                </div>
-                <div class="book-desc-item">
-                    <h2>Shop Direction</h2>
-                    <p>${selectedBussiness.companyData.direction}"</p>
-                </div>
-                </div>   
-    
-    `
-
-
-
-
-//booking form 
-const sampleUpload = document.getElementById('sample-upload');
-const sampleShow = document.querySelector('.sample-upload');
-const sampText = document.querySelector('.sample-up-text');
-let mand;
-
-//for displaying the uploaded  sample image
-sampleUpload.addEventListener('change', ()=>{
-    if(sampleUpload.files) {
-     sampText.classList.add('active')
-
-        const imgUrl = URL.createObjectURL(sampleUpload.files[0]);
-        mand = imgUrl
-        sampleShow.style.backgroundImage = `url(${mand})`;
-        
-        return mand;
-}
-=======
     // Landing page sections — fetch real data from API
     if (document.querySelector('.top-rate-cont') || document.querySelector('.recent-cont') || document.querySelector('.recommend-cont')) {
         await fetchLandingPageData();
     }
->>>>>>> f1620dff819ee72bc502782bd62ec321737acdbd
 });
 
 function checkAuth() {
@@ -289,6 +58,11 @@ function updateProfileUI() {
             el.style.backgroundImage = "url('" + currentUser.profileImg + "')";
             el.style.backgroundSize = 'cover';
             el.style.backgroundPosition = 'center';
+            el.textContent = '';
+        } else {
+            el.style.backgroundImage = 'none';
+            var initial = currentUser.name ? currentUser.name.trim().charAt(0) : 'U';
+            el.textContent = initial;
         }
     });
 }
@@ -379,7 +153,8 @@ function setupProfileForm() {
 
 async function fetchBusinesses() {
     try {
-        businesses = await ApiService.getBusinesses();
+        var fetchedBusinesses = await ApiService.getBusinesses();
+        businesses = sortBusinessesLatestToOldest(fetchedBusinesses);
         createCard();
     } catch (error) {
         var container = document.querySelector('.card-container');
@@ -397,19 +172,6 @@ function setupUI() {
             e.stopPropagation();
             profSummary.classList.toggle('active');
         });
-<<<<<<< HEAD
-        
-       setTimeout(() => {
-         bookForm.reset();
-         mand = 'unset'       
-         sampleShow.style.backgroundImage = `url(${mand})`;
-         sampText.classList.remove('active')
-       }, 1500);
-
-    })
-
-showDates();
-=======
     }
 
     // Mobile profile dropdown
@@ -470,12 +232,21 @@ showDates();
             createCard(filtered);
         });
     }
->>>>>>> f1620dff819ee72bc502782bd62ec321737acdbd
 }
 
 function safeText(str) {
     if (!str) return '';
     return String(str);
+}
+
+function sortBusinessesLatestToOldest(items) {
+    if (!Array.isArray(items)) return [];
+
+    return items.slice().sort(function (a, b) {
+        var aDate = new Date(a && a.createdAt ? a.createdAt : 0).getTime();
+        var bDate = new Date(b && b.createdAt ? b.createdAt : 0).getTime();
+        return bDate - aDate;
+    });
 }
 
 function createCard(data) {
@@ -500,7 +271,7 @@ function createCard(data) {
         cardImg.className = 'card-img';
 
         var img = document.createElement('img');
-        img.src = buss.image || '/Images/img6.png';
+        img.src = buss.image || (buss.images && buss.images[0] && buss.images[0].url) || '/Images/img6.png';
         img.alt = safeText(buss.name);
 
         var loveIcon = document.createElement('div');
@@ -524,7 +295,13 @@ function createCard(data) {
 
         var priceH2 = document.createElement('h2');
         priceH2.className = 'price';
-        priceH2.textContent = '$50/hr';
+        if (buss.minPrice != null && buss.maxPrice != null) {
+            priceH2.textContent = '$' + buss.minPrice + ' - $' + buss.maxPrice + '/hr';
+        } else if (buss.minPrice != null) {
+            priceH2.textContent = 'From $' + buss.minPrice + '/hr';
+        } else {
+            priceH2.textContent = 'Contact for pricing';
+        }
 
         namePrice.appendChild(companyH2);
         namePrice.appendChild(priceH2);
@@ -565,88 +342,143 @@ function createCard(data) {
     });
 }
 
-function showBookPage(bussId, bizData) {
-    // bizData can be passed directly (e.g. from landing page cards where global businesses[] is not populated)
-    var selected = bizData || businesses.find(function (b) {
-        return (b._id || b.id) === bussId;
-    });
-    if (selected) {
-        localStorage.setItem('bookBuss', JSON.stringify(selected));
-        window.location.assign('/Customer/Booking/booking.html');
-    }
+function showBookPage(bussId) {
+    if (!bussId) return;
+    window.location.assign('/Customer/Booking/booking.html?businessId=' + encodeURIComponent(bussId));
 }
 
 window.showBookPage = showBookPage;
 
 function setupBookingPage() {
-    var bookBuss = null;
-    try {
-        bookBuss = JSON.parse(localStorage.getItem('bookBuss'));
-    } catch (e) {
-        bookBuss = null;
-    }
+    var params     = new URLSearchParams(window.location.search);
+    var businessId = params.get('businessId');
 
-    var formContainer = document.querySelector('.buss-sum-view');
-
-    if (!bookBuss) {
+    if (!businessId) {
         alert('No business selected');
         window.location.assign('/Customer/index.html');
         return;
     }
 
+    var formContainer = document.querySelector('.buss-sum-view');
+    var businessInput = document.getElementById('business-id');
+    if (businessInput) businessInput.value = businessId;
+
+    // Show a loading skeleton while we fetch
     if (formContainer) {
-        formContainer.textContent = '';
-
-        var sumImg = document.createElement('div');
-        sumImg.className = 'sum-img';
-        var imgEl = document.createElement('img');
-        imgEl.src = bookBuss.image || '/Images/img6.png';
-        imgEl.alt = safeText(bookBuss.name);
-        sumImg.appendChild(imgEl);
-
-        var sumDet = document.createElement('div');
-        sumDet.className = 'sum-det';
-
-        var h2 = document.createElement('h2');
-        h2.textContent = safeText(bookBuss.companyName || bookBuss.name);
-
-        var addrP = document.createElement('p');
-        addrP.textContent = safeText(bookBuss.address || 'Location varies');
-
-        var ratingDiv = document.createElement('div');
-        ratingDiv.className = 'sum-rating';
-        var star = document.createElement('i');
-        star.className = 'fa-solid fa-star';
-        var rP = document.createElement('p');
-        rP.textContent = '5.0 (20 reviews)';
-        ratingDiv.appendChild(star);
-        ratingDiv.appendChild(rP);
-
-        sumDet.appendChild(h2);
-        sumDet.appendChild(addrP);
-        sumDet.appendChild(ratingDiv);
-
-        formContainer.appendChild(sumImg);
-        formContainer.appendChild(sumDet);
+        formContainer.innerHTML = '<p style="padding:16px;color:#666">Loading business info…</p>';
     }
 
-    var businessId = bookBuss._id || bookBuss.id;
+    // Fetch business data fresh from the API — no localStorage needed
+    ApiService.getBusinessById(businessId).then(function (raw) {
+        // Normalise: API may wrap the object in { business: {...} } or { data: {...} }
+        var bookBuss = (raw && raw.business) ? raw.business
+            : (raw && raw.data)     ? raw.data
+            : raw;
 
-    // Initialize calendar, time picker, and upload preview
-    setupCalendar(businessId);
-    setupTimePicker();
-    setupUploadPreview();
+        if (!bookBuss || !(bookBuss._id || bookBuss.id)) {
+            if (formContainer) formContainer.innerHTML = '<p style="padding:16px;color:#c00">Business not found.</p>';
+            return;
+        }
 
-    var retBtn = document.querySelector('.ret-btn');
-    if (retBtn) {
-        retBtn.addEventListener('click', function () {
-            window.history.back();
-        });
-    }
+        // ── Business banner + info ──────────────────────────────────────────
+        if (formContainer) {
+            formContainer.textContent = '';
+
+            var imgSrc = bookBuss.image ||
+                (bookBuss.images && bookBuss.images[0] && bookBuss.images[0].url) ||
+                '/Images/img6.png';
+
+            var bannerDiv = document.createElement('div');
+            bannerDiv.className = 'buss-banner';
+            bannerDiv.style.backgroundImage = "url('" + imgSrc + "')";
+            var bannerOverlay = document.createElement('div');
+            bannerOverlay.className = 'buss-banner-overlay';
+            bannerDiv.appendChild(bannerOverlay);
+
+            var infoDiv = document.createElement('div');
+            infoDiv.className = 'buss-info-block';
+
+            var h2 = document.createElement('h2');
+            h2.className = 'buss-info-name';
+            h2.textContent = safeText(bookBuss.companyName || bookBuss.name);
+
+            var addrP = document.createElement('p');
+            addrP.className = 'buss-info-addr';
+            addrP.innerHTML = '<i class="fa-solid fa-location-dot"></i> ' + safeText(bookBuss.address || 'Location varies');
+
+            var ratingDiv = document.createElement('div');
+            ratingDiv.className = 'buss-info-rating';
+            var star = document.createElement('i');
+            star.className = 'fa-solid fa-star';
+            var rP = document.createElement('span');
+            rP.textContent = ' ' + (bookBuss.rating || '5.0') + ' (' + (bookBuss.reviewCount || '20') + ' reviews)';
+            ratingDiv.appendChild(star);
+            ratingDiv.appendChild(rP);
+
+            var priceDiv = document.createElement('div');
+            priceDiv.className = 'buss-info-price';
+            if (bookBuss.minPrice != null && bookBuss.maxPrice != null) {
+                priceDiv.innerHTML = '<i class="fa-solid fa-tag"></i> $' + bookBuss.minPrice + ' &ndash; $' + bookBuss.maxPrice + ' / hr';
+            } else if (bookBuss.minPrice != null) {
+                priceDiv.innerHTML = '<i class="fa-solid fa-tag"></i> From $' + bookBuss.minPrice + ' / hr';
+            } else {
+                priceDiv.innerHTML = '<i class="fa-solid fa-tag"></i> Contact for pricing';
+            }
+
+            infoDiv.appendChild(h2);
+            infoDiv.appendChild(addrP);
+            infoDiv.appendChild(ratingDiv);
+            infoDiv.appendChild(priceDiv);
+            formContainer.appendChild(bannerDiv);
+            formContainer.appendChild(infoDiv);
+        }
+
+        // ── Gallery ─────────────────────────────────────────────────────────
+        var galCont = document.querySelector('.gal-cont');
+        if (galCont) {
+            var bizImages = Array.isArray(bookBuss.images) ? bookBuss.images : [];
+            if (bizImages.length > 0) {
+                galCont.textContent = '';
+                bizImages.forEach(function (item) {
+                    var src = typeof item === 'string' ? item : item.url;
+                    if (!src) return;
+                    var div = document.createElement('div');
+                    div.className = 'gal-cont-item';
+                    var img = document.createElement('img');
+                    img.src = src;
+                    img.alt = 'Gallery photo';
+                    div.appendChild(img);
+                    galCont.appendChild(div);
+                });
+            }
+        }
+
+        // ── Wire up selectors, upload preview, back button, form ────────────
+        setupBookingSelectors(businessId, bookBuss);
+        setupUploadPreview();
+
+        var retBtn = document.querySelector('.ret-btn');
+        if (retBtn) {
+            retBtn.removeEventListener('click', retBtn._handler || function(){});
+            retBtn._handler = function () { window.history.back(); };
+            retBtn.addEventListener('click', retBtn._handler);
+        }
+
+        wireBookingForm(businessId, bookBuss);
+
+    }).catch(function (err) {
+        if (formContainer) {
+            formContainer.innerHTML = '<p style="padding:16px;color:#c00">Could not load business. Please go back and try again.</p>';
+        }
+    });
+}
+
+function wireBookingForm(businessId, bookBuss) {
 
     var bookForm = document.getElementById('book-form');
-    if (bookForm) {
-        bookForm.addEventListener('submit', async function (e) {
+    if (!bookForm) return;
+
+    bookForm.addEventListener('submit', async function (e) {
             e.preventDefault();
 
             var token = localStorage.getItem('token');
@@ -656,15 +488,22 @@ function setupBookingPage() {
                 return;
             }
 
-            var dateVal = document.getElementById('date-value');
-            var timeVal = document.getElementById('time-value');
+            var dateEl = document.getElementById('date-picker');
+            var timeEl = document.getElementById('start-time');
+            var selectedDate = dateEl ? dateEl.value : '';
+            var selectedTime = timeEl ? normalizeTimeTo24(timeEl.value) : '';
 
-            if (!dateVal || !dateVal.value) {
-                alert('Please select a date.');
+            if (!selectedDate) {
+                alert('Please select a booking date.');
                 return;
             }
-            if (!timeVal || !timeVal.value) {
-                alert('Please enter a time.');
+            if (!selectedTime) {
+                alert('Please select a valid start time (HH:mm).');
+                return;
+            }
+
+            if (!isBusinessDayAvailable(selectedDate, bookBuss)) {
+                alert('Please choose a date that falls on the business available days.');
                 return;
             }
 
@@ -675,53 +514,93 @@ function setupBookingPage() {
                 submitBtn.disabled = true;
             }
 
-            var noteEl = document.getElementById('short-note');
-            var budgetEl = document.getElementById('budget-price');
+            var noteEl    = document.getElementById('short-note');
+            var budgetEl  = document.getElementById('budget-price');
             var serviceEl = document.getElementById('service-type');
+            var phoneEl   = document.getElementById('phone');
+            var locationEl = document.getElementById('location');
             var addressEl = document.getElementById('house-loacation');
+            var sampleEl  = document.getElementById('sample-upload');
 
-            // Convert "HH:MM AM/PM" → 24-hour "HH:MM" required by API
-            function toTime24(timeStr) {
-                if (!timeStr) return '';
-                var parts = timeStr.trim().split(' ');
-                var hm = parts[0].split(':');
-                var h = parseInt(hm[0], 10);
-                var m = hm[1] || '00';
-                var ampm = (parts[1] || '').toUpperCase();
-                if (ampm === 'PM' && h !== 12) h += 12;
-                if (ampm === 'AM' && h === 12) h = 0;
-                return String(h).padStart(2, '0') + ':' + m;
+            var note = noteEl ? noteEl.value.trim() : '';
+            var budget = budgetEl ? budgetEl.value.trim() : '';
+            var serviceType = (serviceEl && serviceEl.value && serviceEl.value !== 'select') ? serviceEl.value.trim() : '';
+            var phone = phoneEl ? phoneEl.value.trim() : '';
+            var location = locationEl ? locationEl.value.trim() : '';
+            var addressDirection = addressEl ? addressEl.value.trim() : '';
+            var sampleFile = (sampleEl && sampleEl.files && sampleEl.files[0]) ? sampleEl.files[0] : null;
+
+            if (!serviceType) {
+                alert('Please select a service type.');
+                if (submitBtn) { submitBtn.textContent = originalText; submitBtn.disabled = false; }
+                return;
+            }
+            if (!phone) {
+                alert('Please enter your phone number.');
+                if (submitBtn) { submitBtn.textContent = originalText; submitBtn.disabled = false; }
+                return;
+            }
+            if (!location) {
+                alert('Please enter your location.');
+                if (submitBtn) { submitBtn.textContent = originalText; submitBtn.disabled = false; }
+                return;
             }
 
-            // Build extra context into notes
-            var notesParts = [];
-            if (noteEl && noteEl.value.trim()) notesParts.push(noteEl.value.trim());
-            if (budgetEl && budgetEl.value.trim()) notesParts.push('Budget: ' + budgetEl.value.trim());
-            if (serviceEl && serviceEl.value && serviceEl.value !== 'select') notesParts.push('Service type: ' + serviceEl.value.trim());
-            if (addressEl && addressEl.value.trim()) notesParts.push('Address: ' + addressEl.value.trim());
-
-            var payload = {
-                business: businessId,
-                date: dateVal.value,
-                startTime: toTime24(timeVal.value),
-                notes: notesParts.join(' | ')
-            };
-
             try {
-                await ApiService.createBooking(payload);
+                var payload = {
+                    business: businessId,
+                    date: selectedDate,
+                    startTime: selectedTime,
+                    note: note,
+                    serviceType: serviceType,
+                    phone: phone,
+                    location: location,
+                    addressDirection: addressDirection || '',
+                    budget: budget || ''
+                };
+                if (sampleFile) payload.sample = sampleFile;
 
-                var successModal = document.querySelector('.book-suc-cont');
-                var modalOverlay = document.querySelector('.modal');
+                var availableTimes = await getAvailableSlotsForDate(businessId, selectedDate);
+                if (availableTimes.length > 0 && availableTimes.indexOf(selectedTime) === -1) {
+                    alert('Selected time is not available for that date. Pick one of the available slots.');
+                    if (submitBtn) { submitBtn.textContent = originalText; submitBtn.disabled = false; }
+                    return;
+                }
+
+                var detailsText = 'Date: ' + selectedDate + ' \u2022 Time: ' + selectedTime;
+
+                var bookingResult = await ApiService.createBooking(payload);
+                var newBookingId  = bookingResult && (bookingResult.id || bookingResult._id
+                    || (bookingResult.booking && (bookingResult.booking.id || bookingResult.booking._id)));
+
+                var successModal  = document.querySelector('.book-suc-cont');
+                var modalOverlay  = document.querySelector('.modal');
+                var successDetails = document.getElementById('book-suc-details');
                 if (successModal) {
                     successModal.style.display = 'flex';
                     successModal.classList.add('active');
                     if (modalOverlay) modalOverlay.classList.add('active');
+                    if (successDetails) successDetails.textContent = detailsText;
+
+                    var existingMsgBtn = successModal.querySelector('.suc-msg-btn');
+                    if (existingMsgBtn) existingMsgBtn.remove();
+                    if (newBookingId) {
+                        var msgBtn = document.createElement('button');
+                        msgBtn.className = 'suc-msg-btn';
+                        msgBtn.textContent = '\uD83D\uDCAC Message Business';
+                        msgBtn.onclick = function () {
+                            window.location.assign('/Customer/Dashboard/message.html?bookingId=' + newBookingId);
+                        };
+                        var doneBtn2 = successModal.querySelector('.suc-done');
+                        if (doneBtn2) successModal.insertBefore(msgBtn, doneBtn2);
+                        else successModal.appendChild(msgBtn);
+                    }
 
                     var doneBtn = document.querySelector('.suc-done');
                     if (doneBtn) {
-                        doneBtn.addEventListener('click', function () {
+                        doneBtn.onclick = function () {
                             window.location.assign('/Customer/Dashboard/history.html');
-                        });
+                        };
                     }
                 } else {
                     alert('Booking Successful!');
@@ -737,26 +616,193 @@ function setupBookingPage() {
                     submitBtn.disabled = false;
                 }
             }
+    });
+}
+
+
+/**
+ * Generate time slots client-side from a business's workingHours + slotDuration.
+ * Used as a fallback when the availability API returns open:true but empty slots
+ * (i.e., no bookings exist for that date yet — all slots are free).
+ *
+ * Returns an array like [{ startTime, endTime, available: true }, ...]
+ * or null if the business is not open on that day.
+ */
+function generateSlotsFromBusinessData(dateStr, businessData) {
+    if (!businessData || !dateStr) return null;
+
+    var DAY_NAMES = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    var d = new Date(dateStr + 'T00:00:00'); // parse as local date
+    var dayKey = DAY_NAMES[d.getDay()];
+
+    var wh = businessData.workingHours;
+    var openTime  = null;
+    var closeTime = null;
+
+    if (wh && typeof wh === 'object' && !Array.isArray(wh)) {
+        // Object format: { monday: { open, close, enabled }, ... }
+        var dayEntry = wh[dayKey];
+        if (!dayEntry || !dayEntry.enabled) return null; // not open
+        openTime  = dayEntry.open  || '09:00';
+        closeTime = dayEntry.close || '17:00';
+    } else if (typeof wh === 'string' && wh.trim()) {
+        // Legacy string like "09:00-17:00" — treat every day as open
+        var parts = wh.trim().split('-');
+        openTime  = (parts[0] || '09:00').trim();
+        closeTime = (parts[1] || '17:00').trim();
+    } else {
+        return null;
+    }
+
+    var duration = (businessData.slotDuration && parseInt(businessData.slotDuration, 10)) || 30;
+
+    // Convert HH:MM to total minutes
+    function toMins(t) {
+        var p = String(t || '').split(':');
+        return parseInt(p[0] || 0, 10) * 60 + parseInt(p[1] || 0, 10);
+    }
+    function toTime(mins) {
+        return String(Math.floor(mins / 60)).padStart(2, '0') + ':' + String(mins % 60).padStart(2, '0');
+    }
+
+    var start = toMins(openTime);
+    var end   = toMins(closeTime);
+    var slots = [];
+
+    while (start + duration <= end) {
+        slots.push({
+            startTime: toTime(start),
+            endTime:   toTime(start + duration),
+            available: true
+        });
+        start += duration;
+    }
+
+    return slots.length > 0 ? slots : null;
+}
+
+function setupBookingSelectors(businessId, businessData) {
+    var datePicker = document.getElementById('date-picker');
+    var slotsContainer = document.querySelector('.time-slots-container');
+    var timeInput = document.getElementById('start-time');
+    var workingHoursHint = document.getElementById('working-hours-hint');
+
+    if (workingHoursHint) {
+        var wh = businessData && businessData.workingHours;
+        var readableHours = '';
+        if (wh && typeof wh === 'object' && !Array.isArray(wh)) {
+            // New object format: { monday: { open, close, enabled }, ... }
+            var enabledDays = Object.keys(wh).filter(function (k) { return wh[k] && wh[k].enabled; });
+            if (enabledDays.length > 0) {
+                var firstEntry = wh[enabledDays[0]];
+                var lastEntry  = wh[enabledDays[enabledDays.length - 1]];
+                var capitalize = function (s) { return s.charAt(0).toUpperCase() + s.slice(1); };
+                var dayPart = enabledDays.map(capitalize).join(', ');
+                readableHours = dayPart + '  \u2022  ' +
+                    (firstEntry.open || '?') + ' \u2013 ' + (lastEntry.close || '?');
+            }
+        } else if (typeof wh === 'string' && wh.trim()) {
+            readableHours = wh.trim();
+        }
+        workingHoursHint.textContent = 'Working hours: ' + (readableHours || 'See business schedule');
+    }
+
+    if (datePicker) {
+        var now = new Date();
+        datePicker.min = now.toISOString().slice(0, 10);
+    }
+
+    setupInlineCalendar(datePicker, businessData);
+
+    function clearSlotsHint(msg) {
+        if (!slotsContainer) return;
+        slotsContainer.textContent = '';
+        if (!msg) return;
+        var hint = document.createElement('p');
+        hint.className = 'slot-hint';
+        hint.textContent = msg;
+        slotsContainer.appendChild(hint);
+    }
+
+    if (datePicker) {
+        datePicker.addEventListener('change', async function () {
+            if (!datePicker.value) {
+                clearSlotsHint('');
+                return;
+            }
+
+            clearSlotsHint('');
+            try {
+                var res = await ApiService.checkAvailability(businessId, datePicker.value);
+
+                // Business explicitly closed on that day
+                if (res && res.open === false) {
+                    clearSlotsHint('');
+                    return;
+                }
+
+                // Extract slots from whatever shape the API returns
+                var slots;
+                if (Array.isArray(res)) {
+                    slots = res;
+                } else if (res && Array.isArray(res.slots)) {
+                    slots = res.slots;
+                } else if (res && Array.isArray(res.availableSlots)) {
+                    slots = res.availableSlots;
+                } else if (res && Array.isArray(res.data)) {
+                    slots = res.data;
+                } else {
+                    slots = [];
+                }
+
+                // If API returned open:true but no slots, the date likely has no
+                // existing bookings yet — generate all slots client-side instead.
+                if (slots.length === 0) {
+                    var generated = generateSlotsFromBusinessData(datePicker.value, businessData);
+                    if (generated && generated.length > 0) {
+                        renderTimeSlots(generated, slotsContainer);
+                        return;
+                    }
+                    // API said open:true but our local data also says closed — show message
+                    clearSlotsHint('');
+                    return;
+                }
+
+                renderTimeSlots(slots, slotsContainer);
+            } catch (error) {
+                // API failed — try generating slots locally as a graceful fallback
+                var fallbackSlots = generateSlotsFromBusinessData(datePicker.value, businessData);
+                if (fallbackSlots && fallbackSlots.length > 0) {
+                    renderTimeSlots(fallbackSlots, slotsContainer);
+                } else {
+                    clearSlotsHint('');
+                }
+            }
+        });
+    }
+
+    if (timeInput) {
+        timeInput.addEventListener('input', function () {
+            document.querySelectorAll('.time-slot-btn.selected').forEach(function (btn) {
+                btn.classList.remove('selected');
+            });
         });
     }
 }
 
-// =====================
-// CALENDAR
-// =====================
-function setupCalendar(businessId) {
+function setupInlineCalendar(datePicker, businessData) {
+    if (!datePicker) return;
+
     var calContainer = document.querySelector('.week-date-cont');
     var monthYearLabel = document.querySelector('.month-year');
     var prevBtn = document.getElementById('prev-month');
-    var nextBtn = document.querySelector('.next-month');
-    var dateHidden = document.getElementById('date-value');
+    var nextBtn = document.getElementById('next-month');
 
-    if (!calContainer || !monthYearLabel) return;
+    if (!calContainer || !monthYearLabel || !prevBtn || !nextBtn) return;
 
     var today = new Date();
     var calMonth = today.getMonth();
     var calYear = today.getFullYear();
-    var selectedDateStr = '';
 
     var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'];
@@ -765,10 +811,10 @@ function setupCalendar(businessId) {
         calContainer.textContent = '';
         monthYearLabel.textContent = monthNames[calMonth] + ' ' + calYear;
 
+        var selectedDateStr = datePicker.value || '';
         var firstDay = new Date(calYear, calMonth, 1).getDay();
         var daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
 
-        // Empty cells for days before the 1st
         for (var e = 0; e < firstDay; e++) {
             var empty = document.createElement('div');
             calContainer.appendChild(empty);
@@ -781,117 +827,124 @@ function setupCalendar(businessId) {
                 String(d).padStart(2, '0');
 
             var isPast = dateObj < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            var isOpenDay = isBusinessDayAvailable(dateStr, businessData);
 
             var radio = document.createElement('input');
             radio.type = 'radio';
             radio.name = 'cal-date';
             radio.id = 'date-' + dateStr;
             radio.value = dateStr;
-            if (isPast) radio.disabled = true;
+            radio.disabled = isPast || !isOpenDay;
             if (dateStr === selectedDateStr) radio.checked = true;
 
             var label = document.createElement('label');
             label.htmlFor = 'date-' + dateStr;
             label.textContent = d;
+            label.className = isOpenDay ? 'available-day' : 'unavailable-day';
 
-            radio.addEventListener('change', (function (ds) {
-                return function () {
-                    selectedDateStr = ds;
-                    if (dateHidden) dateHidden.value = ds;
-                    fetchSlotsForDate(businessId, ds);
-                };
-            })(dateStr));
+            radio.addEventListener('change', function (ev) {
+                datePicker.value = ev.target.value;
+                datePicker.dispatchEvent(new Event('change', { bubbles: true }));
+            });
 
             calContainer.appendChild(radio);
             calContainer.appendChild(label);
         }
     }
 
-    function fetchSlotsForDate(bId, dateStr) {
-        var slotsContainer = document.querySelector('.time-slots-container');
-        if (!slotsContainer) return;
+    prevBtn.addEventListener('click', function () {
+        calMonth--;
+        if (calMonth < 0) { calMonth = 11; calYear--; }
+        renderCalendar();
+    });
 
-        slotsContainer.textContent = 'Loading available slots...';
+    nextBtn.addEventListener('click', function () {
+        calMonth++;
+        if (calMonth > 11) { calMonth = 0; calYear++; }
+        renderCalendar();
+    });
 
-        if (typeof ApiService !== 'undefined' && ApiService.checkAvailability) {
-            ApiService.checkAvailability(bId, dateStr)
-                .then(function (slots) {
-                    renderTimeSlots(slots, slotsContainer);
-                })
-                .catch(function () {
-                    slotsContainer.textContent = 'Could not load available slots.';
-                });
-        }
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', function () {
-            calMonth--;
-            if (calMonth < 0) { calMonth = 11; calYear--; }
-            renderCalendar();
-        });
-    }
-    if (nextBtn) {
-        nextBtn.addEventListener('click', function () {
-            calMonth++;
-            if (calMonth > 11) { calMonth = 0; calYear++; }
-            renderCalendar();
-        });
-    }
-
+    datePicker.addEventListener('change', renderCalendar);
     renderCalendar();
 }
 
-// =====================
-// TIME PICKER
-// =====================
-function setupTimePicker() {
-    var hourEl = document.getElementById('hour');
-    var minuteEl = document.getElementById('minute');
-    var timeHidden = document.getElementById('time-value');
-    var amRadio = document.getElementById('am');
-    var pmRadio = document.getElementById('pm');
+function getEnabledBusinessDays(businessData) {
+    var wh = businessData && businessData.workingHours;
+    var enabledDays = [];
 
-    if (!hourEl || !minuteEl) return;
-
-    function numericOnly(input, min, max) {
-        input.addEventListener('input', function () {
-            var val = input.value.replace(/[^0-9]/g, '');
-            if (val.length > 2) val = val.slice(0, 2);
-            var num = parseInt(val, 10);
-            if (!isNaN(num)) {
-                if (num > max) val = String(max);
-                if (num < min && val.length === 2) val = String(min).padStart(2, '0');
+    if (wh && typeof wh === 'object' && !Array.isArray(wh)) {
+        Object.keys(wh).forEach(function (dayName) {
+            if (wh[dayName] && wh[dayName].enabled) {
+                enabledDays.push(dayName.toLowerCase());
             }
-            input.value = val;
-            updateTimeValue();
-        });
-
-        input.addEventListener('blur', function () {
-            var num = parseInt(input.value, 10);
-            if (isNaN(num) || num < min) {
-                input.value = '';
-            } else {
-                input.value = String(num).padStart(2, '0');
-            }
-            updateTimeValue();
         });
     }
 
-    function updateTimeValue() {
-        if (!timeHidden) return;
-        var h = hourEl.value;
-        var m = minuteEl.value;
-        if (!h || !m) { timeHidden.value = ''; return; }
-        var ampm = (pmRadio && pmRadio.checked) ? 'PM' : 'AM';
-        timeHidden.value = h.padStart(2, '0') + ':' + m.padStart(2, '0') + ' ' + ampm;
+    return enabledDays;
+}
+
+function isBusinessDayAvailable(dateStr, businessData) {
+    if (!dateStr) return false;
+
+    var enabledDays = getEnabledBusinessDays(businessData);
+    if (enabledDays.length === 0) {
+        return true;
     }
 
-    numericOnly(hourEl, 1, 12);
-    numericOnly(minuteEl, 0, 59);
+    var dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    var date = new Date(dateStr + 'T00:00:00');
+    var dayName = dayNames[date.getDay()];
 
-    if (amRadio) amRadio.addEventListener('change', updateTimeValue);
-    if (pmRadio) pmRadio.addEventListener('change', updateTimeValue);
+    return enabledDays.indexOf(dayName) !== -1;
+}
+
+function normalizeTimeTo24(timeStr) {
+    if (!timeStr) return '';
+
+    var clean = String(timeStr).trim();
+    var hhmm24 = /^([01]\d|2[0-3]):([0-5]\d)$/;
+    if (hhmm24.test(clean)) return clean;
+
+    var match12 = clean.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (!match12) return '';
+
+    var hour = parseInt(match12[1], 10);
+    var minute = match12[2];
+    var ampm = match12[3].toUpperCase();
+    if (ampm === 'PM' && hour !== 12) hour += 12;
+    if (ampm === 'AM' && hour === 12) hour = 0;
+    return String(hour).padStart(2, '0') + ':' + minute;
+}
+
+async function getAvailableSlotsForDate(businessId, dateStr, rawResponse) {
+    if (!ApiService || !ApiService.checkAvailability) return [];
+
+    var res = await ApiService.checkAvailability(businessId, dateStr);
+
+    // Backend returns { open: false, slots: [], msg: "..." } when business is closed that day
+    if (res && res.open === false) {
+        var closedMsg = (res.msg) || 'Business is not open on that day';
+        if (rawResponse) return { open: false, slots: [], msg: closedMsg };
+        throw new Error(closedMsg);
+    }
+
+    var slots = Array.isArray(res) ? res
+        : Array.isArray(res && res.slots) ? res.slots
+        : Array.isArray(res && res.availableSlots) ? res.availableSlots
+        : Array.isArray(res && res.data) ? res.data
+        : [];
+
+    if (rawResponse) return slots;
+
+    // Return only available slots (for conflict-check during submit)
+    return slots
+        .filter(function (slot) {
+            return !(slot && (slot.isAvailable === false || slot.available === false));
+        })
+        .map(function (slot) {
+            return normalizeTimeTo24(slot && (slot.time || slot.startTime || slot));
+        })
+        .filter(Boolean);
 }
 
 // =====================
@@ -929,29 +982,39 @@ function renderTimeSlots(slots, container) {
     container.textContent = '';
 
     if (!slots || slots.length === 0) {
-        var noSlots = document.createElement('p');
-        noSlots.textContent = 'No available slots for this date.';
-        container.appendChild(noSlots);
         return;
     }
+
+    var hasAvailable = slots.some(function (s) {
+        return !(s && (s.isAvailable === false || s.available === false));
+    });
+    if (!hasAvailable) return;
 
     slots.forEach(function (slot) {
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'time-slot-btn';
 
-        var slotTime = slot.time || slot.startTime || slot;
-        btn.textContent = safeText(String(slotTime));
+        // Support both slot objects and plain time strings
+        var slotTime = (typeof slot === 'object' && slot)
+            ? (slot.startTime || slot.time)
+            : slot;
+        var isAvailable = !(slot && (slot.isAvailable === false || slot.available === false));
 
-        if (slot.available === false) {
+        btn.textContent = safeText(String(slotTime || ''));
+
+        if (!isAvailable) {
             btn.disabled = true;
             btn.classList.add('slot-unavailable');
+            btn.title = 'Already booked';
         } else {
             btn.addEventListener('click', function () {
                 document.querySelectorAll('.time-slot-btn.selected').forEach(function (el) {
                     el.classList.remove('selected');
                 });
                 btn.classList.add('selected');
+                var startTime = document.getElementById('start-time');
+                if (startTime) startTime.value = normalizeTimeTo24(String(slotTime));
             });
         }
 
@@ -977,10 +1040,12 @@ async function fetchLandingPageData() {
         var allBiz = await ApiService.getBusinesses();
         if (!allBiz || allBiz.length === 0) return;
 
+        var sortedBiz = sortBusinessesLatestToOldest(allBiz);
+
         // Split businesses among the three sections
-        var topRated = allBiz.slice(0, Math.min(4, allBiz.length));
-        var recent = allBiz.slice(0, Math.min(4, allBiz.length)).reverse();
-        var recommended = allBiz.slice(0, Math.min(4, allBiz.length));
+        var topRated = sortedBiz.slice(0, Math.min(4, sortedBiz.length));
+        var recent = sortedBiz.slice(0, Math.min(4, sortedBiz.length));
+        var recommended = sortedBiz.slice(0, Math.min(4, sortedBiz.length));
 
         if (topCont) renderLandingCards(topRated, topCont);
         if (recentCont) renderLandingCards(recent, recentCont);
@@ -997,15 +1062,32 @@ function renderLandingCards(items, container) {
         var card = document.createElement('div');
         card.className = 'top-rev-item';
 
-        var imgSrc = biz.image || '/Images/img6.png';
+        var imgSrc = biz.image || (biz.images && biz.images[0] && biz.images[0].url) || '/Images/img6.png';
         var name = safeText(biz.companyName || biz.name || 'Business');
         var address = safeText(biz.address || 'Location varies');
         var category = safeText(biz.category || biz.serviceType || 'General Services');
-        var availability = safeText(biz.availability || 'Mon - Sat');
-        var hours = safeText(biz.hours || '9:00 AM - 5:00 PM');
+
+        // Parse workingHours object format or fall back to legacy string
+        var availability = 'Mon - Sat';
+        var hours = '9:00 AM - 5:00 PM';
+        var wh = biz.workingHours;
+        if (wh && typeof wh === 'object' && !Array.isArray(wh)) {
+            var enabledKeys = Object.keys(wh).filter(function (k) { return wh[k] && wh[k].enabled; });
+            if (enabledKeys.length > 0) {
+                var cap = function (s) { return s.charAt(0).toUpperCase() + s.slice(1, 3); };
+                availability = enabledKeys.map(cap).join(', ');
+                var first = wh[enabledKeys[0]];
+                var last  = wh[enabledKeys[enabledKeys.length - 1]];
+                hours = (first.open || '9:00') + ' - ' + (last.close || '5:00');
+            }
+        } else if (typeof wh === 'string' && wh.trim()) {
+            availability = wh.trim();
+        } else if (biz.availability) {
+            availability = safeText(biz.availability);
+        }
         var rating = biz.rating || '5.0';
-        var minPrice = biz.minPrice || biz.price || '20';
-        var maxPrice = biz.maxPrice || '100';
+        var minPrice = biz.minPrice != null ? biz.minPrice : null;
+        var maxPrice = biz.maxPrice != null ? biz.maxPrice : null;
         var bussId = biz._id || biz.id;
 
         // Build card header
@@ -1089,7 +1171,13 @@ function renderLandingCards(items, container) {
         fromP.textContent = 'From';
         var priceDiv = document.createElement('div');
         priceDiv.className = 'price-range';
-        priceDiv.textContent = '$' + minPrice + ' - $' + maxPrice;
+        if (minPrice != null && maxPrice != null) {
+            priceDiv.textContent = '$' + minPrice + ' - $' + maxPrice;
+        } else if (minPrice != null) {
+            priceDiv.textContent = 'From $' + minPrice;
+        } else {
+            priceDiv.textContent = 'Contact for pricing';
+        }
         var perP = document.createElement('p');
         perP.className = 'rev-range';
         perP.textContent = 'Per Person';

@@ -180,7 +180,14 @@ nav ul li a:hover {
 .cust-img {
     width: 35px;
     height: 35px;
-    background-image: url(/Images/img32.png);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    background-color: var(--like-col);
+    text-transform: uppercase;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -562,6 +569,23 @@ p.mes {
 .cha-send-btn svg {
     width: 20px;
 }
+
+/* Conversation status badges */
+.conv-status-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+    margin-left: auto;
+    align-self: center;
+}
+.conv-status-pending  { background: rgba(255,183,77,0.2);  color: #b45309; }
+.conv-status-confirmed{ background: rgba(76,175,80,0.15);  color: #166534; }
+.conv-status-cancelled{ background: rgba(244,67,54,0.15);  color: #991b1b; }
 
 
 

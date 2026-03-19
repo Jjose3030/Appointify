@@ -385,24 +385,29 @@ a.create:hover, a.bus:hover {
     text-align: center;
 }
 .code-box-cont {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    align-items: center;
-    justify-content: space-between;
     margin-block: 1rem;
+    width: 100%;
 }
 .code-box-cont input {
     width: 100%;
-    aspect-ratio: 1;
-    border-radius: 50%;
+    padding: 15px;
+    border-radius: 8px;
     border: none;
     text-align: center;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 600;
+    letter-spacing: 5px;
     outline: none;
     background-color: rgba(101, 100, 100, 0.872);
     color: white;
+}
+.code-box-cont input::-webkit-outer-spin-button,
+.code-box-cont input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.code-box-cont input[type=number] {
+    -moz-appearance: textfield;
 }
 a.resend {
     text-decoration: none;

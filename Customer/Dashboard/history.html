@@ -263,7 +263,7 @@
                 if (!bookings || bookings.length === 0) {
                     var noMsg = document.createElement('p');
                     noMsg.className = 'no-order';
-                    noMsg.textContent = 'No booking orders available';
+                    noMsg.textContent = 'No bookings available';
                     orderHistCont.appendChild(noMsg);
                     return;
                 }
@@ -277,6 +277,12 @@
 
                     var picDiv = document.createElement('div');
                     picDiv.className = 'hist-pic';
+                    if (booking.business && typeof booking.business === 'object' && booking.business.image) {
+                        picDiv.style.backgroundImage = "url('" + booking.business.image + "')";
+                        picDiv.style.backgroundSize = 'cover';
+                        picDiv.style.backgroundPosition = 'center';
+                        picDiv.style.borderRadius = '50%';
+                    }
 
                     var nameP = document.createElement('p');
                     var businessName = 'Unknown Business';
@@ -326,22 +332,35 @@
                     locP.textContent = safeText(category);
                     locationDiv.appendChild(locP);
 
+                    // Parse notes for Budget
+                    var rawNotes = booking.notes || 'No notes';
+                    var displayNotes = rawNotes;
+                    var displayBudget = 'N/A';
+                    if (rawNotes.includes('| Budget:')) {
+                        var parts = rawNotes.split('| Budget:');
+                        displayNotes = parts[0].trim();
+                        var parsedB = parts[1].trim();
+                        // ensure has $
+                        displayBudget = parsedB.startsWith('$') ? parsedB : '$' + parsedB;
+                    }
+
                     var noteDiv = document.createElement('div');
                     noteDiv.className = 'hist-note';
                     var noteP = document.createElement('p');
-                    noteP.textContent = safeText(booking.notes || 'No notes');
+                    noteP.textContent = safeText(displayNotes);
                     noteDiv.appendChild(noteP);
 
-                    var timeDiv = document.createElement('div');
-                    timeDiv.className = 'hist-budget';
-                    var timeP = document.createElement('p');
-                    timeP.textContent = safeText((booking.startTime || '') + ' - ' + (booking.endTime || ''));
-                    timeDiv.appendChild(timeP);
+                    var budgetDiv = document.createElement('div');
+                    budgetDiv.className = 'hist-budget';
+                    var budgetP = document.createElement('p');
+                    budgetP.textContent = safeText(displayBudget);
+                    budgetDiv.appendChild(budgetP);
 
                     var dateDiv = document.createElement('div');
                     dateDiv.className = 'hist-date';
                     var dateP = document.createElement('p');
-                    dateP.textContent = formatDate(booking.date);
+                    var timeStr = (booking.startTime && booking.endTime) ? ('<br><span style="color:#666;font-size:0.9em;">' + booking.startTime + ' - ' + booking.endTime + '</span>') : '';
+                    dateP.innerHTML = formatDate(booking.date) + timeStr;
                     dateDiv.appendChild(dateP);
 
                     var statusDiv = document.createElement('div');
