@@ -300,7 +300,24 @@ nav ul li a:hover {
     gap: 15px;
 }
 
-
+.log-rev {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-top: 0;
+    background-color: var(--btn-col);
+    color: var(--pri-color3);
+    padding: 10px;
+    border-radius: 10px;
+    transition: var(--trans2);
+    text-decoration: none;
+}
+.log-rev:visited {
+    color: var(--pri-color3);
+}
+.log-rev:hover {
+    background-color: var(--btn-col-hov);
+}
 .top-rev-item {
     box-shadow: 0px 0px 4px var(--dark);
     overflow: hidden;

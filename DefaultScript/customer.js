@@ -155,7 +155,16 @@ async function fetchBusinesses() {
     try {
         var fetchedBusinesses = await ApiService.getBusinesses();
         businesses = sortBusinessesLatestToOldest(fetchedBusinesses);
-        createCard();
+        // createCard();
+        var container = document.querySelector('.service-cont');
+        if (!container) return;
+
+    container.textContent = '';
+     var allBiz = await ApiService.getBusinesses();
+        if (!allBiz || allBiz.length === 0) return;
+
+        var sortedBiz = sortBusinessesLatestToOldest(allBiz);
+         renderLandingCards(sortedBiz, container);
     } catch (error) {
         var container = document.querySelector('.card-container');
         if (container) {
@@ -229,7 +238,8 @@ function setupUI() {
                 var company = (b.companyName || '').toLowerCase();
                 return name.includes(term) || company.includes(term);
             });
-            createCard(filtered);
+            //renderLandingCards(filtered)
+            // createCard(filtered);
         });
     }
 }
