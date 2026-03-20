@@ -66,7 +66,7 @@ body {
     display: flex;
     position: relative;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 .sign-img {
     background-image: url(../Images/log.jpg);
@@ -79,12 +79,12 @@ body {
     border-bottom-left-radius: 70px;
     flex-shrink: 0;
     position: absolute;
-    left: 0;
+    right: 0;
     top: 0;
     padding: 30px 25px;
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: end;
     justify-content: space-between;
     gap: 15px;
 }
@@ -105,7 +105,7 @@ body {
     flex-direction: column;
     gap: 8px;
     color: var(--pri-color3);
-    text-align: left;
+    text-align: right;
 }
 
 .welc-text h2 {
